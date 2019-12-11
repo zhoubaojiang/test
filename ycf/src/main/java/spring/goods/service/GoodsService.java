@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import java.beans.Transient;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -37,10 +38,20 @@ public class GoodsService {
     @Autowired
     private GoodsMapper goodsMapper;
 
+    /**
+     * 添加商品
+     * @param request
+     * @return
+     */
     @Transient
     public BaseCommonResult<PGoods> createGoods(GoodsListRequest request) {
         log.info("请求参数:{}",request);
+        request.setIsDelete(1);
+        request.setGoodsNumType(1);
+        request.setGoodsState(1);
+        request.setGoodsType(0);
         PGoods map = dozer.map(request, PGoods.class);
+        map.setCreateTime(new Date());
         int i = pGoodsMapper.insertSelective(map);
         log.info("返回参数:{}",map);
         return ResultBuilder.success(map);
