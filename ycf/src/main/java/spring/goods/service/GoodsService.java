@@ -57,6 +57,11 @@ public class GoodsService {
         return ResultBuilder.success(map);
     }
 
+    /**
+     * 修改商品
+     * @param request
+     * @return
+     */
     @Transient
     public BaseCommonResult<PGoods> update( GoodsListRequest request) {
         log.info("请求参数:{}",request);
@@ -66,7 +71,11 @@ public class GoodsService {
         return ResultBuilder.success(map);
     }
 
-
+    /**
+     * 查询列表
+     * @param request
+     * @return
+     */
     public BaseCommonResult<BasePage<PGoods>> list(GoodsListReq request) {
         BasePage<PGoods> pageResult = new BasePage();
         log.info("分页查询商品列表,请求参数为：{}", request);
@@ -118,6 +127,11 @@ public class GoodsService {
         return ResultBuilder.success(pageResult);
     }
 
+    /**
+     * 底部推荐
+     * @param requset
+     * @return
+     */
     public BaseCommonResult<BasePage<RecommendedResponse>> recommendedlist(RecommendedRequest requset) {
         BasePage<RecommendedResponse> pageResult = new BasePage();
         log.info("会员底部推荐分页查询商品列表,请求参数为：{}", requset);
@@ -135,6 +149,11 @@ public class GoodsService {
         return ResultBuilder.success(pageResult);
     }
 
+    /**
+     * 搜索栏
+     * @param requset
+     * @return
+     */
     public BaseCommonResult<BasePage<RecommendedResponse>> searchlist(RecommendedRequest requset) {
         BasePage<RecommendedResponse> pageResult = new BasePage();
         log.info("会员底部推荐分页查询商品列表,请求参数为：{}", requset);
@@ -152,6 +171,11 @@ public class GoodsService {
         return ResultBuilder.success(pageResult);
     }
 
+    /**
+     * 商品详情
+     * @param id
+     * @return
+     */
     public GoodsDetailsResponse goodsDetails(Long id) {
         log.info("商品详情查询ID: {}",id);
         PGoods goods = pGoodsMapper.selectByPrimaryKey(id);

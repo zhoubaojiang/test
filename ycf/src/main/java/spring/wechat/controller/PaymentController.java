@@ -113,12 +113,17 @@ public class PaymentController {
         logger.info("【小程序支付回调】 回调数据： \n"+map);
         String resXml = "";
         String returnCode = (String) map.get("return_code");
+        String orderId = (String) map.get("order_id");
         if ("SUCCESS".equalsIgnoreCase(returnCode)) {
             String returnmsg = (String) map.get("result_code");
             if("SUCCESS".equals(returnmsg)){
                 //更新数据
                 int result = paymentService.xcxNotify(map);
                 if(result > 0){
+                    PayReq req = new PayReq();
+                    req.setOrderNo(Long.parseLong(orderId));
+                    POrders orderInfo = orderService.getOrder(req);
+                    orderService.updateOrder(orderInfo,"3");
                     //支付成功
                     resXml = "<xml>" + "<return_code><![CDATA[SUCCESS]]></return_code>"
                             + "<return_msg><![CDATA[OK]]></return_msg>"+"</xml>";

@@ -1,5 +1,6 @@
 package spring.trade.service;
 
+import org.springframework.data.annotation.Transient;
 import spring.dto.BaseCommonResult;
 import spring.mapper.PGoodsMapper;
 import spring.mapper.POrdersDetailsMapper;
@@ -12,7 +13,6 @@ import spring.wechat.dto.requset.PayReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.beans.Transient;
 import java.util.Date;
 import java.util.List;
 
@@ -55,7 +55,7 @@ public class OrderService  {
         }else {
             pOreders.setOrderPrice(goods.getTreasureDiscountPrice());
         }
-
+        //订单
         pOreders.setOrderState("0");
         pOreders.setReceivedName(memberReceiveAddress.getName());
         pOreders.setPhone(memberReceiveAddress.getPhone());
@@ -64,7 +64,7 @@ public class OrderService  {
         pOreders.setArea(memberReceiveAddress.getArea());
         pOreders.setAddress(memberReceiveAddress.getDetailAddress());
         int i = pOrdersMapper.insertSelective(pOreders);
-
+        //订单明细
         POrdersDetails pOredersDetails = new POrdersDetails();
         pOredersDetails.setOrderNo(pOreders.getId());
         pOredersDetails.setGoodsId(ordersRes.getGoodsId());
@@ -89,5 +89,18 @@ public class OrderService  {
     public POrders getOrder(PayReq req) {
         POrders pOrders = pOrdersMapper.selectByPrimaryKey(req.getOrderNo());
         return pOrders;
+    }
+
+    /**
+     * 修改订单状态
+     * @param orderInfo
+     * @param i
+     */
+    @Transient
+    public void updateOrder(POrders orderInfo, String i) {
+        POrders record = new POrders();
+        record.setId(orderInfo.getId());
+        record.setOrderState(i);
+        pOrdersMapper.updateByPrimaryKeySelective( record);
     }
 }
