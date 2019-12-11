@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="spring.mapper.POrdersDetailsMapper">
+  <resultMap id="BaseResultMap" type="spring.model.POrdersDetails">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="order_no" jdbcType="BIGINT" property="orderNo" />
+    <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
+    <result column="goods_price" jdbcType="DECIMAL" property="goodsPrice" />
+    <result column="discount_price" jdbcType="DECIMAL" property="discountPrice" />
+    <result column="you_pricce" jdbcType="DECIMAL" property="youPricce" />
+    <result column="order_price" jdbcType="DECIMAL" property="orderPrice" />
+    <result column="goods_picture" jdbcType="VARCHAR" property="goodsPicture" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="goods_num" jdbcType="INTEGER" property="goodsNum" />
+    <result column="goods_condition" jdbcType="INTEGER" property="goodsCondition" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, order_no, goods_id, goods_price, discount_price, you_pricce, order_price, goods_picture, 
+    goods_name, goods_num, goods_condition
+  </sql>
+  <select id="selectByExample" parameterType="spring.model.POrdersDetailsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from p_orders_details
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from p_orders_details
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from p_orders_details
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="spring.model.POrdersDetailsExample">
+    delete from p_orders_details
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="spring.model.POrdersDetails">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into p_orders_details (order_no, goods_id, goods_price, 
+      discount_price, you_pricce, order_price, 
+      goods_picture, goods_name, goods_num, 
+      goods_condition)
+    values (#{orderNo,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, #{goodsPrice,jdbcType=DECIMAL}, 
+      #{discountPrice,jdbcType=DECIMAL}, #{youPricce,jdbcType=DECIMAL}, #{orderPrice,jdbcType=DECIMAL}, 
+      #{goodsPicture,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, #{goodsNum,jdbcType=INTEGER}, 
+      #{goodsCondition,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="spring.model.POrdersDetails">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into p_orders_details
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderNo != null">
+        order_no,
+      </if>
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="goodsPrice != null">
+        goods_price,
+      </if>
+      <if test="discountPrice != null">
+        discount_price,
+      </if>
+      <if test="youPricce != null">
+        you_pricce,
+      </if>
+      <if test="orderPrice != null">
+        order_price,
+      </if>
+      <if test="goodsPicture != null">
+        goods_picture,
+      </if>
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="goodsNum != null">
+        goods_num,
+      </if>
+      <if test="goodsCondition != null">
+        goods_condition,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsPrice != null">
+        #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="discountPrice != null">
+        #{discountPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="youPricce != null">
+        #{youPricce,jdbcType=DECIMAL},
+      </if>
+      <if test="orderPrice != null">
+        #{orderPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsPicture != null">
+        #{goodsPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNum != null">
+        #{goodsNum,jdbcType=INTEGER},
+      </if>
+      <if test="goodsCondition != null">
+        #{goodsCondition,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="spring.model.POrdersDetailsExample" resultType="java.lang.Long">
+    select count(*) from p_orders_details
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update p_orders_details
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderNo != null">
+        order_no = #{record.orderNo,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsId != null">
+        goods_id = #{record.goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsPrice != null">
+        goods_price = #{record.goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.discountPrice != null">
+        discount_price = #{record.discountPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.youPricce != null">
+        you_pricce = #{record.youPricce,jdbcType=DECIMAL},
+      </if>
+      <if test="record.orderPrice != null">
+        order_price = #{record.orderPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.goodsPicture != null">
+        goods_picture = #{record.goodsPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsName != null">
+        goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsNum != null">
+        goods_num = #{record.goodsNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsCondition != null">
+        goods_condition = #{record.goodsCondition,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update p_orders_details
+    set id = #{record.id,jdbcType=BIGINT},
+      order_no = #{record.orderNo,jdbcType=BIGINT},
+      goods_id = #{record.goodsId,jdbcType=BIGINT},
+      goods_price = #{record.goodsPrice,jdbcType=DECIMAL},
+      discount_price = #{record.discountPrice,jdbcType=DECIMAL},
+      you_pricce = #{record.youPricce,jdbcType=DECIMAL},
+      order_price = #{record.orderPrice,jdbcType=DECIMAL},
+      goods_picture = #{record.goodsPicture,jdbcType=VARCHAR},
+      goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      goods_num = #{record.goodsNum,jdbcType=INTEGER},
+      goods_condition = #{record.goodsCondition,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="spring.model.POrdersDetails">
+    update p_orders_details
+    <set>
+      <if test="orderNo != null">
+        order_no = #{orderNo,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null">
+        goods_id = #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsPrice != null">
+        goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="discountPrice != null">
+        discount_price = #{discountPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="youPricce != null">
+        you_pricce = #{youPricce,jdbcType=DECIMAL},
+      </if>
+      <if test="orderPrice != null">
+        order_price = #{orderPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsPicture != null">
+        goods_picture = #{goodsPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNum != null">
+        goods_num = #{goodsNum,jdbcType=INTEGER},
+      </if>
+      <if test="goodsCondition != null">
+        goods_condition = #{goodsCondition,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="spring.model.POrdersDetails">
+    update p_orders_details
+    set order_no = #{orderNo,jdbcType=BIGINT},
+      goods_id = #{goodsId,jdbcType=BIGINT},
+      goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      discount_price = #{discountPrice,jdbcType=DECIMAL},
+      you_pricce = #{youPricce,jdbcType=DECIMAL},
+      order_price = #{orderPrice,jdbcType=DECIMAL},
+      goods_picture = #{goodsPicture,jdbcType=VARCHAR},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_num = #{goodsNum,jdbcType=INTEGER},
+      goods_condition = #{goodsCondition,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

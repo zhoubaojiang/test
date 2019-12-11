@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="spring.mapper.UUserMemberMapper">
+  <resultMap id="BaseResultMap" type="spring.model.UUserMember">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="pass_word" jdbcType="VARCHAR" property="passWord" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="yuan_bao" jdbcType="DECIMAL" property="yuanBao" />
+    <result column="gold" jdbcType="DECIMAL" property="gold" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
+    <result column="app_id" jdbcType="VARCHAR" property="appId" />
+    <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, user_name, pass_word, phone, yuan_bao, gold, price, open_id, app_id, pic_url, 
+    create_time
+  </sql>
+  <select id="selectByExample" parameterType="spring.model.UUserMemberExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from u_user_member
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from u_user_member
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from u_user_member
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="spring.model.UUserMemberExample">
+    delete from u_user_member
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="spring.model.UUserMember">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into u_user_member (user_name, pass_word, phone, 
+      yuan_bao, gold, price, 
+      open_id, app_id, pic_url, 
+      create_time)
+    values (#{userName,jdbcType=VARCHAR}, #{passWord,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{yuanBao,jdbcType=DECIMAL}, #{gold,jdbcType=DECIMAL}, #{price,jdbcType=DECIMAL}, 
+      #{openId,jdbcType=VARCHAR}, #{appId,jdbcType=VARCHAR}, #{picUrl,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="spring.model.UUserMember">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into u_user_member
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="passWord != null">
+        pass_word,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="yuanBao != null">
+        yuan_bao,
+      </if>
+      <if test="gold != null">
+        gold,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="openId != null">
+        open_id,
+      </if>
+      <if test="appId != null">
+        app_id,
+      </if>
+      <if test="picUrl != null">
+        pic_url,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="passWord != null">
+        #{passWord,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="yuanBao != null">
+        #{yuanBao,jdbcType=DECIMAL},
+      </if>
+      <if test="gold != null">
+        #{gold,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="openId != null">
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="appId != null">
+        #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrl != null">
+        #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="spring.model.UUserMemberExample" resultType="java.lang.Long">
+    select count(*) from u_user_member
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update u_user_member
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userName != null">
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.passWord != null">
+        pass_word = #{record.passWord,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yuanBao != null">
+        yuan_bao = #{record.yuanBao,jdbcType=DECIMAL},
+      </if>
+      <if test="record.gold != null">
+        gold = #{record.gold,jdbcType=DECIMAL},
+      </if>
+      <if test="record.price != null">
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.openId != null">
+        open_id = #{record.openId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appId != null">
+        app_id = #{record.appId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.picUrl != null">
+        pic_url = #{record.picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update u_user_member
+    set id = #{record.id,jdbcType=BIGINT},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      pass_word = #{record.passWord,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      yuan_bao = #{record.yuanBao,jdbcType=DECIMAL},
+      gold = #{record.gold,jdbcType=DECIMAL},
+      price = #{record.price,jdbcType=DECIMAL},
+      open_id = #{record.openId,jdbcType=VARCHAR},
+      app_id = #{record.appId,jdbcType=VARCHAR},
+      pic_url = #{record.picUrl,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="spring.model.UUserMember">
+    update u_user_member
+    <set>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="passWord != null">
+        pass_word = #{passWord,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="yuanBao != null">
+        yuan_bao = #{yuanBao,jdbcType=DECIMAL},
+      </if>
+      <if test="gold != null">
+        gold = #{gold,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="openId != null">
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="appId != null">
+        app_id = #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrl != null">
+        pic_url = #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="spring.model.UUserMember">
+    update u_user_member
+    set user_name = #{userName,jdbcType=VARCHAR},
+      pass_word = #{passWord,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      yuan_bao = #{yuanBao,jdbcType=DECIMAL},
+      gold = #{gold,jdbcType=DECIMAL},
+      price = #{price,jdbcType=DECIMAL},
+      open_id = #{openId,jdbcType=VARCHAR},
+      app_id = #{appId,jdbcType=VARCHAR},
+      pic_url = #{picUrl,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

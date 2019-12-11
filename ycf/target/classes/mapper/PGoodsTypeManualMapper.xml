@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="spring.mapper.PGoodsTypeManualMapper" >
+  <resultMap type="spring.goods.dto.response.TypeAttrResponse" id="selectAttrByGoodsTypeIdMap">
+  	<result column="id" property="id" jdbcType="INTEGER" />
+    <result column="attribute_name" property="attributeName" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="selectAttrByGoodsTypeId" resultMap="selectAttrByGoodsTypeIdMap" parameterType="java.lang.Integer">
+  	select a.id,a.attribute_name,a.sort from p_type_attr a
+	left join p_attr_type_relation b
+	on a.id = b.attr_id
+	where b.goods_type_id = #{goodsTypeId,jdbcType=INTEGER}
+	and a.is_delete = 0
+	order by a.sort desc
+  </select>
+  
+</mapper>

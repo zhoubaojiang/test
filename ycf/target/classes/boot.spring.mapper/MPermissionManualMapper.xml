@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="spring.mapper.MPermissionManualMapper">
+  <resultMap id="BaseResultMap" type="spring.model.MPermissionManual">
+    <id column="permission_id" jdbcType="BIGINT" property="permissionId" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="permission_name" jdbcType="VARCHAR" property="permissionName" />
+    <result column="permission_desc" jdbcType="VARCHAR" property="permissionDesc" />
+    <result column="permission_key" jdbcType="VARCHAR" property="permissionKey" />
+    <result column="permission_url" jdbcType="VARCHAR" property="permissionUrl" />
+    <result column="permission_type" jdbcType="VARCHAR" property="permissionType" />
+    <result column="permission_img" jdbcType="VARCHAR" property="permissionImg" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    permission_id, parent_id, permission_name, permission_desc, permission_key, permission_url, 
+    permission_type, permission_img, status, create_date
+  </sql>
+  <select id="selectByExample" parameterType="spring.model.MPermissionManualExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from m_permission_manual
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from m_permission_manual
+    where permission_id = #{permissionId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from m_permission_manual
+    where permission_id = #{permissionId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="spring.model.MPermissionManualExample">
+    delete from m_permission_manual
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="spring.model.MPermissionManual">
+    insert into m_permission_manual (permission_id, parent_id, permission_name, 
+      permission_desc, permission_key, permission_url, 
+      permission_type, permission_img, status, 
+      create_date)
+    values (#{permissionId,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{permissionName,jdbcType=VARCHAR}, 
+      #{permissionDesc,jdbcType=VARCHAR}, #{permissionKey,jdbcType=VARCHAR}, #{permissionUrl,jdbcType=VARCHAR}, 
+      #{permissionType,jdbcType=VARCHAR}, #{permissionImg,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="spring.model.MPermissionManual">
+    insert into m_permission_manual
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="permissionId != null">
+        permission_id,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="permissionName != null">
+        permission_name,
+      </if>
+      <if test="permissionDesc != null">
+        permission_desc,
+      </if>
+      <if test="permissionKey != null">
+        permission_key,
+      </if>
+      <if test="permissionUrl != null">
+        permission_url,
+      </if>
+      <if test="permissionType != null">
+        permission_type,
+      </if>
+      <if test="permissionImg != null">
+        permission_img,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="permissionId != null">
+        #{permissionId,jdbcType=BIGINT},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="permissionName != null">
+        #{permissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionDesc != null">
+        #{permissionDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionKey != null">
+        #{permissionKey,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionUrl != null">
+        #{permissionUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionType != null">
+        #{permissionType,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionImg != null">
+        #{permissionImg,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="spring.model.MPermissionManualExample" resultType="java.lang.Long">
+    select count(*) from m_permission_manual
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update m_permission_manual
+    <set>
+      <if test="record.permissionId != null">
+        permission_id = #{record.permissionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.parentId != null">
+        parent_id = #{record.parentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.permissionName != null">
+        permission_name = #{record.permissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.permissionDesc != null">
+        permission_desc = #{record.permissionDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.permissionKey != null">
+        permission_key = #{record.permissionKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.permissionUrl != null">
+        permission_url = #{record.permissionUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.permissionType != null">
+        permission_type = #{record.permissionType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.permissionImg != null">
+        permission_img = #{record.permissionImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createDate != null">
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update m_permission_manual
+    set permission_id = #{record.permissionId,jdbcType=BIGINT},
+      parent_id = #{record.parentId,jdbcType=BIGINT},
+      permission_name = #{record.permissionName,jdbcType=VARCHAR},
+      permission_desc = #{record.permissionDesc,jdbcType=VARCHAR},
+      permission_key = #{record.permissionKey,jdbcType=VARCHAR},
+      permission_url = #{record.permissionUrl,jdbcType=VARCHAR},
+      permission_type = #{record.permissionType,jdbcType=VARCHAR},
+      permission_img = #{record.permissionImg,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="spring.model.MPermissionManual">
+    update m_permission_manual
+    <set>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="permissionName != null">
+        permission_name = #{permissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionDesc != null">
+        permission_desc = #{permissionDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionKey != null">
+        permission_key = #{permissionKey,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionUrl != null">
+        permission_url = #{permissionUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionType != null">
+        permission_type = #{permissionType,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionImg != null">
+        permission_img = #{permissionImg,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where permission_id = #{permissionId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="spring.model.MPermissionManual">
+    update m_permission_manual
+    set parent_id = #{parentId,jdbcType=BIGINT},
+      permission_name = #{permissionName,jdbcType=VARCHAR},
+      permission_desc = #{permissionDesc,jdbcType=VARCHAR},
+      permission_key = #{permissionKey,jdbcType=VARCHAR},
+      permission_url = #{permissionUrl,jdbcType=VARCHAR},
+      permission_type = #{permissionType,jdbcType=VARCHAR},
+      permission_img = #{permissionImg,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where permission_id = #{permissionId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="spring.mapper.GoodsMapper">
+  <resultMap id="BaseResultMap" type="spring.model.PGoods">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="pms_type" jdbcType="BIGINT" property="pmsType" />
+    <result column="goods_brand" jdbcType="VARCHAR" property="goodsBrand" />
+    <result column="goods_condition" jdbcType="INTEGER" property="goodsCondition" />
+    <result column="goods_number" jdbcType="INTEGER" property="goodsNumber" />
+    <result column="goods_price" jdbcType="DECIMAL" property="goodsPrice" />
+    <result column="discount" jdbcType="VARCHAR" property="discount" />
+    <result column="discount_price" jdbcType="DECIMAL" property="discountPrice" />
+    <result column="treasure_discount" jdbcType="VARCHAR" property="treasureDiscount" />
+    <result column="treasure_discount_price" jdbcType="DECIMAL" property="treasureDiscountPrice" />
+    <result column="express" jdbcType="INTEGER" property="express" />
+    <result column="express_id" jdbcType="BIGINT" property="expressId" />
+    <result column="express_name" jdbcType="VARCHAR" property="expressName" />
+    <result column="goods_service" jdbcType="VARCHAR" property="goodsService" />
+    <result column="content_details" jdbcType="VARCHAR" property="contentDetails" />
+    <result column="master_graph" jdbcType="VARCHAR" property="masterGraph" />
+    <result column="goods_picture" jdbcType="VARCHAR" property="goodsPicture" />
+    <result column="goods_state" jdbcType="INTEGER" property="goodsState" />
+    <result column="goods_type" jdbcType="INTEGER" property="goodsType" />
+    <result column="goods_num_type" jdbcType="INTEGER" property="goodsNumType" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, goods_name, pms_type, goods_brand, goods_condition, goods_number, goods_price,
+    discount, discount_price, treasure_discount, treasure_discount_price, express, express_id,
+    express_name, goods_service, content_details, master_graph, goods_picture, goods_state,
+    goods_type, goods_num_type
+  </sql>
+
+  <select id="selectGoodsList" parameterType="spring.goods.dto.request.GoodsListReq" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from p_goods
+    <where>
+      <if test="id != null">
+        and id = #{id}
+      </if>
+      <if test="goodsName != null">
+        and goods_name like concat('%',#{goodsName},'%')
+      </if>
+      <if test="pmsType != null">
+      and pms_type = #{pmsType}
+      </if>
+      <if test="goodsCondition != null">
+      and goods_condition = #{goodsCondition}
+      </if>
+      <if test="highPrice != null and lowPrice != null">
+      and (goods_price &gt;= #{highPrice} and goods_price  &lt;= #{lowPrice} )
+      </if>
+      <if test="goodsState !=  null">
+      and goods_state = #{goodsState}
+      </if>
+      <if test="goodsNumType != null">
+      and goods_num_type = #{goodsNumType}
+      </if>
+    </where>
+     ORDER BY id desc
+  </select>
+
+  <select id="selectRecommendedlist" parameterType="spring.goods.dto.request.RecommendedRequest" resultType="spring.goods.dto.response.RecommendedResponse">
+    SELECT
+    p.id goodsId,
+    p.goods_name goodsName,
+    p.goods_price goodsPrice,
+    p.discount_price discountPrice
+    FROM
+    p_goods p
+    WHERE
+    p.is_delete = 1 and goods_number = 1
+    <if test="pmsType != null">
+      and p.pms_type = #{pmsType}
+    </if>
+    <if test="goodDesc !=  null">
+      order by p.create_time desc
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+    <select id="searchlist" parameterType="spring.goods.dto.request.RecommendedRequest" resultType="spring.goods.dto.response.RecommendedResponse">
+        SELECT
+        p.id goodsId,
+        p.goods_name goodsName,
+        p.goods_price goodsPrice,
+        p.discount_price discountPrice
+        FROM
+        p_goods p
+        WHERE
+        p.is_delete = 1 and goods_number = 1
+        <if test="goodsName != null">
+            and p.goods_name like concat('%',#{goodsName},'%')
+        </if>
+        <if test="goodDesc !=  null">
+            order by p.create_time desc
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+
+</mapper>

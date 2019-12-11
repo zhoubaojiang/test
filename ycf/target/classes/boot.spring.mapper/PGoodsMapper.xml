@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="spring.mapper.PGoodsMapper">
+  <resultMap id="BaseResultMap" type="spring.model.PGoods">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="pms_type" jdbcType="BIGINT" property="pmsType" />
+    <result column="goods_brand" jdbcType="VARCHAR" property="goodsBrand" />
+    <result column="goods_condition" jdbcType="INTEGER" property="goodsCondition" />
+    <result column="goods_number" jdbcType="INTEGER" property="goodsNumber" />
+    <result column="goods_price" jdbcType="DECIMAL" property="goodsPrice" />
+    <result column="discount" jdbcType="VARCHAR" property="discount" />
+    <result column="discount_price" jdbcType="DECIMAL" property="discountPrice" />
+    <result column="treasure_discount" jdbcType="VARCHAR" property="treasureDiscount" />
+    <result column="treasure_discount_price" jdbcType="DECIMAL" property="treasureDiscountPrice" />
+    <result column="express" jdbcType="INTEGER" property="express" />
+    <result column="express_id" jdbcType="BIGINT" property="expressId" />
+    <result column="express_name" jdbcType="VARCHAR" property="expressName" />
+    <result column="goods_service" jdbcType="VARCHAR" property="goodsService" />
+    <result column="content_details" jdbcType="VARCHAR" property="contentDetails" />
+    <result column="master_graph" jdbcType="VARCHAR" property="masterGraph" />
+    <result column="goods_picture" jdbcType="VARCHAR" property="goodsPicture" />
+    <result column="goods_state" jdbcType="INTEGER" property="goodsState" />
+    <result column="goods_type" jdbcType="INTEGER" property="goodsType" />
+    <result column="goods_num_type" jdbcType="INTEGER" property="goodsNumType" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, goods_name, pms_type, goods_brand, goods_condition, goods_number, goods_price, 
+    discount, discount_price, treasure_discount, treasure_discount_price, express, express_id, 
+    express_name, goods_service, content_details, master_graph, goods_picture, goods_state, 
+    goods_type, goods_num_type, create_time, is_delete
+  </sql>
+  <select id="selectByExample" parameterType="spring.model.PGoodsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from p_goods
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from p_goods
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from p_goods
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="spring.model.PGoodsExample">
+    delete from p_goods
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="spring.model.PGoods">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into p_goods (goods_name, pms_type, goods_brand, 
+      goods_condition, goods_number, goods_price, 
+      discount, discount_price, treasure_discount, 
+      treasure_discount_price, express, express_id, 
+      express_name, goods_service, content_details, 
+      master_graph, goods_picture, goods_state, 
+      goods_type, goods_num_type, create_time, 
+      is_delete)
+    values (#{goodsName,jdbcType=VARCHAR}, #{pmsType,jdbcType=BIGINT}, #{goodsBrand,jdbcType=VARCHAR}, 
+      #{goodsCondition,jdbcType=INTEGER}, #{goodsNumber,jdbcType=INTEGER}, #{goodsPrice,jdbcType=DECIMAL}, 
+      #{discount,jdbcType=VARCHAR}, #{discountPrice,jdbcType=DECIMAL}, #{treasureDiscount,jdbcType=VARCHAR}, 
+      #{treasureDiscountPrice,jdbcType=DECIMAL}, #{express,jdbcType=INTEGER}, #{expressId,jdbcType=BIGINT}, 
+      #{expressName,jdbcType=VARCHAR}, #{goodsService,jdbcType=VARCHAR}, #{contentDetails,jdbcType=VARCHAR}, 
+      #{masterGraph,jdbcType=VARCHAR}, #{goodsPicture,jdbcType=VARCHAR}, #{goodsState,jdbcType=INTEGER}, 
+      #{goodsType,jdbcType=INTEGER}, #{goodsNumType,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{isDelete,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="spring.model.PGoods">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into p_goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="pmsType != null">
+        pms_type,
+      </if>
+      <if test="goodsBrand != null">
+        goods_brand,
+      </if>
+      <if test="goodsCondition != null">
+        goods_condition,
+      </if>
+      <if test="goodsNumber != null">
+        goods_number,
+      </if>
+      <if test="goodsPrice != null">
+        goods_price,
+      </if>
+      <if test="discount != null">
+        discount,
+      </if>
+      <if test="discountPrice != null">
+        discount_price,
+      </if>
+      <if test="treasureDiscount != null">
+        treasure_discount,
+      </if>
+      <if test="treasureDiscountPrice != null">
+        treasure_discount_price,
+      </if>
+      <if test="express != null">
+        express,
+      </if>
+      <if test="expressId != null">
+        express_id,
+      </if>
+      <if test="expressName != null">
+        express_name,
+      </if>
+      <if test="goodsService != null">
+        goods_service,
+      </if>
+      <if test="contentDetails != null">
+        content_details,
+      </if>
+      <if test="masterGraph != null">
+        master_graph,
+      </if>
+      <if test="goodsPicture != null">
+        goods_picture,
+      </if>
+      <if test="goodsState != null">
+        goods_state,
+      </if>
+      <if test="goodsType != null">
+        goods_type,
+      </if>
+      <if test="goodsNumType != null">
+        goods_num_type,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="pmsType != null">
+        #{pmsType,jdbcType=BIGINT},
+      </if>
+      <if test="goodsBrand != null">
+        #{goodsBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCondition != null">
+        #{goodsCondition,jdbcType=INTEGER},
+      </if>
+      <if test="goodsNumber != null">
+        #{goodsNumber,jdbcType=INTEGER},
+      </if>
+      <if test="goodsPrice != null">
+        #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="discount != null">
+        #{discount,jdbcType=VARCHAR},
+      </if>
+      <if test="discountPrice != null">
+        #{discountPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="treasureDiscount != null">
+        #{treasureDiscount,jdbcType=VARCHAR},
+      </if>
+      <if test="treasureDiscountPrice != null">
+        #{treasureDiscountPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="express != null">
+        #{express,jdbcType=INTEGER},
+      </if>
+      <if test="expressId != null">
+        #{expressId,jdbcType=BIGINT},
+      </if>
+      <if test="expressName != null">
+        #{expressName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsService != null">
+        #{goodsService,jdbcType=VARCHAR},
+      </if>
+      <if test="contentDetails != null">
+        #{contentDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="masterGraph != null">
+        #{masterGraph,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPicture != null">
+        #{goodsPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsState != null">
+        #{goodsState,jdbcType=INTEGER},
+      </if>
+      <if test="goodsType != null">
+        #{goodsType,jdbcType=INTEGER},
+      </if>
+      <if test="goodsNumType != null">
+        #{goodsNumType,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="spring.model.PGoodsExample" resultType="java.lang.Long">
+    select count(*) from p_goods
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update p_goods
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsName != null">
+        goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pmsType != null">
+        pms_type = #{record.pmsType,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsBrand != null">
+        goods_brand = #{record.goodsBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsCondition != null">
+        goods_condition = #{record.goodsCondition,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsNumber != null">
+        goods_number = #{record.goodsNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsPrice != null">
+        goods_price = #{record.goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.discount != null">
+        discount = #{record.discount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.discountPrice != null">
+        discount_price = #{record.discountPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.treasureDiscount != null">
+        treasure_discount = #{record.treasureDiscount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.treasureDiscountPrice != null">
+        treasure_discount_price = #{record.treasureDiscountPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.express != null">
+        express = #{record.express,jdbcType=INTEGER},
+      </if>
+      <if test="record.expressId != null">
+        express_id = #{record.expressId,jdbcType=BIGINT},
+      </if>
+      <if test="record.expressName != null">
+        express_name = #{record.expressName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsService != null">
+        goods_service = #{record.goodsService,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contentDetails != null">
+        content_details = #{record.contentDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="record.masterGraph != null">
+        master_graph = #{record.masterGraph,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsPicture != null">
+        goods_picture = #{record.goodsPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsState != null">
+        goods_state = #{record.goodsState,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsType != null">
+        goods_type = #{record.goodsType,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsNumType != null">
+        goods_num_type = #{record.goodsNumType,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isDelete != null">
+        is_delete = #{record.isDelete,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update p_goods
+    set id = #{record.id,jdbcType=BIGINT},
+      goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      pms_type = #{record.pmsType,jdbcType=BIGINT},
+      goods_brand = #{record.goodsBrand,jdbcType=VARCHAR},
+      goods_condition = #{record.goodsCondition,jdbcType=INTEGER},
+      goods_number = #{record.goodsNumber,jdbcType=INTEGER},
+      goods_price = #{record.goodsPrice,jdbcType=DECIMAL},
+      discount = #{record.discount,jdbcType=VARCHAR},
+      discount_price = #{record.discountPrice,jdbcType=DECIMAL},
+      treasure_discount = #{record.treasureDiscount,jdbcType=VARCHAR},
+      treasure_discount_price = #{record.treasureDiscountPrice,jdbcType=DECIMAL},
+      express = #{record.express,jdbcType=INTEGER},
+      express_id = #{record.expressId,jdbcType=BIGINT},
+      express_name = #{record.expressName,jdbcType=VARCHAR},
+      goods_service = #{record.goodsService,jdbcType=VARCHAR},
+      content_details = #{record.contentDetails,jdbcType=VARCHAR},
+      master_graph = #{record.masterGraph,jdbcType=VARCHAR},
+      goods_picture = #{record.goodsPicture,jdbcType=VARCHAR},
+      goods_state = #{record.goodsState,jdbcType=INTEGER},
+      goods_type = #{record.goodsType,jdbcType=INTEGER},
+      goods_num_type = #{record.goodsNumType,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      is_delete = #{record.isDelete,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="spring.model.PGoods">
+    update p_goods
+    <set>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="pmsType != null">
+        pms_type = #{pmsType,jdbcType=BIGINT},
+      </if>
+      <if test="goodsBrand != null">
+        goods_brand = #{goodsBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCondition != null">
+        goods_condition = #{goodsCondition,jdbcType=INTEGER},
+      </if>
+      <if test="goodsNumber != null">
+        goods_number = #{goodsNumber,jdbcType=INTEGER},
+      </if>
+      <if test="goodsPrice != null">
+        goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="discount != null">
+        discount = #{discount,jdbcType=VARCHAR},
+      </if>
+      <if test="discountPrice != null">
+        discount_price = #{discountPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="treasureDiscount != null">
+        treasure_discount = #{treasureDiscount,jdbcType=VARCHAR},
+      </if>
+      <if test="treasureDiscountPrice != null">
+        treasure_discount_price = #{treasureDiscountPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="express != null">
+        express = #{express,jdbcType=INTEGER},
+      </if>
+      <if test="expressId != null">
+        express_id = #{expressId,jdbcType=BIGINT},
+      </if>
+      <if test="expressName != null">
+        express_name = #{expressName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsService != null">
+        goods_service = #{goodsService,jdbcType=VARCHAR},
+      </if>
+      <if test="contentDetails != null">
+        content_details = #{contentDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="masterGraph != null">
+        master_graph = #{masterGraph,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPicture != null">
+        goods_picture = #{goodsPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsState != null">
+        goods_state = #{goodsState,jdbcType=INTEGER},
+      </if>
+      <if test="goodsType != null">
+        goods_type = #{goodsType,jdbcType=INTEGER},
+      </if>
+      <if test="goodsNumType != null">
+        goods_num_type = #{goodsNumType,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="spring.model.PGoods">
+    update p_goods
+    set goods_name = #{goodsName,jdbcType=VARCHAR},
+      pms_type = #{pmsType,jdbcType=BIGINT},
+      goods_brand = #{goodsBrand,jdbcType=VARCHAR},
+      goods_condition = #{goodsCondition,jdbcType=INTEGER},
+      goods_number = #{goodsNumber,jdbcType=INTEGER},
+      goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      discount = #{discount,jdbcType=VARCHAR},
+      discount_price = #{discountPrice,jdbcType=DECIMAL},
+      treasure_discount = #{treasureDiscount,jdbcType=VARCHAR},
+      treasure_discount_price = #{treasureDiscountPrice,jdbcType=DECIMAL},
+      express = #{express,jdbcType=INTEGER},
+      express_id = #{expressId,jdbcType=BIGINT},
+      express_name = #{expressName,jdbcType=VARCHAR},
+      goods_service = #{goodsService,jdbcType=VARCHAR},
+      content_details = #{contentDetails,jdbcType=VARCHAR},
+      master_graph = #{masterGraph,jdbcType=VARCHAR},
+      goods_picture = #{goodsPicture,jdbcType=VARCHAR},
+      goods_state = #{goodsState,jdbcType=INTEGER},
+      goods_type = #{goodsType,jdbcType=INTEGER},
+      goods_num_type = #{goodsNumType,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_delete = #{isDelete,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
