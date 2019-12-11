@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@Api(description = "订单相关接口列表", basePath = "/goods")
+@Api(description = "订单相关接口列表", basePath = "/ordersCenter/admin/orders")
 @RestController
 @RequestMapping("/ordersCenter/admin/orders")
 public class TradeAdminController {
