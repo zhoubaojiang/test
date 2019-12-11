@@ -36,7 +36,7 @@ public class MemberController {
     }
 
     @ApiOperation(value = "登出")
-    @RequestMapping(value = "/login/{code}", method = RequestMethod.GET)
+    @RequestMapping(value = "/member/login/{code}", method = RequestMethod.GET)
     @ResponseBody
     public BaseCommonResult loginOut(@PathVariable String code) {
         return userService.loginOut(code);
