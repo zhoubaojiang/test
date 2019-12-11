@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Transient;
 import spring.dto.BaseCommonResult;
 import spring.dto.request.MemberRequest;
 import spring.dto.request.UserLoginDto;
+import spring.dto.result.MemberLoginResponse;
 import spring.dto.result.UserLoginResponse;
 import spring.mapper.UMemberReceiveAddressMapper;
 import spring.mapper.UUserMemberMapper;
@@ -38,8 +39,8 @@ public class MemberService {
         return ResultBuilder.success(map);
     }
 
-    public BaseCommonResult<UserLoginResponse> login(String code) {
-        UserLoginResponse result = new UserLoginResponse();
+    public BaseCommonResult<MemberLoginResponse> login(String code) {
+        MemberLoginResponse result = new MemberLoginResponse();
         UUserMemberExample example = new UUserMemberExample();
         example.createCriteria().andAppIdEqualTo(code);
         List<UUserMember> userMembers = userMemberMapper.selectByExample(example);
@@ -56,6 +57,10 @@ public class MemberService {
         result.setLoginAccount(userMember.getAppId());
         result.setLoginId(String.valueOf(userMember.getId()));
         result.setUserName(userMember.getUserName());
+        result.setYuanBao(userMember.getYuanBao());
+        result.setPrice(userMember.getPrice());
+        result.setPicUrl(userMember.getPicUrl());
+        result.setGold(userMember.getGold());
         return ResultBuilder.success(result);
     }
 

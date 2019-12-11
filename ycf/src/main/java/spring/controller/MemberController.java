@@ -3,6 +3,7 @@ package spring.controller;
 import org.springframework.validation.annotation.Validated;
 import spring.dto.BaseCommonResult;
 import spring.dto.request.MemberRequest;
+import spring.dto.result.MemberLoginResponse;
 import spring.dto.result.UserLoginResponse;
 import spring.member.service.MemberService;
 import spring.model.UMemberReceiveAddress;
@@ -29,7 +30,7 @@ public class MemberController {
 
     @ApiOperation(value = "登录")
     @RequestMapping(value = "/login/{code}", method = RequestMethod.GET)
-    public @ResponseBody BaseCommonResult<UserLoginResponse>  login(@PathVariable String code) {
+    public @ResponseBody BaseCommonResult<MemberLoginResponse>  login(@PathVariable String code) {
         return userService.login(code);
     }
 
