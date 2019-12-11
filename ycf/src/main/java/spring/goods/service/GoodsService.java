@@ -1,5 +1,6 @@
 package spring.goods.service;
 
+import org.springframework.data.annotation.Transient;
 import spring.dto.BaseCommonResult;
 import spring.dto.result.BasePage;
 import spring.exception.GoodsException;
@@ -22,7 +23,6 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

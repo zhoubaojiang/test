@@ -1,5 +1,6 @@
 package spring.service.impl;
 
+import org.springframework.data.annotation.Transient;
 import spring.dto.BaseCommonResult;
 import spring.dto.request.UserAccountRequest;
 import spring.dto.request.UserLoginDto;
@@ -19,7 +20,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.beans.Transient;
 import java.util.List;
 
 /**

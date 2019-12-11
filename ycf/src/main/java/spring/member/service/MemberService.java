@@ -1,5 +1,6 @@
 package spring.member.service;
 
+import org.springframework.data.annotation.Transient;
 import spring.dto.BaseCommonResult;
 import spring.dto.request.MemberRequest;
 import spring.dto.request.UserLoginDto;
@@ -15,7 +16,6 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.beans.Transient;
 import java.util.Date;
 import java.util.List;
 
