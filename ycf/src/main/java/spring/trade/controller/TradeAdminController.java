@@ -3,6 +3,7 @@ package spring.trade.controller;
 import spring.dto.BaseCommonResult;
 import spring.dto.result.BasePage;
 import spring.trade.dto.request.AdminOrderReq;
+import spring.trade.dto.result.AdminTradeDetailsResult;
 import spring.trade.dto.result.AdminTradeResult;
 import spring.trade.service.OrderService;
 import io.swagger.annotations.Api;
@@ -33,6 +34,16 @@ public class TradeAdminController {
         return pOrderService.getAdminOrder(request);
     }
 
-
+    /**
+     *
+     * 功能描述:查询会员订单
+     * @param orderId
+     * @return
+     */
+    @ApiOperation(value = "订单详情", httpMethod = "GET")
+    @RequestMapping(value = "/order/{orderId}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public BaseCommonResult<AdminTradeDetailsResult> getAdminOrderDetails(@PathVariable Long orderId) {
+        return pOrderService.getAdminOrderDetails(orderId);
+    }
 
 }

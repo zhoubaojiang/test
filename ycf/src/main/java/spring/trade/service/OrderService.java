@@ -16,13 +16,16 @@ import spring.model.*;
 import spring.trade.dto.request.AdminOrderReq;
 import spring.trade.dto.request.MemberOrderReq;
 import spring.trade.dto.request.OrdersRes;
+import spring.trade.dto.result.AdminTradeDetailsResult;
 import spring.trade.dto.result.AdminTradeResult;
+import spring.trade.dto.result.OrderGoodsListResult;
 import spring.utils.DateUtil;
 import spring.utils.ResultBuilder;
 import spring.wechat.dto.requset.PayReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -161,5 +164,17 @@ public class OrderService  {
         }
         log.info("后台管理订单分页查询商品列表接口结束");
         return ResultBuilder.success(pageResult);
+    }
+
+    /**
+     * 管理后台订单详情
+     * @param orderId
+     * @return
+     */
+    public BaseCommonResult<AdminTradeDetailsResult> getAdminOrderDetails(Long orderId) {
+        AdminTradeDetailsResult adminTradeDetailsResult = tradeAdminMapper.selectAdminOrderDetails(orderId);
+        List<OrderGoodsListResult> orderGoodsListResults = tradeAdminMapper.selectOrderGoodsListResult(orderId);
+        adminTradeDetailsResult.setOrderGoodsListResults(orderGoodsListResults);
+        return ResultBuilder.success(adminTradeDetailsResult);
     }
 }

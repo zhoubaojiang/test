@@ -33,4 +33,39 @@
     </if>
     ORDER BY create_time DESC
   </select>
+
+  <select id="selectAdminOrderDetails" resultType="spring.trade.dto.result.AdminTradeDetailsResult">
+   SELECT
+          p.order_no orderNo,
+          p.order_type orderType,
+          u.user_name memberName,
+          p.received_name receivedName,
+          p.phone phone,
+          p.detailed_address address,
+          p.address_no addressNo,
+          p.remarks remarks,
+          p.create_time createTime,
+          p.order_state orderState
+      FROM
+      p_orders p
+      left JOIN p_orders_details po on p.id = po.order_no
+      left join u_user_member u on p.user_id = u.id
+      where p.id = #{orderId}
+  </select>
+  <select id="selectOrderGoodsListResult" resultType="spring.trade.dto.result.OrderGoodsListResult">
+   SELECT
+      po.goods_price,
+          g.goods_name,
+          po.goods_condition,
+          po.goods_price,
+          po.you_pricce,
+          po.discount_price,
+          po.order_price
+      FROM
+      p_orders_details po
+          JOIN p_goods g on po.goods_id = g.id
+      where po.order_no = #{orderId}
+
+  </select>
+
 </mapper>
