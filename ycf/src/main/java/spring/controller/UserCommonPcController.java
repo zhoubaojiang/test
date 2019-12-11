@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 会员、商家 、代理商注册接口
  */
-@Api(tags = "PC ==> 活态管理信息",basePath = "/userCenter/pc/users")
+@Api(tags = "PC ==> 后台管理信息",basePath = "/userCenter/pc/users")
 @RequestMapping("/userCenter/pc/users")
 @RestController
 public class UserCommonPcController {
