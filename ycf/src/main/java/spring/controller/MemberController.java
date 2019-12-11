@@ -1,9 +1,11 @@
 package spring.controller;
 
+import org.springframework.validation.annotation.Validated;
 import spring.dto.BaseCommonResult;
 import spring.dto.request.MemberRequest;
 import spring.dto.result.UserLoginResponse;
 import spring.member.service.MemberService;
+import spring.model.UMemberReceiveAddress;
 import spring.model.UUserMember;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -34,7 +36,7 @@ public class MemberController {
     }
 
     @ApiOperation(value = "登出")
-    @RequestMapping(value = "/login/{code}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/login/{code}", method = RequestMethod.GET)
     @ResponseBody
     public BaseCommonResult loginOut(@PathVariable String code) {
         return userService.loginOut(code);
@@ -44,6 +46,18 @@ public class MemberController {
     @ResponseBody
     public BaseCommonResult getMoney(@PathVariable String code) {
         return userService.getMoney(code);
+    }
+
+    @ApiOperation(value = "会员收货地址添加", notes = "会员收货地址添加")
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public BaseCommonResult add(@Validated @RequestBody UMemberReceiveAddress request){
+        return userService.add(request);
+    }
+
+    @ApiOperation(value = "会员收货地址修改", notes = "会员收货地址修改")
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public BaseCommonResult update(@Validated @RequestBody UMemberReceiveAddress request){
+        return userService.update(request);
     }
 
 }

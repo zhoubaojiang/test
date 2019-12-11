@@ -4,10 +4,9 @@ import spring.dto.BaseCommonResult;
 import spring.dto.request.MemberRequest;
 import spring.dto.request.UserLoginDto;
 import spring.dto.result.UserLoginResponse;
+import spring.mapper.UMemberReceiveAddressMapper;
 import spring.mapper.UUserMemberMapper;
-import spring.model.MUserManual;
-import spring.model.UUserMember;
-import spring.model.UUserMemberExample;
+import spring.model.*;
 import spring.utils.Constants;
 import spring.utils.ResultBuilder;
 import spring.utils.TonKenUtile;
@@ -25,6 +24,8 @@ import java.util.List;
 public class MemberService {
     @Autowired
     private UUserMemberMapper userMemberMapper;
+    @Autowired
+    private UMemberReceiveAddressMapper memberReceiveAddressMapper;
     @Autowired
     private DozerBeanMapper dozerMapper;
     @Transient
@@ -71,5 +72,28 @@ public class MemberService {
             return ResultBuilder.fail("非法请求");
         }
         return ResultBuilder.success(uUserMembers.get(0));
+    }
+    @Transient
+    public BaseCommonResult add(UMemberReceiveAddress request) {
+        UMemberReceiveAddressExample example = new UMemberReceiveAddressExample();
+        example.createCriteria().andMemberIdEqualTo(request.getMemberId()).andDefaultStatusEqualTo(0);
+        List<UMemberReceiveAddress> uMemberReceiveAddresses = memberReceiveAddressMapper.selectByExample(example);
+        if (uMemberReceiveAddresses.size()>0){
+            UMemberReceiveAddress memberReceiveAddress = uMemberReceiveAddresses.get(0);
+            if (request.getDefaultStatus()==0){
+                memberReceiveAddress.setDefaultStatus(1);
+                memberReceiveAddressMapper.updateByPrimaryKeySelective(memberReceiveAddress);
+            }
+        }else {
+            //没有默认地址设置为默认
+            request.setDefaultStatus(0);
+        }
+        int i = memberReceiveAddressMapper.insertSelective(request);
+        return ResultBuilder.success(request);
+    }
+    @Transient
+    public BaseCommonResult update(UMemberReceiveAddress request) {
+        memberReceiveAddressMapper.updateByPrimaryKeySelective(request);
+        return ResultBuilder.success(request);
     }
 }

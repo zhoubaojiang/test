@@ -37,7 +37,7 @@ public class UserCommonPcController {
     }
 
     @ApiOperation(value = "管理修改", notes = "管理修改")
-    @RequestMapping(value = "/user", method = RequestMethod.PUT)
+    @RequestMapping(value = "/user", method = RequestMethod.POST)
     public BaseCommonResult updateAccount(@Validated @RequestBody UserAccountRequest request){
         return userCommonRegistryService.updateAccount(request);
     }
