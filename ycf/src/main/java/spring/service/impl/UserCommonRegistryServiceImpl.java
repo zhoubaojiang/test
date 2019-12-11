@@ -10,6 +10,7 @@ import spring.model.MUser;
 import spring.model.MUserExample;
 import spring.model.MUserManual;
 import spring.service.UserCommonRegistryService;
+import spring.utils.Constants;
 import spring.utils.MD5;
 import spring.utils.ResultBuilder;
 import spring.utils.TonKenUtile;
@@ -36,7 +37,7 @@ public class UserCommonRegistryServiceImpl implements UserCommonRegistryService 
     public BaseCommonResult updateAccount(UserAccountRequest request) {
         MUser user = new MUser();
         BeanUtils.copyProperties(request,user);
-        int i = userMapper.insertSelective(user);
+        int i = userMapper.updateByPrimaryKeySelective(user);
         log.info("插入数据成功: {}",user);
         BaseCommonResult result = new BaseCommonResult();
         result.setCode(UserErrorCodeEnum.SUCCESS.getCode());
@@ -46,13 +47,19 @@ public class UserCommonRegistryServiceImpl implements UserCommonRegistryService 
     }
 
     @Override
+    public BaseCommonResult<UserLoginResponse> userLogout(UserLoginDto loginDto) {
+        TonKenUtile.loginOut(loginDto.getAccount(), Constants.USER_TYPE_BACKEND,Constants.CHANNELID_PC);
+        return ResultBuilder.success();
+    }
+
+    @Override
     @Transient
     public BaseCommonResult createAccount(UserAccountRequest request) {
         MUser user = new MUser();
         request.setPassWord(MD5.MD5(request.getPassWord()));
         BeanUtils.copyProperties(request,user);
-        int i = userMapper.updateByPrimaryKeySelective(user);
-        log.info("修改数据数据成功: {}",user);
+        int i = userMapper.insertSelective(user);
+        log.info("插入数据成功: {}",user);
         BaseCommonResult result = new BaseCommonResult();
         return beanUtils(result, user);
     }
@@ -63,13 +70,16 @@ public class UserCommonRegistryServiceImpl implements UserCommonRegistryService 
         MUserExample example = new MUserExample();
         example.createCriteria().andLoginAccountEqualTo(loginDto.getAccount());
         List<MUser> mUsers = userMapper.selectByExample(example);
-        MUser mUser = mUsers.get(0);
-        if (mUser==null){
+
+        if (mUsers.size()<=0){
             return ResultBuilder.fail("用户不存在");
         }
+        MUser mUser = mUsers.get(0);
         if (!mUser.getPassWord().equals(MD5.MD5(loginDto.getPassword()))){
             return ResultBuilder.fail("密码错误");
         }
+        loginDto.setUserType(Constants.USER_TYPE_BACKEND);
+        loginDto.setChannelId(Constants.CHANNELID_PC);
         MUserManual userManual = new MUserManual();
         userManual.setWfcode(String.valueOf(mUser.getUserId()));
         TonKenUtile.setResultToken(result, loginDto, userManual);

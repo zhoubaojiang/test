@@ -16,4 +16,6 @@ public interface UserCommonRegistryService {
     BaseCommonResult<UserLoginResponse> userLogin(UserLoginDto loginDto);
 
     BaseCommonResult updateAccount(UserAccountRequest request);
+
+    BaseCommonResult<UserLoginResponse> userLogout(UserLoginDto loginDto);
 }

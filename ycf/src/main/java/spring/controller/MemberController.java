@@ -23,24 +23,23 @@ public class MemberController {
 
     @ApiOperation("注册用户")
     @RequestMapping(value = "/member", method = RequestMethod.POST)
-    @ResponseBody
-    public BaseCommonResult<UUserMember> register(@RequestBody MemberRequest record) {
+    public @ResponseBody BaseCommonResult<UUserMember> register(@RequestBody MemberRequest record) {
         return userService.register(record);
     }
 
     @ApiOperation(value = "登录")
     @RequestMapping(value = "/login/{code}", method = RequestMethod.GET)
-    @ResponseBody
-    public BaseCommonResult<UserLoginResponse>  login(@PathVariable String code) {
+    public @ResponseBody BaseCommonResult<UserLoginResponse>  login(@PathVariable String code) {
         return userService.login(code);
     }
 
     @ApiOperation(value = "登出")
-    @RequestMapping(value = "/member/login/{code}", method = RequestMethod.GET)
-    @ResponseBody
-    public BaseCommonResult loginOut(@PathVariable String code) {
+    @RequestMapping(value = "/logout/{code}", method = RequestMethod.GET)
+    public @ResponseBody BaseCommonResult loginOut(@PathVariable String code) {
         return userService.loginOut(code);
     }
+
+
     @ApiOperation(value = "鱿费查询")
     @RequestMapping(value = "/money/{code}", method = RequestMethod.GET)
     @ResponseBody
@@ -56,7 +55,7 @@ public class MemberController {
 
     @ApiOperation(value = "会员收货地址修改", notes = "会员收货地址修改")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public BaseCommonResult update(@Validated @RequestBody UMemberReceiveAddress request){
+    public @ResponseBody BaseCommonResult update(@Validated @RequestBody UMemberReceiveAddress request){
         return userService.update(request);
     }
 

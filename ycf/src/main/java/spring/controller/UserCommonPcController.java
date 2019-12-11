@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 会员、商家 、代理商注册接口
  */
-@Api(tags = "PC ==> 会员、商家、代理商信息",basePath = "/userCenter/pc/users")
+@Api(tags = "PC ==> 活态管理信息",basePath = "/userCenter/pc/users")
 @RequestMapping("/userCenter/pc/users")
 @RestController
 public class UserCommonPcController {
@@ -26,14 +26,20 @@ public class UserCommonPcController {
 
 
     @ApiOperation(value = "管理添加", notes = "管理添加")
-    @RequestMapping(value = "/user", method = RequestMethod.POST)
+    @RequestMapping(value = "/add/user", method = RequestMethod.POST)
     public BaseCommonResult createAccount(@Validated @RequestBody UserAccountRequest request){
         return userCommonRegistryService.createAccount(request);
     }
     @ApiOperation(value = "管理员登录", notes = "管理员登录")
-    @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public BaseCommonResult<UserLoginResponse> userLogin(@RequestBody UserLoginDto loginDto) {
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public BaseCommonResult<UserLoginResponse> userLogin(@Validated @RequestBody UserLoginDto loginDto) {
         return userCommonRegistryService.userLogin(loginDto);
+    }
+
+    @ApiOperation(value = "管理员登出", notes = "管理员登出")
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    public BaseCommonResult<UserLoginResponse> userLogout(@Validated @RequestBody UserLoginDto loginDto) {
+        return userCommonRegistryService.userLogout(loginDto);
     }
 
     @ApiOperation(value = "管理修改", notes = "管理修改")

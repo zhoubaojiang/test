@@ -1,41 +1,27 @@
 package spring.dto.request;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 /**
  * @author wangdg
  * @Description: 用户登录参数转化类
  * @date 2018/8/21 10:14
  */
-@ToString
-@Getter
-@Setter
+@Data
 public class UserLoginDto {
 
-	@ApiModelProperty(value ="登录账号",required = true)
+	@ApiModelProperty(value ="登录账号")
 	private String account;
 
-	@ApiModelProperty(value ="登录密码",required = false)
+	@ApiModelProperty(value ="登录密码")
 	private String password;
-
-
-
-    //----------------------------------APP会员相关字段-------------------------------------------
-	@ApiModelProperty(value ="设备类型",required = false)
-	private String deviceType;
-
-	@ApiModelProperty(value ="设备id",required = false)
-	private String deviceId;
-
 
 	//----------------------------------请求头信息--------------------------------------------------
 
-	@ApiModelProperty(value ="channelId",required = true)
+	@ApiModelProperty(value ="channelId")
 	private String channelId;
 
-	@ApiModelProperty(value ="userType",required = true)
+	@ApiModelProperty(value ="userType")
 	private String userType;
 }
