@@ -1,9 +1,9 @@
 package spring.mapper;
 
-import spring.model.MRole;
-import spring.model.MRoleExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import spring.model.MRole;
+import spring.model.MRoleExample;
 
 public interface MRoleMapper {
     long countByExample(MRoleExample example);

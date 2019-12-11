@@ -1,9 +1,9 @@
 package spring.mapper;
 
-import spring.model.ActorInfo;
-import spring.model.ActorInfoExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import spring.model.ActorInfo;
+import spring.model.ActorInfoExample;
 
 public interface ActorInfoMapper {
     long countByExample(ActorInfoExample example);

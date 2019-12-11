@@ -1,9 +1,9 @@
 package spring.mapper;
 
-import spring.model.MPermissionManual;
-import spring.model.MPermissionManualExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import spring.model.MPermissionManual;
+import spring.model.MPermissionManualExample;
 
 public interface MPermissionManualMapper {
     long countByExample(MPermissionManualExample example);

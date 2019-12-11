@@ -1,9 +1,9 @@
 package spring.mapper;
 
-import spring.model.UMemberReceiveAddress;
-import spring.model.UMemberReceiveAddressExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import spring.model.UMemberReceiveAddress;
+import spring.model.UMemberReceiveAddressExample;
 
 public interface UMemberReceiveAddressMapper {
     long countByExample(UMemberReceiveAddressExample example);

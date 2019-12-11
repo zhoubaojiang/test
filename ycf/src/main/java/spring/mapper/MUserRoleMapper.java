@@ -1,9 +1,9 @@
 package spring.mapper;
 
-import spring.model.MUserRole;
-import spring.model.MUserRoleExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import spring.model.MUserRole;
+import spring.model.MUserRoleExample;
 
 public interface MUserRoleMapper {
     long countByExample(MUserRoleExample example);

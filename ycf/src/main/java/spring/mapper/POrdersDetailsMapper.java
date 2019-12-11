@@ -1,9 +1,9 @@
 package spring.mapper;
 
-import spring.model.POrdersDetails;
-import spring.model.POrdersDetailsExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import spring.model.POrdersDetails;
+import spring.model.POrdersDetailsExample;
 
 public interface POrdersDetailsMapper {
     long countByExample(POrdersDetailsExample example);

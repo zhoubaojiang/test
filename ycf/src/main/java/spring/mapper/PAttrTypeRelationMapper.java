@@ -1,9 +1,9 @@
 package spring.mapper;
 
-import spring.model.PAttrTypeRelation;
-import spring.model.PAttrTypeRelationExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import spring.model.PAttrTypeRelation;
+import spring.model.PAttrTypeRelationExample;
 
 public interface PAttrTypeRelationMapper {
     long countByExample(PAttrTypeRelationExample example);

@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import spring.po.Actor;
+//import spring.po.Actor;
 
 @Component
 public class ScheduledTasks {

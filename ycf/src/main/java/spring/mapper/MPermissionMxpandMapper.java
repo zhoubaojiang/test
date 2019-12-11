@@ -1,9 +1,9 @@
 package spring.mapper;
 
-import spring.model.MPermissionMxpand;
-import spring.model.MPermissionMxpandExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import spring.model.MPermissionMxpand;
+import spring.model.MPermissionMxpandExample;
 
 public interface MPermissionMxpandMapper {
     long countByExample(MPermissionMxpandExample example);

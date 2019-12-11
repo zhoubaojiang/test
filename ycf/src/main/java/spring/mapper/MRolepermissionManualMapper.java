@@ -1,9 +1,9 @@
 package spring.mapper;
 
-import spring.model.MRolepermissionManual;
-import spring.model.MRolepermissionManualExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import spring.model.MRolepermissionManual;
+import spring.model.MRolepermissionManualExample;
 
 public interface MRolepermissionManualMapper {
     long countByExample(MRolepermissionManualExample example);

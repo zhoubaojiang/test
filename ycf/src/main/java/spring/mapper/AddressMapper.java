@@ -1,9 +1,9 @@
 package spring.mapper;
 
-import spring.model.Address;
-import spring.model.AddressExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import spring.model.Address;
+import spring.model.AddressExample;
 
 public interface AddressMapper {
     long countByExample(AddressExample example);

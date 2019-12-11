@@ -1,9 +1,9 @@
 package spring.mapper;
 
-import spring.model.UUserMember;
-import spring.model.UUserMemberExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import spring.model.UUserMember;
+import spring.model.UUserMemberExample;
 
 public interface UUserMemberMapper {
     long countByExample(UUserMemberExample example);

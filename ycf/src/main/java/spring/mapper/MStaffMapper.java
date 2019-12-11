@@ -1,9 +1,9 @@
 package spring.mapper;
 
-import spring.model.MStaff;
-import spring.model.MStaffExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import spring.model.MStaff;
+import spring.model.MStaffExample;
 
 public interface MStaffMapper {
     long countByExample(MStaffExample example);

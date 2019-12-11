@@ -30,12 +30,12 @@
             <property name="nullCatalogMeansCurrent" value="true" />
         </jdbcConnection>
 
-        <javaModelGenerator targetPackage="spring.model" targetProject="SSM\src\main\java"/>
+        <javaModelGenerator targetPackage="spring.model" targetProject="ycf\src\main\java"/>
 
-        <sqlMapGenerator targetPackage="mapper" targetProject="SSM\src\main\resources"/>
+        <sqlMapGenerator targetPackage="mapper" targetProject="ycf\src\main\resources"/>
 
         <javaClientGenerator type="XMLMAPPER" targetPackage="spring.mapper"
-                             targetProject="SSM\src\main\java"/>
+                             targetProject="ycf\src\main\java"/>
         <!--生成全部表tableName设为%-->
         <table tableName="%">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>

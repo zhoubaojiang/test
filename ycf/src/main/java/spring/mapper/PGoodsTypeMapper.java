@@ -1,9 +1,9 @@
 package spring.mapper;
 
-import spring.model.PGoodsType;
-import spring.model.PGoodsTypeExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import spring.model.PGoodsType;
+import spring.model.PGoodsTypeExample;
 
 public interface PGoodsTypeMapper {
     long countByExample(PGoodsTypeExample example);

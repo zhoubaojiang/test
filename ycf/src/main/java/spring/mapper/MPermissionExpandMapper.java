@@ -1,9 +1,9 @@
 package spring.mapper;
 
-import spring.model.MPermissionExpand;
-import spring.model.MPermissionExpandExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import spring.model.MPermissionExpand;
+import spring.model.MPermissionExpandExample;
 
 public interface MPermissionExpandMapper {
     long countByExample(MPermissionExpandExample example);

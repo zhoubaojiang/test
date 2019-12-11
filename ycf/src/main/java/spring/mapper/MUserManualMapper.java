@@ -1,9 +1,9 @@
 package spring.mapper;
 
-import spring.model.MUserManual;
-import spring.model.MUserManualExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import spring.model.MUserManual;
+import spring.model.MUserManualExample;
 
 public interface MUserManualMapper {
     long countByExample(MUserManualExample example);

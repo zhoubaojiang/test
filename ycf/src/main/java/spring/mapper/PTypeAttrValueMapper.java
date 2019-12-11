@@ -1,9 +1,9 @@
 package spring.mapper;
 
-import spring.model.PTypeAttrValue;
-import spring.model.PTypeAttrValueExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import spring.model.PTypeAttrValue;
+import spring.model.PTypeAttrValueExample;
 
 public interface PTypeAttrValueMapper {
     long countByExample(PTypeAttrValueExample example);
