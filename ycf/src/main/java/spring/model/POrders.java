@@ -12,6 +12,9 @@ public class POrders implements Serializable {
     @ApiModelProperty(value = "用户ID")
     private Long userId;
 
+    @ApiModelProperty(value = "订单号")
+    private String orderNo;
+
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
 
@@ -91,6 +94,14 @@ public class POrders implements Serializable {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
     }
 
     public Date getCreateTime() {
@@ -269,6 +280,7 @@ public class POrders implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", userId=").append(userId);
+        sb.append(", orderNo=").append(orderNo);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", goodsNum=").append(goodsNum);

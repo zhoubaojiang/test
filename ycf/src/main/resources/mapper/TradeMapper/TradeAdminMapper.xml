@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="spring.trade.mapper.TradeAdminMapper">
+
+
+  <select id="selectOrderList" parameterType="spring.trade.dto.request.AdminOrderReq" resultType="spring.trade.dto.result.AdminTradeResult">
+    SELECT
+    p.id id,
+    p.order_no orderNo,
+    po.goods_picture goodsPicture,
+    p.create_time createTime,
+    p.total_price totalPrice,
+    p.goods_num goodsNum,
+    u.user_name memberName,
+    p.order_price orderPrice,
+    p.order_state orderState
+    FROM
+    p_orders p
+    left JOIN p_orders_details po on p.id = po.order_no
+    left join u_user_member u on p.user_id = u.id
+    where 1=1
+    <if test="orderNo != null">
+      AND p.order_no LIKE concat("%",#{orderNo},"%")
+    </if>
+    <if test="userName != null">
+      AND u.user_name LIKE concat("%",#{userName},"%")
+    </if>
+    <if test="orderState != null">
+      and p.order_state = #{orderState}
+    </if>
+    <if test="startTime != null and endTime!= null">
+      and  unix_timestamp(p.create_time) BETWEEN #{startTime,jdbcType=BIGINT} and #{endTime,jdbcType=BIGINT}
+    </if>
+    ORDER BY create_time DESC
+  </select>
+</mapper>

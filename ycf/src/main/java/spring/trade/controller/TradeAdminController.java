@@ -1,8 +1,9 @@
 package spring.trade.controller;
 
 import spring.dto.BaseCommonResult;
-import spring.model.POrders;
-import spring.trade.dto.request.OrdersRes;
+import spring.dto.result.BasePage;
+import spring.trade.dto.request.AdminOrderReq;
+import spring.trade.dto.result.AdminTradeResult;
 import spring.trade.service.OrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,16 +23,14 @@ public class TradeAdminController {
 
     /**
      *
-     * 功能描述:商品列表
-     * @author: xiongkun
-     * @date: 2017年11月27日 下午4:36:51
+     * 功能描述:查询会员订单
      * @param request
      * @return
      */
-    @ApiOperation(value = "创建订单", httpMethod = "POST")
+    @ApiOperation(value = "查询会员订单", httpMethod = "POST")
     @RequestMapping(value = "/order", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
-    public BaseCommonResult<POrders> createOrder(@Validated @RequestBody OrdersRes request) {
-        return pOrderService.createOrder(request);
+    public BaseCommonResult<BasePage<AdminTradeResult>> getAdminOrder(@Validated @RequestBody AdminOrderReq request) {
+        return pOrderService.getAdminOrder(request);
     }
 
 

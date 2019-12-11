@@ -1,13 +1,23 @@
 package spring.trade.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.annotation.Transient;
 import spring.dto.BaseCommonResult;
+import spring.dto.result.BasePage;
+import spring.exception.GoodsException;
 import spring.mapper.PGoodsMapper;
 import spring.mapper.POrdersDetailsMapper;
 import spring.mapper.POrdersMapper;
 import spring.mapper.UMemberReceiveAddressMapper;
 import spring.model.*;
+import spring.trade.dto.request.AdminOrderReq;
+import spring.trade.dto.request.MemberOrderReq;
 import spring.trade.dto.request.OrdersRes;
+import spring.trade.dto.result.AdminTradeResult;
+import spring.trade.mapper.TradeAdminMapper;
+import spring.utils.DateUtil;
 import spring.utils.ResultBuilder;
 import spring.wechat.dto.requset.PayReq;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +27,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@Slf4j
 public class OrderService  {
     @Autowired
     private PGoodsMapper pGoodsMapper;
@@ -26,7 +37,8 @@ public class OrderService  {
     private UMemberReceiveAddressMapper memberReceiveAddressMapper;
     @Autowired
     private POrdersDetailsMapper pOrdersDetailsMapper;
-
+    @Autowired
+    private TradeAdminMapper tradeAdminMapper;
     /**
      * 创建订单
      * @param ordersRes
@@ -50,6 +62,7 @@ public class OrderService  {
         pOreders.setCreateTime(new Date());
         pOreders.setGoodsNum(1);
         pOreders.setTotalPrice(goods.getGoodsPrice());
+        pOreders.setOrderNo(DateUtil.getOrderNumber());
         if(ordersRes.getOrderType()==0){//支付方式;0现金，1鱿费
             pOreders.setTotalPrice(goods.getGoodsPrice());
         }else {
@@ -102,5 +115,51 @@ public class OrderService  {
         record.setId(orderInfo.getId());
         record.setOrderState(i);
         pOrdersMapper.updateByPrimaryKeySelective( record);
+    }
+
+    public BaseCommonResult<BasePage<POrders>> getMemberOrder(MemberOrderReq request) {
+        BasePage<POrders> pageResult = new BasePage();
+        log.info("会员订单分页查询商品列表,请求参数为：{}", request);
+        try {
+            PageHelper.startPage(request.getPage(), request.getPageSize());
+            POrdersExample example = new POrdersExample();
+            POrdersExample.Criteria criteria = example.createCriteria();
+            if(request.getOrderState()!=null){
+                criteria.andOrderStateEqualTo(request.getOrderState());
+            }
+            criteria.andUserIdEqualTo(request.getUserId());
+            example.setOrderByClause("create_time desc");
+            List<POrders> list = pOrdersMapper.selectByExample(example);
+            PageInfo<POrders> pageInfo = new PageInfo<>(list);
+            pageResult.setList(list);
+            pageResult.setPageInfo(pageInfo.getPageNum(), pageInfo.getPageSize(), pageInfo.getPages(), pageInfo.getTotal());
+        }catch (GoodsException e) {
+            log.info("会员订单分页查询商品列表异常，异常信息为：{}", e);
+            ResultBuilder.fail("系统异常");
+        }
+        log.info("会员订单分页查询商品列表接口结束");
+        return ResultBuilder.success(pageResult);
+    }
+
+    /**
+     * 后台管理查询订单
+     * @param request
+     * @return
+     */
+    public BaseCommonResult<BasePage<AdminTradeResult>> getAdminOrder(AdminOrderReq request) {
+        BasePage<AdminTradeResult> pageResult = new BasePage();
+        log.info("后台管理订单分页查询商品列表,请求参数为：{}", request);
+        try {
+            PageHelper.startPage(request.getPage(), request.getPageSize());
+            List<AdminTradeResult> list = tradeAdminMapper.selectOrderList(request);
+            PageInfo<AdminTradeResult> pageInfo = new PageInfo<>(list);
+            pageResult.setList(list);
+            pageResult.setPageInfo(pageInfo.getPageNum(), pageInfo.getPageSize(), pageInfo.getPages(), pageInfo.getTotal());
+        }catch (GoodsException e) {
+            log.info("后台管理订单分页查询商品列表异常，异常信息为：{}", e);
+            ResultBuilder.fail("系统异常");
+        }
+        log.info("后台管理订单分页查询商品列表接口结束");
+        return ResultBuilder.success(pageResult);
     }
 }

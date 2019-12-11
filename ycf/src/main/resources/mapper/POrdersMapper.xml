@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="spring.model.POrders">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="goods_num" jdbcType="INTEGER" property="goodsNum" />
@@ -85,9 +86,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, create_time, update_time, goods_num, order_price, pay_user_id, total_price, 
-    order_state, state, order_type, received_name, phone, province, city, area, address, 
-    detailed_address, address_no, remarks, send_time, freight, you_price
+    id, user_id, order_no, create_time, update_time, goods_num, order_price, pay_user_id, 
+    total_price, order_state, state, order_type, received_name, phone, province, city, 
+    area, address, detailed_address, address_no, remarks, send_time, freight, you_price
   </sql>
   <select id="selectByExample" parameterType="spring.model.POrdersExample" resultMap="BaseResultMap">
     select
@@ -123,22 +124,22 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into p_orders (user_id, create_time, update_time, 
-      goods_num, order_price, pay_user_id, 
-      total_price, order_state, state, 
-      order_type, received_name, phone, 
-      province, city, area, 
-      address, detailed_address, address_no, 
-      remarks, send_time, freight, 
-      you_price)
-    values (#{userId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{goodsNum,jdbcType=INTEGER}, #{orderPrice,jdbcType=DECIMAL}, #{payUserId,jdbcType=BIGINT}, 
-      #{totalPrice,jdbcType=DECIMAL}, #{orderState,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, 
-      #{orderType,jdbcType=INTEGER}, #{receivedName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, 
-      #{address,jdbcType=VARCHAR}, #{detailedAddress,jdbcType=VARCHAR}, #{addressNo,jdbcType=BIGINT}, 
-      #{remarks,jdbcType=VARCHAR}, #{sendTime,jdbcType=TIMESTAMP}, #{freight,jdbcType=DECIMAL}, 
-      #{youPrice,jdbcType=DECIMAL})
+    insert into p_orders (user_id, order_no, create_time, 
+      update_time, goods_num, order_price, 
+      pay_user_id, total_price, order_state, 
+      state, order_type, received_name, 
+      phone, province, city, 
+      area, address, detailed_address, 
+      address_no, remarks, send_time, 
+      freight, you_price)
+    values (#{userId,jdbcType=BIGINT}, #{orderNo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{goodsNum,jdbcType=INTEGER}, #{orderPrice,jdbcType=DECIMAL}, 
+      #{payUserId,jdbcType=BIGINT}, #{totalPrice,jdbcType=DECIMAL}, #{orderState,jdbcType=VARCHAR}, 
+      #{state,jdbcType=INTEGER}, #{orderType,jdbcType=INTEGER}, #{receivedName,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{area,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{detailedAddress,jdbcType=VARCHAR}, 
+      #{addressNo,jdbcType=BIGINT}, #{remarks,jdbcType=VARCHAR}, #{sendTime,jdbcType=TIMESTAMP}, 
+      #{freight,jdbcType=DECIMAL}, #{youPrice,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="spring.model.POrders">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -148,6 +149,9 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">
         user_id,
+      </if>
+      <if test="orderNo != null">
+        order_no,
       </if>
       <if test="createTime != null">
         create_time,
@@ -216,6 +220,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
         #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -297,6 +304,9 @@
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=BIGINT},
       </if>
+      <if test="record.orderNo != null">
+        order_no = #{record.orderNo,jdbcType=VARCHAR},
+      </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
@@ -369,6 +379,7 @@
     update p_orders
     set id = #{record.id,jdbcType=BIGINT},
       user_id = #{record.userId,jdbcType=BIGINT},
+      order_no = #{record.orderNo,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       goods_num = #{record.goodsNum,jdbcType=INTEGER},
@@ -399,6 +410,9 @@
     <set>
       <if test="userId != null">
         user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="orderNo != null">
+        order_no = #{orderNo,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -469,6 +483,7 @@
   <update id="updateByPrimaryKey" parameterType="spring.model.POrders">
     update p_orders
     set user_id = #{userId,jdbcType=BIGINT},
+      order_no = #{orderNo,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       goods_num = #{goodsNum,jdbcType=INTEGER},
