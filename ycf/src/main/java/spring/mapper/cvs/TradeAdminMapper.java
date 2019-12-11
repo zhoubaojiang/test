@@ -1,4 +1,4 @@
-package spring.trade.mapper;
+package spring.mapper.cvs;
 
 
 import spring.trade.dto.request.AdminOrderReq;
