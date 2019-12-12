@@ -49,10 +49,13 @@ public class OrderService  {
      */
     @Transient
     public BaseCommonResult<POrders> createOrder(OrdersRes ordersRes) {
-        PGoods goods = pGoodsMapper.selectByPrimaryKey(ordersRes.getGoodsId());
-        if (goods == null){
-            return  ResultBuilder.fail("查无此商品");
+        PGoodsExample goodsExample = new PGoodsExample();
+        goodsExample.createCriteria().andIdEqualTo(ordersRes.getGoodsId()).andIsDeleteEqualTo(1).andGoodsNumTypeEqualTo(1);
+        List<PGoods> goodsList = pGoodsMapper.selectByExample(goodsExample);
+        if (goodsList.size() <= 0){
+            return  ResultBuilder.fail("商品已售出");
         }
+        PGoods goods = goodsList.get(0);
         UMemberReceiveAddressExample example = new UMemberReceiveAddressExample();
         example.createCriteria().andMemberIdEqualTo(ordersRes.getGoodsId()).andDefaultStatusEqualTo(0);
         List<UMemberReceiveAddress> memberReceiveAddresses = memberReceiveAddressMapper.selectByExample(example);
