@@ -4,6 +4,7 @@ import spring.dto.BaseCommonResult;
 import spring.dto.result.BasePage;
 import spring.goods.dto.request.GoodsListReq;
 import spring.goods.dto.request.GoodsListRequest;
+import spring.goods.dto.response.GoodsStateResponse;
 import spring.goods.service.GoodsService;
 import spring.model.PGoods;
 import io.swagger.annotations.Api;
@@ -34,6 +35,12 @@ public class GoodsAdminController {
     @RequestMapping(value = "/good", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody BaseCommonResult<BasePage<PGoods>> list(@Valid GoodsListReq request) {
         return goodsService.list(request);
+    }
+
+    @ApiOperation(value = "查询商品状态数量", httpMethod = "GET")
+    @RequestMapping(value = "/goodsState", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody BaseCommonResult<GoodsStateResponse> goodsState() {
+        return goodsService.goodsState();
     }
     /**
      *

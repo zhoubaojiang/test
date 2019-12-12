@@ -59,7 +59,7 @@ public class AliYunService  {
         UserFileUploadResult uploadResult = new UserFileUploadResult();
         try {
             // 上传图片
-            MultipartFile file = request.getFile();
+            MultipartFile file = request.getPicUpload();
             String subString = ossClientUtil.uploadImg(file.getInputStream(),file.getOriginalFilename(), filedir);
             uploadResult.setImgUrl(subString);
         } catch (Exception e) {

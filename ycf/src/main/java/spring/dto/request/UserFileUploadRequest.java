@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class UserFileUploadRequest {
     /** 上传的文件 */
     @ApiModelProperty(value = "上传的文件")
-    private MultipartFile file;
+    private MultipartFile picUpload;
 //    /** 上传的文件类型 */
     @ApiModelProperty(value = "上传的文件类型")
     private Integer type;

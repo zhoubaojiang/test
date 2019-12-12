@@ -19,7 +19,7 @@ public class PicUserService {
     public BaseCommonResult upload(UserFileUploadRequest request) throws Exception {
         log.info("用户文件上传,请求参数为：{}", request);
         BaseCommonResult result = new BaseCommonResult();
-        MultipartFile file = request.getFile();
+        MultipartFile file = request.getPicUpload();
         long size = file.getSize();
         if (size > 5242880) {
             throw new UserException(UserErrorCodeEnum.FAIL.getCode(), "文件上传失败,文件大小不能超过:5M");

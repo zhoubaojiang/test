@@ -10,6 +10,7 @@ import spring.goods.dto.request.GoodsMemberRequset;
 import spring.goods.dto.request.RecommendedRequest;
 import spring.goods.dto.response.GoodsDetailsResponse;
 import spring.goods.dto.response.GoodsMemberResponse;
+import spring.goods.dto.response.GoodsStateResponse;
 import spring.goods.dto.response.RecommendedResponse;
 import spring.mapper.cvs.GoodsMapper;
 import spring.mapper.PGoodsMapper;
@@ -182,5 +183,20 @@ public class GoodsService {
         GoodsDetailsResponse map = dozer.map(goods, GoodsDetailsResponse.class);
         log.info("商品详情查询返回: {}",map);
         return ResultBuilder.success(map);
+    }
+
+    public BaseCommonResult<GoodsStateResponse> goodsState() {
+        PGoodsExample example = new PGoodsExample();
+        GoodsStateResponse goodsStateResponse = new GoodsStateResponse();
+        goodsStateResponse.setGoodsNumber(pGoodsMapper.countByExample(example));
+        example.createCriteria().andGoodsStateEqualTo(0).andIsDeleteEqualTo(1);
+        goodsStateResponse.setUpper(pGoodsMapper.countByExample(example));
+        example.clear();
+        example.createCriteria().andGoodsStateEqualTo(1).andIsDeleteEqualTo(1);
+        goodsStateResponse.setLower(pGoodsMapper.countByExample(example));
+        example.clear();
+        example.createCriteria().andGoodsNumTypeEqualTo(0);
+        goodsStateResponse.setSell(pGoodsMapper.countByExample(example));
+        return ResultBuilder.success(goodsStateResponse);
     }
 }
