@@ -16,8 +16,8 @@ public class UserFileUploadRequest {
     @ApiModelProperty(value = "上传的文件")
     private MultipartFile file;
 //    /** 上传的文件类型 */
-//    @ApiModelProperty(value = "上传的文件类型")
-//    private Integer type;
+    @ApiModelProperty(value = "上传的文件类型")
+    private Integer type;
     /** 是否需要覆盖上次上传图片 */
     @ApiModelProperty(value = "是否需要覆盖上次上传图片")
     private boolean isRepeatUpload;

@@ -49,4 +49,10 @@ public class GoodsDetailsResponse {
 
     @ApiModelProperty(value = "商品主图")
     private String masterGraph;
+
+    @ApiModelProperty(value = "服务：0专业消毒，1官方直营，2品牌严选，3超级折扣")
+    private String goodsService;
+
+    @ApiModelProperty(value = "快递费用方案：0包邮，1运费方案")
+    private Integer express;
 }

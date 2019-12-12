@@ -66,7 +66,7 @@ public class GoodsMemberController {
      */
     @ApiOperation(value = "商品详情", httpMethod = "GET")
     @RequestMapping(value = "/detail", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public @ResponseBody GoodsDetailsResponse goodsDetails(@RequestParam(name="id") Long id) {
+    public @ResponseBody BaseCommonResult<GoodsDetailsResponse> goodsDetails(@RequestParam(name="id") Long id) {
         return goodsService.goodsDetails(id);
     }
 

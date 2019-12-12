@@ -176,11 +176,11 @@ public class GoodsService {
      * @param id
      * @return
      */
-    public GoodsDetailsResponse goodsDetails(Long id) {
+    public BaseCommonResult<GoodsDetailsResponse> goodsDetails(Long id) {
         log.info("商品详情查询ID: {}",id);
         PGoods goods = pGoodsMapper.selectByPrimaryKey(id);
         GoodsDetailsResponse map = dozer.map(goods, GoodsDetailsResponse.class);
         log.info("商品详情查询返回: {}",map);
-        return map;
+        return ResultBuilder.success(map);
     }
 }

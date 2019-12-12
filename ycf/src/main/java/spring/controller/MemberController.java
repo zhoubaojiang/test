@@ -4,7 +4,6 @@ import org.springframework.validation.annotation.Validated;
 import spring.dto.BaseCommonResult;
 import spring.dto.request.MemberRequest;
 import spring.dto.result.MemberLoginResponse;
-import spring.dto.result.UserLoginResponse;
 import spring.member.service.MemberService;
 import spring.model.UMemberReceiveAddress;
 import spring.model.UUserMember;

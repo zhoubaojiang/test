@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 会员、商家 、代理商注册接口
+ * 后台管理信息
  */
 @Api(tags = "PC ==> 后台管理信息",basePath = "/userCenter/pc/users")
 @RequestMapping("/userCenter/pc/users")
