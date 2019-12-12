@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import spring.dto.BaseCommonResult;
-import spring.dto.request.MultipartUploadRequest;
 import spring.dto.request.UserFileUploadRequest;
 import spring.dto.result.UserFileUploadResult;
 import spring.enums.UserErrorCodeEnum;
@@ -14,9 +13,6 @@ import spring.exception.UserException;
 import spring.utils.ThreadPoolManager;
 import spring.utils.alioss.OSSClientUtil;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
