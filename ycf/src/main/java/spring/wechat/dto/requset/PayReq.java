@@ -7,7 +7,7 @@ import lombok.Data;
 public class PayReq {
 
     @ApiModelProperty("订单号")
-    private Long orderNo;
+    private String orderNo;
     @ApiModelProperty("微信唯一标识AppID")
     private String openId;
 

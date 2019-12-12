@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="spring.mapper.GoodsMapper">
+<mapper namespace="spring.mapper.cvs.GoodsMapper">
   <resultMap id="BaseResultMap" type="spring.model.PGoods">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
@@ -102,4 +102,13 @@
         </if>
     </select>
 
+    <select id="selectOrderGoodsNum" parameterType="java.lang.String" resultType="spring.wechat.dto.result.PayOrderGoodsNumRes">
+    SELECT
+    g.goods_num_type
+    FROM
+		p_orders p
+		left JOIN  p_orders_details po on p.id = po.order_no
+		left JOIN p_goods g on po.goods_id = g.id
+        where po.order_no = #{orderNo}
+    </select>
 </mapper>

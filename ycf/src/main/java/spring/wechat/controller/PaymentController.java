@@ -28,6 +28,7 @@ import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Api(description = "微信管理", basePath = "/payment/")
@@ -64,15 +65,15 @@ public class PaymentController {
     @RequestMapping(value="toPay", method= RequestMethod.POST)
     public BaseCommonResult toPay(@RequestBody PayReq req) throws Exception {
 
-        POrders orderInfo = orderService.getOrder(req);
-        if(orderInfo == null){
+        List<POrders> orderInfo = orderService.getOrder(req);
+        if(orderInfo.size() == 0){
             return ResultBuilder.fail("订单不存在！");
-        }else if( Integer.parseInt(orderInfo.getOrderState()) > 0){
+        }else if( Integer.parseInt(orderInfo.get(0).getOrderState()) > 0){
             //订单状态:0待支付,1支付中,2支付失败,3支付成功,4待发货,5已发货,6确认收货,7订单完成,8申请退款,9退款中,10退款完成,11拒绝退款,12取消订单
             return ResultBuilder.fail("订单已支付或者已取消!");
         }else{
-            logger.info("【小程序支付服务】请求订单编号:["+orderInfo.getId()+"]");
-            Map<String, Object> resMap = paymentService.xcxPayment(String.valueOf(orderInfo.getId()),orderInfo.getOrderPrice(),req.getOpenId());
+            logger.info("【小程序支付服务】请求订单编号:["+orderInfo.get(0).getOrderNo()+"]");
+            Map<String, Object> resMap = paymentService.xcxPayment(orderInfo.get(0).getOrderNo(),orderInfo.get(0).getOrderPrice(),req.getOpenId(),orderInfo.get(0).getOrderState());
             if("SUCCESS".equals(resMap.get("returnCode")) && "OK".equals(resMap.get("returnMsg"))){
                 //统一下单成功
                 resMap.remove("returnCode");
@@ -114,26 +115,29 @@ public class PaymentController {
         String resXml = "";
         String returnCode = (String) map.get("return_code");
         String orderId = (String) map.get("order_id");
+        PayReq req = new PayReq();
+        req.setOrderNo(orderId);
+        List<POrders> orderInfo = orderService.getOrder(req);
         if ("SUCCESS".equalsIgnoreCase(returnCode)) {
             String returnmsg = (String) map.get("result_code");
             if("SUCCESS".equals(returnmsg)){
                 //更新数据
                 int result = paymentService.xcxNotify(map);
                 if(result > 0){
-                    PayReq req = new PayReq();
-                    req.setOrderNo(Long.parseLong(orderId));
-                    POrders orderInfo = orderService.getOrder(req);
-                    orderService.updateOrder(orderInfo,"3");
+
+                    orderService.updateOrder(orderInfo.get(0),"1");
                     //支付成功
                     resXml = "<xml>" + "<return_code><![CDATA[SUCCESS]]></return_code>"
                             + "<return_msg><![CDATA[OK]]></return_msg>"+"</xml>";
                 }
             }else{
+                orderService.updateOrder(orderInfo.get(0),"2");
                 resXml = "<xml>" + "<return_code><![CDATA[FAIL]]></return_code>"
                         + "<return_msg><![CDATA[报文为空]></return_msg>" + "</xml>";
                 logger.info("支付失败:"+resXml);
             }
         }else{
+            orderService.updateOrder(orderInfo.get(0),"2");
             resXml = "<xml>" + "<return_code><![CDATA[FAIL]]></return_code>"
                     + "<return_msg><![CDATA[报文为空]></return_msg>" + "</xml>";
             logger.info("【订单支付失败】");

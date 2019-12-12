@@ -11,7 +11,7 @@ import spring.goods.dto.request.RecommendedRequest;
 import spring.goods.dto.response.GoodsDetailsResponse;
 import spring.goods.dto.response.GoodsMemberResponse;
 import spring.goods.dto.response.RecommendedResponse;
-import spring.mapper.GoodsMapper;
+import spring.mapper.cvs.GoodsMapper;
 import spring.mapper.PGoodsMapper;
 import spring.model.PGoods;
 import spring.model.PGoodsExample;

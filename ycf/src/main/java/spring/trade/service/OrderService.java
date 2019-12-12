@@ -105,8 +105,10 @@ public class OrderService  {
     }
 
 
-    public POrders getOrder(PayReq req) {
-        POrders pOrders = pOrdersMapper.selectByPrimaryKey(req.getOrderNo());
+    public List<POrders> getOrder(PayReq req) {
+        POrdersExample example = new POrdersExample();
+        example.createCriteria().andOrderNoEqualTo(req.getOrderNo());
+        List<POrders> pOrders = pOrdersMapper.selectByExample(example);
         return pOrders;
     }
 
@@ -121,6 +123,18 @@ public class OrderService  {
         record.setId(orderInfo.getId());
         record.setOrderState(i);
         pOrdersMapper.updateByPrimaryKeySelective( record);
+            POrdersDetailsExample example = new POrdersDetailsExample();
+            example.createCriteria().andOrderNoEqualTo(orderInfo.getId());
+            List<POrdersDetails> pOrdersDetails = pOrdersDetailsMapper.selectByExample(example);
+            for (POrdersDetails details:pOrdersDetails) {
+                PGoods pGoods = pGoodsMapper.selectByPrimaryKey(details.getGoodsId());
+                if (i.equals("1")){
+                    pGoods.setGoodsNumType(0);
+                }else {
+                    pGoods.setGoodsNumType(1);
+                }
+                pGoodsMapper.updateByPrimaryKeySelective(pGoods);
+            }
     }
 
     public BaseCommonResult<BasePage<POrders>> getMemberOrder(MemberOrderReq request) {

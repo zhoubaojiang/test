@@ -1,12 +1,9 @@
 package spring.wechat.service.impl;
 
-import spring.mapper.POrdersMapper;
-import spring.model.POrders;
-import spring.model.POrdersExample;
-import spring.wechat.commom.BaseConstants;
-import spring.wechat.commom.PayConstant;
-import spring.wechat.config.PayConfig;
-import spring.wechat.config.WechatProperty;
+import spring.mapper.cvs.GoodsMapper;
+import spring.wechat.commom.*;
+import spring.wechat.config.*;
+import spring.wechat.dto.result.PayOrderGoodsNumRes;
 import spring.wechat.service.PaymentService;
 import spring.wechat.utils.BeanUtil;
 import spring.wechat.utils.HttpUtils;
@@ -15,20 +12,17 @@ import spring.wechat.utils.WechatMsgUtil;
 import jodd.http.HttpRequest;
 import jodd.http.HttpResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import java.util.UUID;
 
 @Service
 @Slf4j
@@ -37,15 +31,16 @@ public class PaymentServiceImpl implements PaymentService {
     @Autowired
     private WechatProperty wechatProperty;
     @Autowired
-    private POrdersMapper pOredersMapper;
+    private GoodsMapper goodsMapper;
+
+
     @Override
-    public Map<String, Object> xcxPayment(String orderNum, BigDecimal money, String openId) throws Exception {
+    public Map<String, Object> xcxPayment(String orderNum, BigDecimal money, String openId,String orderState) throws Exception {
         LOGGER.info("【小程序支付】 统一下单开始, 订单编号="+orderNum);
         SortedMap<String, Object> resultMap = new TreeMap<String, Object>();
         //生成支付金额，开发环境处理支付金额数到0.01、0.02、0.03元
         //添加或更新支付记录(参数跟进自己业务需求添加)
-        int flag = this.addOrUpdatePaymentRecord(orderNum, money);
-        POrders record = new POrders();
+        int flag = this.addOrUpdatePaymentRecord(orderNum, money,orderState);
         if(flag == 0){
             resultMap.put("returnCode", "FAIL");
             resultMap.put("returnMsg", "此订单已支付！");
@@ -55,7 +50,7 @@ public class PaymentServiceImpl implements PaymentService {
             resultMap.put("returnMsg", "支付记录生成或更新失败！");
             LOGGER.info("【小程序支付】 支付记录生成或更新失败！");
         }else{
-//
+            //生成微信支付
             Map<String,Object> resMap = this.xcxUnifieldOrder(orderNum, PayConfig.TRADE_TYPE_JSAPI, money,openId);
             if(PayConstant.SUCCESS.equals(resMap.get("return_code")) && PayConstant.SUCCESS.equals(resMap.get("result_code"))){
                 resultMap.put("appId", wechatProperty.getAppId());
@@ -103,26 +98,6 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     private String getNotifyUrl(){
         //服务域名
         return PayConfig.PRO_SERVER_DOMAIN + "/payment/xcxNotify";
@@ -131,23 +106,14 @@ public class PaymentServiceImpl implements PaymentService {
     /**
      * 添加或更新支付记录
      */
-    public int addOrUpdatePaymentRecord(String orderNo, BigDecimal payAmount) throws Exception{
-        //写自己的添加或更新支付记录的业务代码
-        POrders pOreders = pOredersMapper.selectByPrimaryKey(Long.parseLong(orderNo));
-        //订单状态:0待支付,1支付中,2支付失败,3支付成功,4待发货,5已发货,6确认收货,7订单完成,8申请退款,9退款中,10退款完成,11拒绝退款,12取消订单
-        int[] orderState = {3,4,5,6,7,8,9,10,11};
-        if (pOreders == null || ArrayUtils.contains(orderState,Integer.parseInt(pOreders.getOrderState()))){
+    public int addOrUpdatePaymentRecord(String orderNo, BigDecimal payAmount,String orderState) throws Exception{
+        //订单状态:0待支付,1支付成功,2支付失败,3待发货,4已发货,5确认收货,6订单完成,7申请退款,8退款中,9退款完成,10拒绝退款,11取消订单,12订单关闭
+        int[] orderStateList = {1,3,4,5,6,7,8,9,10,11,12};
+        if ( ArrayUtils.contains(orderStateList,Integer.parseInt(orderState))){
             return 0;//此订单已支付
         }
-        if (pOreders.getOrderState().equals("1")){
-            return 1;//订单已创建
-        }
-        POrders record = new POrders();
-        record.setOrderState("1");
-        POrdersExample example = new POrdersExample();
-        example.createCriteria().andIdEqualTo(Long.parseLong(orderNo));
-        int i = pOredersMapper.updateByExampleSelective(record, example);
-        if (i == 0){
+        PayOrderGoodsNumRes payOrderGoodsNumRes = goodsMapper.selectOrderGoodsNum(orderNo);
+        if (payOrderGoodsNumRes.getGoodsNumType().equals("0")){//已售出
             return 1;
         }
         return 2;
@@ -166,7 +132,6 @@ public class PaymentServiceImpl implements PaymentService {
     }
     /**
      * 统一下单接口
-     * @param request
      * @return
      * @throws Exception
      */
