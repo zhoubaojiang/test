@@ -86,6 +86,7 @@ public class UserCommonRegistryServiceImpl implements UserCommonRegistryService 
         result.setLoginAccount(mUser.getLoginAccount());
         result.setUserName(mUser.getUserName());
         result.setUserId(String.valueOf(mUser.getUserId()));
+        result.setUserType(Constants.USER_TYPE_BACKEND);
         return ResultBuilder.success(result);
     }
 

@@ -61,6 +61,7 @@ public class MemberService {
         result.setPrice(userMember.getPrice());
         result.setPicUrl(userMember.getPicUrl());
         result.setGold(userMember.getGold());
+        result.setUserType(Constants.USER_TYPE_MEMBER);
         return ResultBuilder.success(result);
     }
 
