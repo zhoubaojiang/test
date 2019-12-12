@@ -9,9 +9,10 @@
     <result column="goods_condition" jdbcType="INTEGER" property="goodsCondition" />
     <result column="goods_number" jdbcType="INTEGER" property="goodsNumber" />
     <result column="goods_price" jdbcType="DECIMAL" property="goodsPrice" />
-    <result column="discount" jdbcType="VARCHAR" property="discount" />
+    <result column="fresh_used" jdbcType="INTEGER" property="freshUsed" />
+    <result column="discount" jdbcType="DECIMAL" property="discount" />
     <result column="discount_price" jdbcType="DECIMAL" property="discountPrice" />
-    <result column="treasure_discount" jdbcType="VARCHAR" property="treasureDiscount" />
+    <result column="treasure_discount" jdbcType="DECIMAL" property="treasureDiscount" />
     <result column="treasure_discount_price" jdbcType="DECIMAL" property="treasureDiscountPrice" />
     <result column="express" jdbcType="INTEGER" property="express" />
     <result column="express_id" jdbcType="BIGINT" property="expressId" />
@@ -23,12 +24,14 @@
     <result column="goods_state" jdbcType="INTEGER" property="goodsState" />
     <result column="goods_type" jdbcType="INTEGER" property="goodsType" />
     <result column="goods_num_type" jdbcType="INTEGER" property="goodsNumType" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
   </resultMap>
   <sql id="Base_Column_List">
     id, goods_name, pms_type, goods_brand, goods_condition, goods_number, goods_price,
-    discount, discount_price, treasure_discount, treasure_discount_price, express, express_id,
-    express_name, goods_service, content_details, master_graph, goods_picture, goods_state,
-    goods_type, goods_num_type
+    fresh_used, discount, discount_price, treasure_discount, treasure_discount_price,
+    express, express_id, express_name, goods_service, content_details, master_graph,
+    goods_picture, goods_state, goods_type, goods_num_type, create_time, is_delete
   </sql>
 
   <select id="selectGoodsList" parameterType="spring.goods.dto.request.GoodsListReq" resultMap="BaseResultMap">
