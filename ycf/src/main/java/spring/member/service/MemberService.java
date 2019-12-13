@@ -2,7 +2,6 @@ package spring.member.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import lombok.Data;
 import org.springframework.data.annotation.Transient;
 import spring.dto.BaseCommonResult;
 import spring.dto.request.MemberCarListRequest;
@@ -12,7 +11,6 @@ import spring.dto.request.UserLoginDto;
 import spring.dto.result.BasePage;
 import spring.dto.result.MemberCarResult;
 import spring.dto.result.MemberLoginResponse;
-import spring.dto.result.UserLoginResponse;
 import spring.exception.GoodsException;
 import spring.mapper.MMemberCarDetailMapper;
 import spring.mapper.MMemberCarMapper;
@@ -137,9 +135,16 @@ public class MemberService {
     public BaseCommonResult addCar(MemberCarRequest request) {
         MMemberCar record = new MMemberCar();
         record.setMemberId(request.getMemberId());
-        record.setCreateTime(new Date());
-        mMemberCarMapper.insertSelective(record);
-
+        MMemberCarExample example = new MMemberCarExample();
+        example.createCriteria().andMemberIdEqualTo(request.getMemberId());
+        List<MMemberCar> mMemberCars = mMemberCarMapper.selectByExample(example);
+        if (mMemberCars.size()>0){
+            record = mMemberCars.get(0);
+        }else {
+            record.setCreateTime(new Date());
+            mMemberCarMapper.insertSelective(record);
+        }
+        //插入中间表
         MMemberCarDetail memberCarDetail = new MMemberCarDetail();
         memberCarDetail.setGoodsId(request.getGoodsId());
         memberCarDetail.setMemberCarId(record.getId());
