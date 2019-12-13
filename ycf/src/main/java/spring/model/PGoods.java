@@ -15,7 +15,7 @@ public class PGoods implements Serializable {
     @ApiModelProperty(value = "商品分类ID:pms_product_category")
     private Long pmsType;
 
-    @ApiModelProperty(value = "商品品相")
+    @ApiModelProperty(value = "商品品牌")
     private String goodsBrand;
 
     @ApiModelProperty(value = "商品品相：0全新，1优良，2普通，3轻度磨损，4不合格")
