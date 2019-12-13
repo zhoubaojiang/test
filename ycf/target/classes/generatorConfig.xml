@@ -37,15 +37,15 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="spring.mapper"
                              targetProject="ycf\src\main\java"/>
         <!--生成全部表tableName设为%-->
-        <table tableName="%">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <!--<table schema="mybatis" tableName="p_orders_details" domainObjectName="POrdersDetails"-->
-               <!--enableCountByExample="true" enableUpdateByExample="true"-->
-               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-               <!--selectByExampleQueryId="true">-->
+        <!--<table tableName="%">-->
             <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
+        <table schema="mybatis" tableName="p_first_ficture" domainObjectName="PFirstFicture"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
 
     </context>
 </generatorConfiguration>

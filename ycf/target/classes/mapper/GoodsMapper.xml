@@ -69,11 +69,12 @@
     p.id goodsId,
     p.goods_name goodsName,
     p.goods_price goodsPrice,
-    p.discount_price discountPrice
+    p.discount_price discountPrice,
+    p.master_graph pic
     FROM
     p_goods p
     WHERE
-    p.is_delete = 1 and goods_number = 1
+    p.is_delete = 1 and goods_num_type = 1
     <if test="pmsType != null">
       and p.pms_type = #{pmsType}
     </if>
