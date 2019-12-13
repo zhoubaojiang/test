@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-public class RecommendedRequest extends PegeBeanUtile{
+public class RecommendedRequest extends PageBeanUtile {
     @ApiModelProperty(value = "商品分类ID")
     private Integer pmsType;
 

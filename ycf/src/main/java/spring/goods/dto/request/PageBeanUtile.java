@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-public class PegeBeanUtile {
+public class PageBeanUtile {
     /** 当前页 */
     @ApiModelProperty(value="当前分页数，默认：1")
     private Integer page = Constants.DEFAULT_PAGE;

@@ -2,9 +2,9 @@ package spring.trade.dto.request;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import spring.goods.dto.request.PegeBeanUtile;
+import spring.goods.dto.request.PageBeanUtile;
 @Data
-public class AdminOrderReq extends PegeBeanUtile {
+public class AdminOrderReq extends PageBeanUtile {
     @ApiModelProperty("订单号")
     private String orderNo;
     @ApiModelProperty("用户姓名")

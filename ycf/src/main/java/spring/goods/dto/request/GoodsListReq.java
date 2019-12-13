@@ -1,6 +1,5 @@
 package spring.goods.dto.request;
 
-import spring.utils.Constants;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -13,7 +12,7 @@ import java.math.BigDecimal;
 * @date: 2017年11月27日 下午4:30:32
  */
 @Data
-public class GoodsListReq extends PegeBeanUtile{
+public class GoodsListReq extends PageBeanUtile {
 
 	@ApiModelProperty(value = "商品ID")
 	private Long id;
