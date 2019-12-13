@@ -2,7 +2,11 @@ package spring.controller;
 
 import org.springframework.validation.annotation.Validated;
 import spring.dto.BaseCommonResult;
+import spring.dto.request.MemberCarListRequest;
+import spring.dto.request.MemberCarRequest;
 import spring.dto.request.MemberRequest;
+import spring.dto.result.BasePage;
+import spring.dto.result.MemberCarResult;
 import spring.dto.result.MemberLoginResponse;
 import spring.member.service.MemberService;
 import spring.model.UMemberReceiveAddress;
@@ -51,6 +55,24 @@ public class MemberController {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public @ResponseBody BaseCommonResult update(@Validated @RequestBody UMemberReceiveAddress request){
         return userService.update(request);
+    }
+
+    @ApiOperation(value = "添加购物车", notes = "添加购物车")
+    @RequestMapping(value = "/car/add", method = RequestMethod.POST)
+    public BaseCommonResult addCar(@Validated @RequestBody MemberCarRequest request){
+        return userService.addCar(request);
+    }
+
+    @ApiOperation(value = "删除购物车", notes = "删除购物车")
+    @RequestMapping(value = "/car/delete", method = RequestMethod.POST)
+    public BaseCommonResult deleteCar(@Validated @RequestBody MemberCarRequest request){
+        return userService.deleteCar(request);
+    }
+
+    @ApiOperation(value = "查询购物车")
+    @RequestMapping(value = "/car", method = RequestMethod.POST)
+    public @ResponseBody BaseCommonResult<BasePage<MemberCarResult>>  memberCarList(@Validated @RequestBody MemberCarListRequest request) {
+        return userService.memberCarList(request);
     }
 
 }

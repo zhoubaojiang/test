@@ -55,4 +55,7 @@ public class GoodsDetailsResponse {
 
     @ApiModelProperty(value = "快递费用方案：0包邮，1运费方案")
     private Integer express;
+
+    @ApiModelProperty(value = "轮播图片多张逗号分开")
+    private String goodsPicture;
 }

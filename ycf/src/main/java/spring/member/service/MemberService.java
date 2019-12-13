@@ -1,13 +1,24 @@
 package spring.member.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import lombok.Data;
 import org.springframework.data.annotation.Transient;
 import spring.dto.BaseCommonResult;
+import spring.dto.request.MemberCarListRequest;
+import spring.dto.request.MemberCarRequest;
 import spring.dto.request.MemberRequest;
 import spring.dto.request.UserLoginDto;
+import spring.dto.result.BasePage;
+import spring.dto.result.MemberCarResult;
 import spring.dto.result.MemberLoginResponse;
 import spring.dto.result.UserLoginResponse;
+import spring.exception.GoodsException;
+import spring.mapper.MMemberCarDetailMapper;
+import spring.mapper.MMemberCarMapper;
 import spring.mapper.UMemberReceiveAddressMapper;
 import spring.mapper.UUserMemberMapper;
+import spring.mapper.cvs.MemberCarMapper;
 import spring.model.*;
 import spring.utils.Constants;
 import spring.utils.ResultBuilder;
@@ -29,6 +40,14 @@ public class MemberService {
     private UMemberReceiveAddressMapper memberReceiveAddressMapper;
     @Autowired
     private DozerBeanMapper dozerMapper;
+    @Autowired
+    private MMemberCarMapper mMemberCarMapper;
+    @Autowired
+    private MMemberCarDetailMapper mMemberCarDetailMapper;
+    @Autowired
+    private MemberCarMapper memberCarMapper;
+
+
     @Transient
     public BaseCommonResult<UUserMember> register(MemberRequest record) {
         log.info("会员注册请求参数:{}",record);
@@ -113,5 +132,44 @@ public class MemberService {
     public BaseCommonResult update(UMemberReceiveAddress request) {
         memberReceiveAddressMapper.updateByPrimaryKeySelective(request);
         return ResultBuilder.success(request);
+    }
+    @Transient
+    public BaseCommonResult addCar(MemberCarRequest request) {
+        MMemberCar record = new MMemberCar();
+        record.setMemberId(request.getMemberId());
+        record.setCreateTime(new Date());
+        mMemberCarMapper.insertSelective(record);
+
+        MMemberCarDetail memberCarDetail = new MMemberCarDetail();
+        memberCarDetail.setGoodsId(request.getGoodsId());
+        memberCarDetail.setMemberCarId(record.getId());
+        mMemberCarDetailMapper.insertSelective(memberCarDetail);
+        return ResultBuilder.success(record);
+    }
+    @Transient
+    public BaseCommonResult deleteCar(MemberCarRequest request) {
+        log.info("会员购物车删除,请求参数为：{}", request);
+        MMemberCarDetailExample example = new MMemberCarDetailExample();
+        example.createCriteria().andGoodsIdEqualTo(request.getGoodsId()).andIdEqualTo(request.getMemberCarDetailId());
+        int i = mMemberCarDetailMapper.deleteByExample(example);
+        log.info("会员购物车删除,成功：{}", i);
+        return ResultBuilder.success();
+    }
+
+    public BaseCommonResult<BasePage<MemberCarResult>> memberCarList(MemberCarListRequest request) {
+        BasePage<MemberCarResult> pageResult = new BasePage();
+        log.info("会员购物车列表,请求参数为：{}", request);
+        try {
+            PageHelper.startPage(request.getPage(), request.getPageSize());
+            List<MemberCarResult> list= memberCarMapper.selectMemberCarList(request.getMemberId());
+            PageInfo<MemberCarResult> pageInfo = new PageInfo<>(list);
+            pageResult.setList(list);
+            pageResult.setPageInfo(pageInfo.getPageNum(), pageInfo.getPageSize(), pageInfo.getPages(), pageInfo.getTotal());
+        }catch (GoodsException e) {
+            log.info("会员购物车列表异常，异常信息为：{}", e);
+            ResultBuilder.fail("系统异常");
+        }
+        log.info("会员购物车列表接口结束");
+        return ResultBuilder.success(pageResult);
     }
 }

@@ -40,7 +40,13 @@
         <!--<table tableName="%">-->
             <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
-        <table schema="mybatis" tableName="p_first_ficture" domainObjectName="PFirstFicture"
+        <table schema="mybatis" tableName="m_member_car" domainObjectName="MMemberCar"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table schema="mybatis" tableName="m_member_car_detail" domainObjectName="MMemberCarDetail"
                enableCountByExample="true" enableUpdateByExample="true"
                enableDeleteByExample="true" enableSelectByExample="true"
                selectByExampleQueryId="true">

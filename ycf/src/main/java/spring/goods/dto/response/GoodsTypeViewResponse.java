@@ -19,7 +19,7 @@ public class GoodsTypeViewResponse implements Serializable {
      */
     private static final long serialVersionUID = 8261836162071709969L;
 
-    @ApiModelProperty("订单ID")
+    @ApiModelProperty("ID")
     private Integer id;
 
     @ApiModelProperty("分类名")
