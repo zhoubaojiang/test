@@ -21,16 +21,10 @@ public class MemberController {
     @Autowired
     private MemberService userService;
 
-    @ApiOperation("注册用户")
-    @RequestMapping(value = "/member", method = RequestMethod.POST)
-    public @ResponseBody BaseCommonResult<UUserMember> register(@RequestBody MemberRequest record) {
-        return userService.register(record);
-    }
-
     @ApiOperation(value = "登录")
-    @RequestMapping(value = "/login/{code}", method = RequestMethod.GET)
-    public @ResponseBody BaseCommonResult<MemberLoginResponse>  login(@PathVariable String code) {
-        return userService.login(code);
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public @ResponseBody BaseCommonResult<MemberLoginResponse>  login(@RequestBody MemberRequest record) {
+        return userService.login(record);
     }
 
     @ApiOperation(value = "登出")

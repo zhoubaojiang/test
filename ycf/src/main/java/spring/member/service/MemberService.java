@@ -45,29 +45,35 @@ public class MemberService {
         return ResultBuilder.success(map);
     }
 
-    public BaseCommonResult<MemberLoginResponse> login(String code) {
+    public BaseCommonResult<MemberLoginResponse> login(MemberRequest record) {
         MemberLoginResponse result = new MemberLoginResponse();
         UUserMemberExample example = new UUserMemberExample();
-        example.createCriteria().andAppIdEqualTo(code);
+        example.createCriteria().andAppIdEqualTo(record.getAppId());
         List<UUserMember> userMembers = userMemberMapper.selectByExample(example);
-        UUserMember userMember = userMembers.get(0);
-        if(userMember == null){
-            ResultBuilder.fail("会员不存在");
+        UUserMember userMember = new UUserMember();
+        if(userMembers.size() == 0){
+            userMember.setCreateTime(new Date());
+            userMember.setUserName(record.getUserName());
+            userMember.setAppId(record.getAppId());
+            userMember.setPicUrl(record.getPicUrl());
+            userMemberMapper.insertSelective(userMember);
+        }else{
+            userMember = userMembers.get(0);
         }
-        UserLoginDto loginDto = new UserLoginDto();
-        loginDto.setChannelId(Constants.CHANNELID_XCX);
-        loginDto.setUserType(Constants.USER_TYPE_MEMBER);
-        MUserManual member = new MUserManual();
-        member.setWfcode(userMember.getAppId());
-        TonKenUtile.setResultToken(result, loginDto, member);
-        result.setLoginAccount(userMember.getAppId());
-        result.setLoginId(String.valueOf(userMember.getId()));
-        result.setUserName(userMember.getUserName());
-        result.setYuanBao(userMember.getYuanBao());
-        result.setPrice(userMember.getPrice());
-        result.setPicUrl(userMember.getPicUrl());
-        result.setGold(userMember.getGold());
-        result.setUserType(Constants.USER_TYPE_MEMBER);
+            UserLoginDto loginDto = new UserLoginDto();
+            loginDto.setChannelId(Constants.CHANNELID_XCX);
+            loginDto.setUserType(Constants.USER_TYPE_MEMBER);
+            MUserManual member = new MUserManual();
+            member.setWfcode(userMember.getAppId());
+            TonKenUtile.setResultToken(result, loginDto, member);
+            result.setLoginAccount(userMember.getAppId());
+            result.setLoginId(String.valueOf(userMember.getId()));
+            result.setUserName(userMember.getUserName());
+            result.setYuanBao(userMember.getYuanBao());
+            result.setPrice(userMember.getPrice());
+            result.setPicUrl(userMember.getPicUrl());
+            result.setGold(userMember.getGold());
+            result.setUserType(Constants.USER_TYPE_MEMBER);
         return ResultBuilder.success(result);
     }
 

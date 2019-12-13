@@ -15,7 +15,4 @@ public class MemberRequest {
     @ApiModelProperty(value = "用户头像")
     private String picUrl;
 
-    @ApiModelProperty(value ="userType",required = true)
-    private String userType;
-
 }
