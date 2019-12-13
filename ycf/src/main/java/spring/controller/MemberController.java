@@ -10,7 +10,6 @@ import spring.dto.result.MemberCarResult;
 import spring.dto.result.MemberLoginResponse;
 import spring.member.service.MemberService;
 import spring.model.UMemberReceiveAddress;
-import spring.model.UUserMember;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import jdk.nashorn.internal.runtime.logging.Logger;
