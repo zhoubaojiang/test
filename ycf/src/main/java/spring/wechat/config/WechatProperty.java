@@ -15,13 +15,13 @@ public class WechatProperty {
     /**
      * 设置微信公众号的appid
      */
-    @Value("${spring.datasource.ssm.driver-class-name}")
+    @Value("${wechat.appId}")
     private String appId;
 
     /**
      * 设置微信公众号的app secret
      */
-    @Value("${spring.datasource.ssm.driver-class-name}")
+    @Value("${wechat.secret}")
     private String secret;
 
     /**
@@ -37,19 +37,19 @@ public class WechatProperty {
     /**
      * 获取openID的url
      */
-    @Value("${spring.datasource.ssm.driver-class-name}")
+    @Value("${wechatOAuthOpenIdUrl}")
     private String OAuthOpenIdUrl;
 
     /**
      * 商户号
      */
-    @Value("${spring.datasource.ssm.driver-class-name}")
+    @Value("${wechat.mchId}")
     private String mchId;
 
     /**
      * 商户密钥
      */
-    @Value("${spring.datasource.ssm.driver-class-name}")
+    @Value("${wechat.mchKey}")
     private String mchKey;
 
     /**
