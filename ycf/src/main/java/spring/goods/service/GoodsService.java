@@ -13,8 +13,11 @@ import spring.goods.dto.response.GoodsDetailsResponse;
 import spring.goods.dto.response.GoodsMemberResponse;
 import spring.goods.dto.response.GoodsStateResponse;
 import spring.goods.dto.response.RecommendedResponse;
+import spring.mapper.PFirstFictureMapper;
 import spring.mapper.cvs.GoodsMapper;
 import spring.mapper.PGoodsMapper;
+import spring.model.PFirstFicture;
+import spring.model.PFirstFictureExample;
 import spring.model.PGoods;
 import spring.model.PGoodsExample;
 import spring.utils.ResultBuilder;
@@ -41,6 +44,9 @@ public class GoodsService {
     private GoodsMapper goodsMapper;
     @Value("${ycf.picUrl}")
     private String picUrl;
+    @Autowired
+    private PFirstFictureMapper pFirstFictureMapper;
+
     /**
      * 添加商品
      * @param request
@@ -237,5 +243,16 @@ public class GoodsService {
         example.createCriteria().andGoodsNumTypeEqualTo(0);
         goodsStateResponse.setSell(pGoodsMapper.countByExample(example));
         return ResultBuilder.success(goodsStateResponse);
+    }
+
+    public BaseCommonResult<List<PFirstFicture>> picList() {
+        PFirstFictureExample example = new PFirstFictureExample();
+        List<PFirstFicture> pFirstFictures = pFirstFictureMapper.selectByExample(example);
+        if (pFirstFictures.size()>0){
+            for (PFirstFicture pFirstFicture:pFirstFictures) {
+                pFirstFicture.setPicUrl(picUrl+pFirstFicture.getPicUrl());
+            }
+        }
+        return ResultBuilder.success(pFirstFictures);
     }
 }

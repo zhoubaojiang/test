@@ -10,6 +10,7 @@ import spring.goods.dto.response.GoodsDetailsResponse;
 import spring.goods.dto.response.GoodsMemberResponse;
 import spring.goods.dto.response.RecommendedResponse;
 import spring.goods.service.GoodsService;
+import spring.model.PFirstFicture;
 import spring.model.PGoods;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,6 +19,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Api(description = "会员商品信息相关接口列表", basePath = "/goodsCenter/member/goods")
 @RestController
@@ -70,4 +72,14 @@ public class GoodsMemberController {
         return goodsService.goodsDetails(id);
     }
 
+    /**
+     *
+     * 功能描述:商品详情
+     * @return
+     */
+    @ApiOperation(value = "小程序首页图", httpMethod = "GET")
+    @RequestMapping(value = "/picList", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody BaseCommonResult<List<PFirstFicture>> picList() {
+        return goodsService.picList();
+    }
 }
