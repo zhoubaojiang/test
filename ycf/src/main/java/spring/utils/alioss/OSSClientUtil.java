@@ -72,10 +72,11 @@ public class OSSClientUtil {
 	 */
 	public String uploadImg(InputStream inputStream, String originalFilename, String filedir) throws IOException {
 		String fileName = this.uploadImg2Oss(inputStream, originalFilename, filedir); // 上传图片
-		// String imgUrl = this.getImgUrl(fileName,filedir);// 获取url
-		// logger.info("上传图片的url:{}",imgUrl);
-		// String subString = splitFileUrl(imgUrl); // 保存到数据库的url
-		return "/" + filedir + fileName;
+		 String imgUrl = this.getImgUrl(fileName,filedir);// 获取url
+		 logger.info("上传图片的url:{}",imgUrl);
+		 String subString = splitFileUrl(imgUrl); // 保存到数据库的url
+//		return "/" + filedir + fileName;
+		return subString;
 	}
 
 	/**
