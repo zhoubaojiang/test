@@ -5,6 +5,7 @@ import spring.model.POrders;
 import spring.trade.service.OrderService;
 import spring.utils.ResultBuilder;
 import spring.wechat.dto.requset.PayReq;
+import spring.wechat.dto.result.WechatAppIdResult;
 import spring.wechat.service.PaymentService;
 import spring.wechat.service.WechatService;
 import spring.wechat.utils.BeanToMap;
@@ -37,12 +38,13 @@ public class PaymentController {
     private WechatService wechatService;
     @ApiOperation(value = "获取微信唯一OPEN_ID", httpMethod = "GET")
     @RequestMapping(value ="/getOperatorIdOrderList/{code}",method = RequestMethod.GET)
-    public BaseCommonResult getOperatorIdOrderList(@PathVariable String code) throws Exception{
+    public BaseCommonResult<WechatAppIdResult> getOperatorIdOrderList(@PathVariable String code) throws Exception{
         logger.info("获取微信OPEN_ID请求参数:"+code);
         String operatorid = wechatService.getOpenid(code);
         logger.info("获取微信OPEN_ID返回参数:"+operatorid);
-        String oppid = new ObjectMapper().writeValueAsString(operatorid);
-        return ResultBuilder.success(oppid);
+        WechatAppIdResult wechatAppIdResult = new WechatAppIdResult();
+        wechatAppIdResult.setCode(operatorid);
+        return ResultBuilder.success(wechatAppIdResult);
     }
 
     /**

@@ -47,6 +47,7 @@ public class WechatAPI {
 			OpenIdResponse or = new ObjectMapper().readValue(resp, OpenIdResponse.class);
 			if(!StringUtils.isEmpty(or.getErrcode())) {
 				logger.info("获取微信openid异常:" + or.getErrmsg());
+				logger.info("获取微信openid异常:" + or.getErrcode());
 				throw new BusinessException("获取微信openid异常");
 			}
 			result = or.getOpenid();
