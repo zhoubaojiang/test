@@ -1,35 +1,26 @@
 package spring.wechat.controller;
 
 import spring.dto.BaseCommonResult;
-import spring.exception.GoodsException;
-import spring.goods.common.GoodsApiCode;
 import spring.model.POrders;
 import spring.trade.service.OrderService;
 import spring.utils.ResultBuilder;
 import spring.wechat.dto.requset.PayReq;
 import spring.wechat.service.PaymentService;
-//import spring.wechat.service.WechatPayService;
 import spring.wechat.service.WechatService;
 import spring.wechat.utils.BeanToMap;
 import com.fasterxml.jackson.databind.ObjectMapper;
-//import com.lly835.bestpay.model.PayResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Api(description = "微信管理", basePath = "/payment/")
 @RestController
@@ -41,18 +32,17 @@ public class PaymentController {
     private PaymentService paymentService;
     @Autowired
     private OrderService orderService;
-//    @Autowired
-//    private WechatPayService wechatPayService;
 
     @Autowired
     private WechatService wechatService;
     @ApiOperation(value = "获取微信唯一OPEN_ID", httpMethod = "GET")
     @RequestMapping(value ="/getOperatorIdOrderList/{code}",method = RequestMethod.GET)
-    public String getOperatorIdOrderList(@PathVariable String code) throws Exception{
+    public BaseCommonResult getOperatorIdOrderList(@PathVariable String code) throws Exception{
         logger.info("获取微信OPEN_ID请求参数:"+code);
         String operatorid = wechatService.getOpenid(code);
         logger.info("获取微信OPEN_ID返回参数:"+operatorid);
-        return new ObjectMapper().writeValueAsString(operatorid);
+        String oppid = new ObjectMapper().writeValueAsString(operatorid);
+        return ResultBuilder.success(oppid);
     }
 
     /**

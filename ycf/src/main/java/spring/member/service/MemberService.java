@@ -34,6 +34,12 @@ public class MemberService {
         log.info("会员注册请求参数:{}",record);
         UUserMember map = dozerMapper.map(record, UUserMember.class);
         map.setCreateTime(new Date());
+        UUserMemberExample example = new UUserMemberExample();
+        example.createCriteria().andAppIdEqualTo(record.getAppId());
+        List<UUserMember> uUserMembers = userMemberMapper.selectByExample(example);
+        if (uUserMembers.size()>0){
+            return ResultBuilder.fail("用户已注册");
+        }
         int i = userMemberMapper.insertSelective(map);
         log.info("会员注册注册成功:{}",map);
         return ResultBuilder.success(map);
