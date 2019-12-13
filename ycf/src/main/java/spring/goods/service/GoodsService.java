@@ -111,7 +111,7 @@ public class GoodsService {
             pic = picUrl +s;
             i++;
             if (i != 0){
-                pic =","+ picUrl +s;
+                pic =pic + ","+ picUrl +s;
             }
         }
         return pic;
@@ -140,7 +140,6 @@ public class GoodsService {
             }
           List<GoodsMemberResponse> goodsMemberResponseList = new ArrayList<>();
             if (list.size()>0){
-                GoodsMemberResponse goodsMemberResponse = new GoodsMemberResponse();
                 for (PGoods  goods:list) {
                     GoodsMemberResponse map = dozer.map(goods, GoodsMemberResponse.class);
                     goodsMemberResponseList.add(map);

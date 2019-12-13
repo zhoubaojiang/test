@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class RecommendedRequest extends PegeBeanUtile{
     @ApiModelProperty(value = "商品分类ID")
-    private Long pmsType;
+    private Integer pmsType;
 
     @ApiModelProperty(value = "商品名")
     private Long goodsName;
