@@ -1,5 +1,6 @@
 package spring.goods.service;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.Transient;
 import spring.dto.BaseCommonResult;
 import spring.dto.result.BasePage;
@@ -38,7 +39,8 @@ public class GoodsService {
     private PGoodsMapper pGoodsMapper;
     @Autowired
     private GoodsMapper goodsMapper;
-
+    @Value("${ycf.picUrl}")
+    private String picUrl;
     /**
      * 添加商品
      * @param request
@@ -83,7 +85,14 @@ public class GoodsService {
         try {
             PageHelper.startPage(request.getPage(), request.getPageSize());
             List<PGoods> list = goodsMapper.selectGoodsList(request);
-
+            for (PGoods goods:list) {
+                if (goods.getMasterGraph()!= null){
+                    goods.setMasterGraph(picUrl+goods.getMasterGraph());
+                }
+                if (goods.getGoodsPicture()!=null){
+                    goods.setGoodsPicture(split(goods.getGoodsPicture().split(",")));
+                }
+            }
             PageInfo<PGoods> pageInfo = new PageInfo<>(list);
             pageResult.setList(list);
             pageResult.setPageInfo(pageInfo.getPageNum(), pageInfo.getPageSize(), pageInfo.getPages(), pageInfo.getTotal());
@@ -94,7 +103,19 @@ public class GoodsService {
         log.info("分页查询商品列表接口结束");
         return ResultBuilder.success(pageResult);
     }
-
+    //图片拼接URL
+    public String split(String[] split){
+        String pic = null;
+        int i = 0;
+        for ( String s :split) {
+            pic = picUrl +s;
+            i++;
+            if (i != 0){
+                pic =","+ picUrl +s;
+            }
+        }
+        return pic;
+    }
     /**
      * 新品推荐
      * @param requset
@@ -109,6 +130,14 @@ public class GoodsService {
             example.createCriteria().andGoodsTypeEqualTo(0).andGoodsStateEqualTo(0).andGoodsNumTypeEqualTo(1);
             example.setOrderByClause("create_time desc");
             List<PGoods> list = pGoodsMapper.selectByExample(example);
+            for (PGoods goods:list ) {
+                if (goods.getMasterGraph()!= null){
+                    goods.setMasterGraph(picUrl+goods.getMasterGraph());
+                }
+                if (goods.getGoodsPicture()!=null){
+                    goods.setGoodsPicture(split(goods.getGoodsPicture().split(",")));
+                }
+            }
           List<GoodsMemberResponse> goodsMemberResponseList = new ArrayList<>();
             if (list.size()>0){
                 GoodsMemberResponse goodsMemberResponse = new GoodsMemberResponse();
@@ -139,6 +168,11 @@ public class GoodsService {
         try {
             PageHelper.startPage(requset.getPage(), requset.getPageSize());
             List<RecommendedResponse> list = goodsMapper.selectRecommendedlist(requset);
+            for (RecommendedResponse response:list) {
+                if (response.getPic()!=null){
+                    response.setPic(picUrl+response.getPic());
+                }
+            }
             PageInfo<RecommendedResponse> pageInfo = new PageInfo<>(list);
             pageResult.setList(list);
             pageResult.setPageInfo(pageInfo.getPageNum(), pageInfo.getPageSize(), pageInfo.getPages(), pageInfo.getTotal());
@@ -161,6 +195,11 @@ public class GoodsService {
         try {
             PageHelper.startPage(requset.getPage(), requset.getPageSize());
             List<RecommendedResponse> list = goodsMapper.searchlist(requset);
+            for (RecommendedResponse response:list) {
+                if (response.getPic()!=null){
+                    response.setPic(picUrl+response.getPic());
+                }
+            }
             PageInfo<RecommendedResponse> pageInfo = new PageInfo<>(list);
             pageResult.setList(list);
             pageResult.setPageInfo(pageInfo.getPageNum(), pageInfo.getPageSize(), pageInfo.getPages(), pageInfo.getTotal());
@@ -181,6 +220,7 @@ public class GoodsService {
         log.info("商品详情查询ID: {}",id);
         PGoods goods = pGoodsMapper.selectByPrimaryKey(id);
         GoodsDetailsResponse map = dozer.map(goods, GoodsDetailsResponse.class);
+        map.setMasterGraph(picUrl+map.getMasterGraph());
         log.info("商品详情查询返回: {}",map);
         return ResultBuilder.success(map);
     }
