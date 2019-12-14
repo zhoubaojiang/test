@@ -19,9 +19,6 @@ public class UMemberReceiveAddress implements Serializable {
     @ApiModelProperty(value = "是否为默认")
     private Integer defaultStatus;
 
-    @ApiModelProperty(value = "邮政编码")
-    private String postCode;
-
     @ApiModelProperty(value = "省份/直辖市")
     private String province;
 
@@ -76,14 +73,6 @@ public class UMemberReceiveAddress implements Serializable {
         this.defaultStatus = defaultStatus;
     }
 
-    public String getPostCode() {
-        return postCode;
-    }
-
-    public void setPostCode(String postCode) {
-        this.postCode = postCode;
-    }
-
     public String getProvince() {
         return province;
     }
@@ -127,7 +116,6 @@ public class UMemberReceiveAddress implements Serializable {
         sb.append(", name=").append(name);
         sb.append(", phone=").append(phone);
         sb.append(", defaultStatus=").append(defaultStatus);
-        sb.append(", postCode=").append(postCode);
         sb.append(", province=").append(province);
         sb.append(", city=").append(city);
         sb.append(", area=").append(area);

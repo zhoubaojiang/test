@@ -2,9 +2,7 @@ package spring.controller;
 
 import org.springframework.validation.annotation.Validated;
 import spring.dto.BaseCommonResult;
-import spring.dto.request.MemberCarListRequest;
-import spring.dto.request.MemberCarRequest;
-import spring.dto.request.MemberRequest;
+import spring.dto.request.*;
 import spring.dto.result.BasePage;
 import spring.dto.result.MemberCarResult;
 import spring.dto.result.MemberLoginResponse;
@@ -50,11 +48,19 @@ public class MemberController {
         return userService.add(request);
     }
 
+
+    @ApiOperation(value = "查看会员收货地址")
+    @RequestMapping(value = "/address", method = RequestMethod.POST)
+    public @ResponseBody BaseCommonResult getAddress(AddressRequest addressRequest) {
+        return userService.getAddress(addressRequest);
+    }
+
     @ApiOperation(value = "会员收货地址修改", notes = "会员收货地址修改")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public @ResponseBody BaseCommonResult update(@Validated @RequestBody UMemberReceiveAddress request){
+    public @ResponseBody BaseCommonResult update(@Validated @RequestBody MemberReceiveAddressReq request){
         return userService.update(request);
     }
+
 
     @ApiOperation(value = "添加购物车", notes = "添加购物车")
     @RequestMapping(value = "/car/add", method = RequestMethod.POST)

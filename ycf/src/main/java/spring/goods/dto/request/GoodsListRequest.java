@@ -41,6 +41,8 @@ public class GoodsListRequest {
     private String masterGraph;
     @ApiModelProperty(value = "轮播图片多张逗号分开")
     private String goodsPicture;
+    @ApiModelProperty(value = "商品详情图")
+    private String goodsDetailPic;
     @ApiModelProperty(value = "商品状态：0上架，1未上架")
     private Integer goodsState;
     @ApiModelProperty(value = "是否热门：0热门，1不热门")

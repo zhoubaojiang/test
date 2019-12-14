@@ -72,7 +72,8 @@ public class GoodsService {
      * @return
      */
     @Transient
-    public BaseCommonResult<PGoods> update( GoodsListRequest request) {
+    public BaseCommonResult<PGoods>
+    update( GoodsListRequest request) {
         log.info("请求参数:{}",request);
         PGoods map = dozer.map(request, PGoods.class);
         int i = pGoodsMapper.updateByPrimaryKeySelective(map);
@@ -91,14 +92,14 @@ public class GoodsService {
         try {
             PageHelper.startPage(request.getPage(), request.getPageSize());
             List<PGoods> list = goodsMapper.selectGoodsList(request);
-            for (PGoods goods:list) {
-                if (goods.getMasterGraph()!= null){
-                    goods.setMasterGraph(picUrl+goods.getMasterGraph());
-                }
-                if (goods.getGoodsPicture()!=null){
-                    goods.setGoodsPicture(split(goods.getGoodsPicture().split(",")));
-                }
-            }
+//            for (PGoods goods:list) {
+//                if (goods.getMasterGraph()!= null){
+//                    goods.setMasterGraph(picUrl+goods.getMasterGraph());
+//                }
+//                if (goods.getGoodsPicture()!=null){
+//                    goods.setGoodsPicture(split(goods.getGoodsPicture().split(",")));
+//                }
+//            }
             PageInfo<PGoods> pageInfo = new PageInfo<>(list);
             pageResult.setList(list);
             pageResult.setPageInfo(pageInfo.getPageNum(), pageInfo.getPageSize(), pageInfo.getPages(), pageInfo.getTotal());
@@ -138,7 +139,7 @@ public class GoodsService {
             List<PGoods> list = pGoodsMapper.selectByExample(example);
             for (PGoods goods:list ) {
                 if (goods.getMasterGraph()!= null){
-                    goods.setMasterGraph(picUrl+goods.getMasterGraph());
+                    goods.setMasterGraph(goods.getMasterGraph());
                 }
                 if (goods.getGoodsPicture()!=null){
                     goods.setGoodsPicture(split(goods.getGoodsPicture().split(",")));
@@ -175,7 +176,7 @@ public class GoodsService {
             List<RecommendedResponse> list = goodsMapper.selectRecommendedlist(requset);
             for (RecommendedResponse response:list) {
                 if (response.getPic()!=null){
-                    response.setPic(picUrl+response.getPic());
+                    response.setPic(response.getPic());
                 }
             }
             PageInfo<RecommendedResponse> pageInfo = new PageInfo<>(list);
@@ -202,7 +203,7 @@ public class GoodsService {
             List<RecommendedResponse> list = goodsMapper.searchlist(requset);
             for (RecommendedResponse response:list) {
                 if (response.getPic()!=null){
-                    response.setPic(picUrl+response.getPic());
+                    response.setPic(response.getPic());
                 }
             }
             PageInfo<RecommendedResponse> pageInfo = new PageInfo<>(list);
@@ -225,7 +226,7 @@ public class GoodsService {
         log.info("商品详情查询ID: {}",id);
         PGoods goods = pGoodsMapper.selectByPrimaryKey(id);
         GoodsDetailsResponse map = dozer.map(goods, GoodsDetailsResponse.class);
-        map.setMasterGraph(picUrl+map.getMasterGraph());
+        map.setMasterGraph(map.getMasterGraph());
         log.info("商品详情查询返回: {}",map);
         return ResultBuilder.success(map);
     }
@@ -250,7 +251,7 @@ public class GoodsService {
         List<PFirstFicture> pFirstFictures = pFirstFictureMapper.selectByExample(example);
         if (pFirstFictures.size()>0){
             for (PFirstFicture pFirstFicture:pFirstFictures) {
-                pFirstFicture.setPicUrl(picUrl+pFirstFicture.getPicUrl());
+                pFirstFicture.setPicUrl(pFirstFicture.getPicUrl());
             }
         }
         return ResultBuilder.success(pFirstFictures);

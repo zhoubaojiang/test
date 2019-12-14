@@ -7,11 +7,9 @@ import org.springframework.data.annotation.Transient;
 import spring.dto.BaseCommonResult;
 import spring.dto.result.BasePage;
 import spring.exception.GoodsException;
-import spring.mapper.PGoodsMapper;
-import spring.mapper.POrdersDetailsMapper;
-import spring.mapper.POrdersMapper;
-import spring.mapper.UMemberReceiveAddressMapper;
+import spring.mapper.*;
 import spring.mapper.cvs.TradeAdminMapper;
+import spring.member.service.MemberService;
 import spring.model.*;
 import spring.trade.dto.request.AdminOrderReq;
 import spring.trade.dto.request.MemberOrderReq;
@@ -24,6 +22,7 @@ import spring.utils.ResultBuilder;
 import spring.wechat.dto.requset.PayReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import spring.wechat.service.WechatService;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -56,32 +55,30 @@ public class OrderService  {
             return  ResultBuilder.fail("商品已售出");
         }
         PGoods goods = goodsList.get(0);
-        UMemberReceiveAddressExample example = new UMemberReceiveAddressExample();
-        example.createCriteria().andMemberIdEqualTo(ordersRes.getGoodsId()).andDefaultStatusEqualTo(0);
-        List<UMemberReceiveAddress> memberReceiveAddresses = memberReceiveAddressMapper.selectByExample(example);
-        if (memberReceiveAddresses.size()<0){
-            return  ResultBuilder.fail("请添加收货地址");
-        }
-        UMemberReceiveAddress memberReceiveAddress = memberReceiveAddresses.get(0);
+        UMemberReceiveAddress memberReceiveAddress = memberReceiveAddressMapper.selectByPrimaryKey(ordersRes.getAddressId());
         POrders pOreders = new POrders();
         pOreders.setUserId(ordersRes.getUserId());
         pOreders.setCreateTime(new Date());
         pOreders.setGoodsNum(1);
-        pOreders.setTotalPrice(goods.getGoodsPrice());
+        //生成订单号时间戳加随机数
         pOreders.setOrderNo(DateUtil.getOrderNumber());
         if(ordersRes.getOrderType()==0){//支付方式;0现金，1鱿费
-            pOreders.setTotalPrice(goods.getGoodsPrice());
+            pOreders.setTotalPrice(goods.getDiscountPrice());
         }else {
             pOreders.setOrderPrice(goods.getTreasureDiscountPrice());
         }
         //订单
         pOreders.setOrderState("0");
+        //收货人
         pOreders.setReceivedName(memberReceiveAddress.getName());
         pOreders.setPhone(memberReceiveAddress.getPhone());
+        //设置收货地址
         pOreders.setProvince(memberReceiveAddress.getProvince());
         pOreders.setCity(memberReceiveAddress.getCity());
         pOreders.setArea(memberReceiveAddress.getArea());
         pOreders.setAddress(memberReceiveAddress.getDetailAddress());
+        //省市区详细地址
+        pOreders.setDetailedAddress(memberReceiveAddress.getProvince()+memberReceiveAddress.getCity()+memberReceiveAddress.getArea()+memberReceiveAddress.getDetailAddress());
         int i = pOrdersMapper.insertSelective(pOreders);
         //订单明细
         POrdersDetails pOredersDetails = new POrdersDetails();
@@ -91,12 +88,11 @@ public class OrderService  {
         pOredersDetails.setGoodsName(goods.getGoodsName());
         pOredersDetails.setGoodsNum(1);
         pOredersDetails.setGoodsCondition(goods.getGoodsCondition());//商品品相
+        pOredersDetails.setOrderPrice(goods.getDiscountPrice());
         if(ordersRes.getOrderType()==0){//支付方式;0现金，1鱿费
             pOredersDetails.setDiscountPrice(goods.getDiscountPrice());
-            pOredersDetails.setOrderPrice(goods.getDiscountPrice());
         }else {
             pOredersDetails.setYouPricce(goods.getTreasureDiscountPrice());
-            pOredersDetails.setOrderPrice(goods.getDiscountPrice());
         }
         pOredersDetails.setGoodsPicture(goods.getMasterGraph());//商品主图
         pOrdersDetailsMapper.insertSelective(pOredersDetails);
@@ -194,4 +190,5 @@ public class OrderService  {
         adminTradeDetailsResult.setOrderGoodsListResults(orderGoodsListResults);
         return ResultBuilder.success(adminTradeDetailsResult);
     }
+
 }

@@ -9,7 +9,6 @@ import spring.wechat.dto.result.WechatAppIdResult;
 import spring.wechat.service.PaymentService;
 import spring.wechat.service.WechatService;
 import spring.wechat.utils.BeanToMap;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -28,12 +27,11 @@ import java.util.*;
 @RequestMapping(value = "/payment/")
 public class PaymentController {
     private static Logger logger = LoggerFactory.getLogger(PaymentController.class);
-
+    private final static String GRANTTYPE = "authorization_code";
     @Autowired
     private PaymentService paymentService;
     @Autowired
     private OrderService orderService;
-
     @Autowired
     private WechatService wechatService;
     @ApiOperation(value = "获取微信唯一OPEN_ID", httpMethod = "GET")
@@ -46,6 +44,7 @@ public class PaymentController {
         wechatAppIdResult.setCode(operatorid);
         return ResultBuilder.success(wechatAppIdResult);
     }
+
 
     /**
      * <p>统一下单入口</p>

@@ -4,10 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.data.annotation.Transient;
 import spring.dto.BaseCommonResult;
-import spring.dto.request.MemberCarListRequest;
-import spring.dto.request.MemberCarRequest;
-import spring.dto.request.MemberRequest;
-import spring.dto.request.UserLoginDto;
+import spring.dto.request.*;
 import spring.dto.result.BasePage;
 import spring.dto.result.MemberCarResult;
 import spring.dto.result.MemberLoginResponse;
@@ -25,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import spring.wechat.service.WechatService;
 
 import java.util.Date;
 import java.util.List;
@@ -44,7 +42,8 @@ public class MemberService {
     private MMemberCarDetailMapper mMemberCarDetailMapper;
     @Autowired
     private MemberCarMapper memberCarMapper;
-
+    @Autowired
+    private WechatService wechatService;
 
     @Transient
     public BaseCommonResult<UUserMember> register(MemberRequest record) {
@@ -63,6 +62,14 @@ public class MemberService {
     }
 
     public BaseCommonResult<MemberLoginResponse> login(MemberRequest record) {
+        String operatorid = null;
+        try {
+             operatorid = wechatService.getOpenid(record.getAppId());
+        } catch (Exception e) {
+           log.error("获取微信OPPENID错误:{}",e);
+           ResultBuilder.fail("授权失败");
+        }
+        record.setAppId(operatorid);
         MemberLoginResponse result = new MemberLoginResponse();
         UUserMemberExample example = new UUserMemberExample();
         example.createCriteria().andAppIdEqualTo(record.getAppId());
@@ -98,7 +105,7 @@ public class MemberService {
         TonKenUtile.loginOut(code,Constants.USER_TYPE_MEMBER,Constants.CHANNELID_XCX);
         return ResultBuilder.success();
     }
-
+    //获取会员信息
     public BaseCommonResult getMoney(String code) {
         UUserMemberExample example = new UUserMemberExample();
         example.createCriteria().andAppIdEqualTo(code);
@@ -108,6 +115,7 @@ public class MemberService {
         }
         return ResultBuilder.success(uUserMembers.get(0));
     }
+    //添加会员收货地址
     @Transient
     public BaseCommonResult add(UMemberReceiveAddress request) {
         UMemberReceiveAddressExample example = new UMemberReceiveAddressExample();
@@ -126,11 +134,32 @@ public class MemberService {
         int i = memberReceiveAddressMapper.insertSelective(request);
         return ResultBuilder.success(request);
     }
+    //修改会员收货地址
     @Transient
-    public BaseCommonResult update(UMemberReceiveAddress request) {
-        memberReceiveAddressMapper.updateByPrimaryKeySelective(request);
+    public BaseCommonResult update(MemberReceiveAddressReq request) {
+        if (request.getIsDelete()!= null&&request.getIsDelete()==0){
+            memberReceiveAddressMapper.deleteByPrimaryKey(request.getId());
+            return ResultBuilder.success();
+        }
+        //默认地址修改
+        if (request.getDefaultStatus()==0){
+            UMemberReceiveAddressExample example = new UMemberReceiveAddressExample ();
+            example.createCriteria().andMemberIdEqualTo(request.getMemberId()).andDefaultStatusEqualTo(0);
+            List<UMemberReceiveAddress> uMemberReceiveAddresses = memberReceiveAddressMapper.selectByExample(example);
+            if (uMemberReceiveAddresses.size()>0){
+                UMemberReceiveAddress memberReceiveAddress = uMemberReceiveAddresses.get(0);
+                UMemberReceiveAddress record = new UMemberReceiveAddress ();
+                record.setId(memberReceiveAddress.getId());
+                record.setDefaultStatus(1);
+                memberReceiveAddressMapper.updateByPrimaryKeySelective(record);
+            }
+        }
+
+        UMemberReceiveAddress map = dozerMapper.map(request, UMemberReceiveAddress.class);
+        memberReceiveAddressMapper.updateByPrimaryKeySelective(map);
         return ResultBuilder.success(request);
     }
+    //添加会员购物信息
     @Transient
     public BaseCommonResult addCar(MemberCarRequest request) {
         MMemberCar record = new MMemberCar();
@@ -151,6 +180,7 @@ public class MemberService {
         mMemberCarDetailMapper.insertSelective(memberCarDetail);
         return ResultBuilder.success(record);
     }
+    //删除会员购物车
     @Transient
     public BaseCommonResult deleteCar(MemberCarRequest request) {
         log.info("会员购物车删除,请求参数为：{}", request);
@@ -160,7 +190,7 @@ public class MemberService {
         log.info("会员购物车删除,成功：{}", i);
         return ResultBuilder.success();
     }
-
+    //查询会员购物车
     public BaseCommonResult<BasePage<MemberCarResult>> memberCarList(MemberCarListRequest request) {
         BasePage<MemberCarResult> pageResult = new BasePage();
         log.info("会员购物车列表,请求参数为：{}", request);
@@ -176,5 +206,19 @@ public class MemberService {
         }
         log.info("会员购物车列表接口结束");
         return ResultBuilder.success(pageResult);
+    }
+    //查询会员收货地址
+    public BaseCommonResult getAddress(AddressRequest addressRequest) {
+        UMemberReceiveAddressExample example = new UMemberReceiveAddressExample();
+        UMemberReceiveAddressExample.Criteria criteria = example.createCriteria();
+        criteria.andMemberIdEqualTo(Long.parseLong(addressRequest.getUserId()));
+        if (addressRequest.getAddressId() != null){
+            criteria.andIdEqualTo(Long.parseLong(addressRequest.getAddressId()));
+        }
+        if (addressRequest.getDefaultStatus() != null){
+            criteria.andDefaultStatusEqualTo(addressRequest.getDefaultStatus());
+        }
+        List<UMemberReceiveAddress> uMemberReceiveAddresses = memberReceiveAddressMapper.selectByExample(example);
+        return ResultBuilder.success(uMemberReceiveAddresses);
     }
 }

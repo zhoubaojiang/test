@@ -1316,6 +1316,76 @@ public class PGoodsExample {
             return (Criteria) this;
         }
 
+        public Criteria andGoodsDetailPicIsNull() {
+            addCriterion("goods_detail_pic is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsDetailPicIsNotNull() {
+            addCriterion("goods_detail_pic is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsDetailPicEqualTo(String value) {
+            addCriterion("goods_detail_pic =", value, "goodsDetailPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsDetailPicNotEqualTo(String value) {
+            addCriterion("goods_detail_pic <>", value, "goodsDetailPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsDetailPicGreaterThan(String value) {
+            addCriterion("goods_detail_pic >", value, "goodsDetailPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsDetailPicGreaterThanOrEqualTo(String value) {
+            addCriterion("goods_detail_pic >=", value, "goodsDetailPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsDetailPicLessThan(String value) {
+            addCriterion("goods_detail_pic <", value, "goodsDetailPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsDetailPicLessThanOrEqualTo(String value) {
+            addCriterion("goods_detail_pic <=", value, "goodsDetailPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsDetailPicLike(String value) {
+            addCriterion("goods_detail_pic like", value, "goodsDetailPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsDetailPicNotLike(String value) {
+            addCriterion("goods_detail_pic not like", value, "goodsDetailPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsDetailPicIn(List<String> values) {
+            addCriterion("goods_detail_pic in", values, "goodsDetailPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsDetailPicNotIn(List<String> values) {
+            addCriterion("goods_detail_pic not in", values, "goodsDetailPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsDetailPicBetween(String value1, String value2) {
+            addCriterion("goods_detail_pic between", value1, value2, "goodsDetailPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsDetailPicNotBetween(String value1, String value2) {
+            addCriterion("goods_detail_pic not between", value1, value2, "goodsDetailPic");
+            return (Criteria) this;
+        }
+
         public Criteria andGoodsStateIsNull() {
             addCriterion("goods_state is null");
             return (Criteria) this;

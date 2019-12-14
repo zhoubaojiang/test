@@ -58,4 +58,8 @@ public class GoodsDetailsResponse {
 
     @ApiModelProperty(value = "轮播图片多张逗号分开")
     private String goodsPicture;
+
+    @ApiModelProperty(value = "商品详情图")
+    private String goodsDetailPic;
+
 }

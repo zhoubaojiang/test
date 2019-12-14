@@ -63,6 +63,9 @@ public class PGoods implements Serializable {
     @ApiModelProperty(value = "轮播图片多张逗号分开")
     private String goodsPicture;
 
+    @ApiModelProperty(value = "商品详情图")
+    private String goodsDetailPic;
+
     @ApiModelProperty(value = "商品状态：0上架，1未上架")
     private Integer goodsState;
 
@@ -232,6 +235,14 @@ public class PGoods implements Serializable {
         this.goodsPicture = goodsPicture;
     }
 
+    public String getGoodsDetailPic() {
+        return goodsDetailPic;
+    }
+
+    public void setGoodsDetailPic(String goodsDetailPic) {
+        this.goodsDetailPic = goodsDetailPic;
+    }
+
     public Integer getGoodsState() {
         return goodsState;
     }
@@ -297,6 +308,7 @@ public class PGoods implements Serializable {
         sb.append(", contentDetails=").append(contentDetails);
         sb.append(", masterGraph=").append(masterGraph);
         sb.append(", goodsPicture=").append(goodsPicture);
+        sb.append(", goodsDetailPic=").append(goodsDetailPic);
         sb.append(", goodsState=").append(goodsState);
         sb.append(", goodsType=").append(goodsType);
         sb.append(", goodsNumType=").append(goodsNumType);

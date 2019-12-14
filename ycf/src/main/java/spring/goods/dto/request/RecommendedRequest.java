@@ -9,7 +9,7 @@ public class RecommendedRequest extends PageBeanUtile {
     private Integer pmsType;
 
     @ApiModelProperty(value = "商品名")
-    private Long goodsName;
+    private String goodsName;
 
     @ApiModelProperty(value = "上新:0->上新")
     private Integer goodDesc;
