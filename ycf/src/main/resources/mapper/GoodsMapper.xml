@@ -94,7 +94,7 @@
         FROM
         p_goods p
         WHERE
-        p.is_delete = 1 and goods_number = 1
+        p.is_delete = 1 and goods_num_type = 1
         <if test="goodsName != null and goodsName != ''">
             and p.goods_name like concat('%',#{goodsName},'%')
         </if>
