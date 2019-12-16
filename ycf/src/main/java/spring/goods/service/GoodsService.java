@@ -137,14 +137,6 @@ public class GoodsService {
             example.createCriteria().andGoodsTypeEqualTo(0).andGoodsStateEqualTo(0).andGoodsNumTypeEqualTo(1);
             example.setOrderByClause("create_time desc");
             List<PGoods> list = pGoodsMapper.selectByExample(example);
-            for (PGoods goods:list ) {
-                if (goods.getMasterGraph()!= null){
-                    goods.setMasterGraph(goods.getMasterGraph());
-                }
-                if (goods.getGoodsPicture()!=null){
-                    goods.setGoodsPicture(split(goods.getGoodsPicture().split(",")));
-                }
-            }
           List<GoodsMemberResponse> goodsMemberResponseList = new ArrayList<>();
             if (list.size()>0){
                 for (PGoods  goods:list) {
@@ -174,11 +166,6 @@ public class GoodsService {
         try {
             PageHelper.startPage(requset.getPage(), requset.getPageSize());
             List<RecommendedResponse> list = goodsMapper.selectRecommendedlist(requset);
-            for (RecommendedResponse response:list) {
-                if (response.getPic()!=null){
-                    response.setPic(response.getPic());
-                }
-            }
             PageInfo<RecommendedResponse> pageInfo = new PageInfo<>(list);
             pageResult.setList(list);
             pageResult.setPageInfo(pageInfo.getPageNum(), pageInfo.getPageSize(), pageInfo.getPages(), pageInfo.getTotal());
@@ -201,11 +188,6 @@ public class GoodsService {
         try {
             PageHelper.startPage(requset.getPage(), requset.getPageSize());
             List<RecommendedResponse> list = goodsMapper.searchlist(requset);
-            for (RecommendedResponse response:list) {
-                if (response.getPic()!=null){
-                    response.setPic(response.getPic());
-                }
-            }
             PageInfo<RecommendedResponse> pageInfo = new PageInfo<>(list);
             pageResult.setList(list);
             pageResult.setPageInfo(pageInfo.getPageNum(), pageInfo.getPageSize(), pageInfo.getPages(), pageInfo.getTotal());
@@ -246,14 +228,4 @@ public class GoodsService {
         return ResultBuilder.success(goodsStateResponse);
     }
 
-    public BaseCommonResult<List<PFirstFicture>> picList() {
-        PFirstFictureExample example = new PFirstFictureExample();
-        List<PFirstFicture> pFirstFictures = pFirstFictureMapper.selectByExample(example);
-        if (pFirstFictures.size()>0){
-            for (PFirstFicture pFirstFicture:pFirstFictures) {
-                pFirstFicture.setPicUrl(pFirstFicture.getPicUrl());
-            }
-        }
-        return ResultBuilder.success(pFirstFictures);
-    }
 }
