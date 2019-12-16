@@ -19,4 +19,6 @@ public class MemberCarResult {
     private String goodsNumType;
     @ApiModelProperty(value = "商品图片")
     private String pic;
+    @ApiModelProperty(value = "是否选中")
+    private Integer selected;
 }
