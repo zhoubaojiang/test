@@ -36,6 +36,9 @@ public class POrders implements Serializable {
     @ApiModelProperty(value = "订单状态:0待支付,1支付成功,2支付失败,3待发货,4已发货,5确认收货,6订单完成,7申请退款,8退款中,9退款完成,10拒绝退款,11取消订单,12订单关闭")
     private String orderState;
 
+    @ApiModelProperty(value = "取消订单原因:0:我不想买了,1信息填写错误,2重新下单,3其他原因")
+    private Integer type;
+
     @ApiModelProperty(value = "是否隐藏:0是,1否")
     private Integer state;
 
@@ -77,6 +80,21 @@ public class POrders implements Serializable {
 
     @ApiModelProperty(value = "总鱿费抵扣")
     private BigDecimal youPrice;
+
+    @ApiModelProperty(value = "0:发错货,1质量问题,2材质与商品描述不符,3收到商品少件或破损,4不喜欢/效果差,5其它")
+    private String refundState;
+
+    @ApiModelProperty(value = "退货原因备注")
+    private String refundRemarks;
+
+    @ApiModelProperty(value = "退货图片")
+    private String refundPic;
+
+    @ApiModelProperty(value = "退货金额")
+    private BigDecimal refundPrice;
+
+    @ApiModelProperty(value = "退货物流单号")
+    private String refundAddressNo;
 
     private static final long serialVersionUID = 1L;
 
@@ -158,6 +176,14 @@ public class POrders implements Serializable {
 
     public void setOrderState(String orderState) {
         this.orderState = orderState;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public Integer getState() {
@@ -272,6 +298,46 @@ public class POrders implements Serializable {
         this.youPrice = youPrice;
     }
 
+    public String getRefundState() {
+        return refundState;
+    }
+
+    public void setRefundState(String refundState) {
+        this.refundState = refundState;
+    }
+
+    public String getRefundRemarks() {
+        return refundRemarks;
+    }
+
+    public void setRefundRemarks(String refundRemarks) {
+        this.refundRemarks = refundRemarks;
+    }
+
+    public String getRefundPic() {
+        return refundPic;
+    }
+
+    public void setRefundPic(String refundPic) {
+        this.refundPic = refundPic;
+    }
+
+    public BigDecimal getRefundPrice() {
+        return refundPrice;
+    }
+
+    public void setRefundPrice(BigDecimal refundPrice) {
+        this.refundPrice = refundPrice;
+    }
+
+    public String getRefundAddressNo() {
+        return refundAddressNo;
+    }
+
+    public void setRefundAddressNo(String refundAddressNo) {
+        this.refundAddressNo = refundAddressNo;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -288,6 +354,7 @@ public class POrders implements Serializable {
         sb.append(", payUserId=").append(payUserId);
         sb.append(", totalPrice=").append(totalPrice);
         sb.append(", orderState=").append(orderState);
+        sb.append(", type=").append(type);
         sb.append(", state=").append(state);
         sb.append(", orderType=").append(orderType);
         sb.append(", receivedName=").append(receivedName);
@@ -302,6 +369,11 @@ public class POrders implements Serializable {
         sb.append(", sendTime=").append(sendTime);
         sb.append(", freight=").append(freight);
         sb.append(", youPrice=").append(youPrice);
+        sb.append(", refundState=").append(refundState);
+        sb.append(", refundRemarks=").append(refundRemarks);
+        sb.append(", refundPic=").append(refundPic);
+        sb.append(", refundPrice=").append(refundPrice);
+        sb.append(", refundAddressNo=").append(refundAddressNo);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

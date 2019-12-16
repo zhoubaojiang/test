@@ -53,7 +53,7 @@ public class TradeAdminController {
     @ApiOperation(value = "取消订单", httpMethod = "GET")
     @RequestMapping(value = "/delete/order/{orderNo}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
     public BaseCommonResult deleteOrder(@PathVariable Long orderNo) {
-        return pOrderService.deleteOrder(orderNo);
+        return pOrderService.deleteOrder(orderNo,null);
     }
 
     /**

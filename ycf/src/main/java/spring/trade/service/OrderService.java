@@ -203,11 +203,14 @@ public class OrderService  {
      * @param orderNo
      * @return
      */
-    public BaseCommonResult deleteOrder(Long orderNo) {
+    public BaseCommonResult deleteOrder(Long orderNo,Integer type) {
 
         POrders pOrders = pOrdersMapper.selectByPrimaryKey(orderNo);
         if (pOrders!=null){
             pOrders.setOrderState("11");
+            if (type!= null){
+                pOrders.setType(type);
+            }
             pOrdersMapper.updateByPrimaryKeySelective(pOrders);
         }
         return ResultBuilder.success(pOrders);
@@ -355,5 +358,27 @@ public class OrderService  {
         mRecoveryGoods.setOrderState(2);
         mRecoveryGoodsMapper.updateByPrimaryKeySelective(mRecoveryGoods);
         return ResultBuilder.success(mRecoveryGoods);
+    }
+
+    /**
+     * 会员退货
+     * @param request
+     * @return
+     */
+    public BaseCommonResult<POrders> refundOrder(RefundOrderReequest request) {
+        POrdersExample example = new POrdersExample ();
+        example.createCriteria().andIdEqualTo(request.getOrderNo()).andUserIdEqualTo(request.getUserId());
+        List<POrders> pOrders = pOrdersMapper.selectByExample(example);
+        if (pOrders.size()<=0){
+            ResultBuilder.fail("订单不存在");
+        }
+        POrders orders = pOrders.get(0);
+        orders.setRefundState(request.getRefundState());
+        orders.setRefundRemarks(request.getRefundRemarks());
+        orders.setRefundPic(request.getRefundPic());
+        orders.setRefundPrice(request.getRefundPrice());
+        orders.setOrderState("7");
+        pOrdersMapper.updateByPrimaryKeySelective(orders);
+        return ResultBuilder.success(orders);
     }
 }

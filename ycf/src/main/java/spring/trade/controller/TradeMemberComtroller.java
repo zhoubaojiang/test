@@ -14,6 +14,7 @@ import spring.model.UUserMember;
 import spring.trade.dto.request.MemberOrderReq;
 import spring.trade.dto.request.OrdersRes;
 import spring.trade.dto.request.RecoveryRequest;
+import spring.trade.dto.request.RefundOrderReequest;
 import spring.trade.service.OrderService;
 
 @Api(description = "会员订单相关接口列表", basePath = "/ordersCenter/member/orders")
@@ -48,9 +49,15 @@ public class TradeMemberComtroller {
     }
 
     @ApiOperation(value = "取消订单", httpMethod = "GET")
-    @RequestMapping(value = "/delete/order/{orderNo}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public BaseCommonResult deleteOrder(@PathVariable Long orderNo) {
-        return pOrderService.deleteOrder(orderNo);
+    @RequestMapping(value = "/delete/order/{orderNo}/{type}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public BaseCommonResult deleteOrder(@PathVariable Long orderNo,@PathVariable Integer type) {
+        return pOrderService.deleteOrder(orderNo,type);
+    }
+
+    @ApiOperation(value = "退货", httpMethod = "POST")
+    @RequestMapping(value = "/refund/order", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    public BaseCommonResult<POrders> refundOrder(@Validated @RequestBody RefundOrderReequest request) {
+        return pOrderService.refundOrder(request);
     }
 
 

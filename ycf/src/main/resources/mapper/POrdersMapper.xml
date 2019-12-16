@@ -12,6 +12,7 @@
     <result column="pay_user_id" jdbcType="BIGINT" property="payUserId" />
     <result column="total_price" jdbcType="DECIMAL" property="totalPrice" />
     <result column="order_state" jdbcType="VARCHAR" property="orderState" />
+    <result column="type" jdbcType="INTEGER" property="type" />
     <result column="state" jdbcType="INTEGER" property="state" />
     <result column="order_type" jdbcType="INTEGER" property="orderType" />
     <result column="received_name" jdbcType="VARCHAR" property="receivedName" />
@@ -26,6 +27,11 @@
     <result column="send_time" jdbcType="TIMESTAMP" property="sendTime" />
     <result column="freight" jdbcType="DECIMAL" property="freight" />
     <result column="you_price" jdbcType="DECIMAL" property="youPrice" />
+    <result column="refund_state" jdbcType="VARCHAR" property="refundState" />
+    <result column="refund_remarks" jdbcType="VARCHAR" property="refundRemarks" />
+    <result column="refund_pic" jdbcType="VARCHAR" property="refundPic" />
+    <result column="refund_price" jdbcType="DECIMAL" property="refundPrice" />
+    <result column="refund_address_no" jdbcType="VARCHAR" property="refundAddressNo" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -87,8 +93,9 @@
   </sql>
   <sql id="Base_Column_List">
     id, user_id, order_no, create_time, update_time, goods_num, order_price, pay_user_id, 
-    total_price, order_state, state, order_type, received_name, phone, province, city, 
-    area, address, detailed_address, address_no, remarks, send_time, freight, you_price
+    total_price, order_state, type, state, order_type, received_name, phone, province, 
+    city, area, address, detailed_address, address_no, remarks, send_time, freight, you_price, 
+    refund_state, refund_remarks, refund_pic, refund_price, refund_address_no
   </sql>
   <select id="selectByExample" parameterType="spring.model.POrdersExample" resultMap="BaseResultMap">
     select
@@ -128,19 +135,23 @@
     insert into p_orders (user_id, order_no, create_time, 
       update_time, goods_num, order_price, 
       pay_user_id, total_price, order_state, 
-      state, order_type, received_name, 
-      phone, province, city, 
-      area, address, detailed_address, 
-      address_no, remarks, send_time, 
-      freight, you_price)
+      type, state, order_type, 
+      received_name, phone, province, 
+      city, area, address, 
+      detailed_address, address_no, remarks, 
+      send_time, freight, you_price, 
+      refund_state, refund_remarks, refund_pic, 
+      refund_price, refund_address_no)
     values (#{userId,jdbcType=BIGINT}, #{orderNo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{goodsNum,jdbcType=INTEGER}, #{orderPrice,jdbcType=DECIMAL}, 
       #{payUserId,jdbcType=BIGINT}, #{totalPrice,jdbcType=DECIMAL}, #{orderState,jdbcType=VARCHAR}, 
-      #{state,jdbcType=INTEGER}, #{orderType,jdbcType=INTEGER}, #{receivedName,jdbcType=VARCHAR}, 
-      #{phone,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
-      #{area,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{detailedAddress,jdbcType=VARCHAR}, 
-      #{addressNo,jdbcType=BIGINT}, #{remarks,jdbcType=VARCHAR}, #{sendTime,jdbcType=TIMESTAMP}, 
-      #{freight,jdbcType=DECIMAL}, #{youPrice,jdbcType=DECIMAL})
+      #{type,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, #{orderType,jdbcType=INTEGER}, 
+      #{receivedName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{detailedAddress,jdbcType=VARCHAR}, #{addressNo,jdbcType=BIGINT}, #{remarks,jdbcType=VARCHAR}, 
+      #{sendTime,jdbcType=TIMESTAMP}, #{freight,jdbcType=DECIMAL}, #{youPrice,jdbcType=DECIMAL}, 
+      #{refundState,jdbcType=VARCHAR}, #{refundRemarks,jdbcType=VARCHAR}, #{refundPic,jdbcType=VARCHAR}, 
+      #{refundPrice,jdbcType=DECIMAL}, #{refundAddressNo,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="spring.model.POrders">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -174,6 +185,9 @@
       </if>
       <if test="orderState != null">
         order_state,
+      </if>
+      <if test="type != null">
+        type,
       </if>
       <if test="state != null">
         state,
@@ -217,6 +231,21 @@
       <if test="youPrice != null">
         you_price,
       </if>
+      <if test="refundState != null">
+        refund_state,
+      </if>
+      <if test="refundRemarks != null">
+        refund_remarks,
+      </if>
+      <if test="refundPic != null">
+        refund_pic,
+      </if>
+      <if test="refundPrice != null">
+        refund_price,
+      </if>
+      <if test="refundAddressNo != null">
+        refund_address_no,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -245,6 +274,9 @@
       </if>
       <if test="orderState != null">
         #{orderState,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
       </if>
       <if test="state != null">
         #{state,jdbcType=INTEGER},
@@ -288,6 +320,21 @@
       <if test="youPrice != null">
         #{youPrice,jdbcType=DECIMAL},
       </if>
+      <if test="refundState != null">
+        #{refundState,jdbcType=VARCHAR},
+      </if>
+      <if test="refundRemarks != null">
+        #{refundRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="refundPic != null">
+        #{refundPic,jdbcType=VARCHAR},
+      </if>
+      <if test="refundPrice != null">
+        #{refundPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="refundAddressNo != null">
+        #{refundAddressNo,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="spring.model.POrdersExample" resultType="java.lang.Long">
@@ -328,6 +375,9 @@
       </if>
       <if test="record.orderState != null">
         order_state = #{record.orderState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=INTEGER},
       </if>
       <if test="record.state != null">
         state = #{record.state,jdbcType=INTEGER},
@@ -371,6 +421,21 @@
       <if test="record.youPrice != null">
         you_price = #{record.youPrice,jdbcType=DECIMAL},
       </if>
+      <if test="record.refundState != null">
+        refund_state = #{record.refundState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refundRemarks != null">
+        refund_remarks = #{record.refundRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refundPic != null">
+        refund_pic = #{record.refundPic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refundPrice != null">
+        refund_price = #{record.refundPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.refundAddressNo != null">
+        refund_address_no = #{record.refundAddressNo,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -388,6 +453,7 @@
       pay_user_id = #{record.payUserId,jdbcType=BIGINT},
       total_price = #{record.totalPrice,jdbcType=DECIMAL},
       order_state = #{record.orderState,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
       state = #{record.state,jdbcType=INTEGER},
       order_type = #{record.orderType,jdbcType=INTEGER},
       received_name = #{record.receivedName,jdbcType=VARCHAR},
@@ -401,7 +467,12 @@
       remarks = #{record.remarks,jdbcType=VARCHAR},
       send_time = #{record.sendTime,jdbcType=TIMESTAMP},
       freight = #{record.freight,jdbcType=DECIMAL},
-      you_price = #{record.youPrice,jdbcType=DECIMAL}
+      you_price = #{record.youPrice,jdbcType=DECIMAL},
+      refund_state = #{record.refundState,jdbcType=VARCHAR},
+      refund_remarks = #{record.refundRemarks,jdbcType=VARCHAR},
+      refund_pic = #{record.refundPic,jdbcType=VARCHAR},
+      refund_price = #{record.refundPrice,jdbcType=DECIMAL},
+      refund_address_no = #{record.refundAddressNo,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -435,6 +506,9 @@
       </if>
       <if test="orderState != null">
         order_state = #{orderState,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
       </if>
       <if test="state != null">
         state = #{state,jdbcType=INTEGER},
@@ -478,6 +552,21 @@
       <if test="youPrice != null">
         you_price = #{youPrice,jdbcType=DECIMAL},
       </if>
+      <if test="refundState != null">
+        refund_state = #{refundState,jdbcType=VARCHAR},
+      </if>
+      <if test="refundRemarks != null">
+        refund_remarks = #{refundRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="refundPic != null">
+        refund_pic = #{refundPic,jdbcType=VARCHAR},
+      </if>
+      <if test="refundPrice != null">
+        refund_price = #{refundPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="refundAddressNo != null">
+        refund_address_no = #{refundAddressNo,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -492,6 +581,7 @@
       pay_user_id = #{payUserId,jdbcType=BIGINT},
       total_price = #{totalPrice,jdbcType=DECIMAL},
       order_state = #{orderState,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
       state = #{state,jdbcType=INTEGER},
       order_type = #{orderType,jdbcType=INTEGER},
       received_name = #{receivedName,jdbcType=VARCHAR},
@@ -505,7 +595,12 @@
       remarks = #{remarks,jdbcType=VARCHAR},
       send_time = #{sendTime,jdbcType=TIMESTAMP},
       freight = #{freight,jdbcType=DECIMAL},
-      you_price = #{youPrice,jdbcType=DECIMAL}
+      you_price = #{youPrice,jdbcType=DECIMAL},
+      refund_state = #{refundState,jdbcType=VARCHAR},
+      refund_remarks = #{refundRemarks,jdbcType=VARCHAR},
+      refund_pic = #{refundPic,jdbcType=VARCHAR},
+      refund_price = #{refundPrice,jdbcType=DECIMAL},
+      refund_address_no = #{refundAddressNo,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

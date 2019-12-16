@@ -726,6 +726,66 @@ public class POrdersExample {
             return (Criteria) this;
         }
 
+        public Criteria andTypeIsNull() {
+            addCriterion("type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIsNotNull() {
+            addCriterion("type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeEqualTo(Integer value) {
+            addCriterion("type =", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotEqualTo(Integer value) {
+            addCriterion("type <>", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThan(Integer value) {
+            addCriterion("type >", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("type >=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThan(Integer value) {
+            addCriterion("type <", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("type <=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIn(List<Integer> values) {
+            addCriterion("type in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotIn(List<Integer> values) {
+            addCriterion("type not in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeBetween(Integer value1, Integer value2) {
+            addCriterion("type between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("type not between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
         public Criteria andStateIsNull() {
             addCriterion("state is null");
             return (Criteria) this;
@@ -1643,6 +1703,346 @@ public class POrdersExample {
 
         public Criteria andYouPriceNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("you_price not between", value1, value2, "youPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundStateIsNull() {
+            addCriterion("refund_state is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundStateIsNotNull() {
+            addCriterion("refund_state is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundStateEqualTo(String value) {
+            addCriterion("refund_state =", value, "refundState");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundStateNotEqualTo(String value) {
+            addCriterion("refund_state <>", value, "refundState");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundStateGreaterThan(String value) {
+            addCriterion("refund_state >", value, "refundState");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundStateGreaterThanOrEqualTo(String value) {
+            addCriterion("refund_state >=", value, "refundState");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundStateLessThan(String value) {
+            addCriterion("refund_state <", value, "refundState");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundStateLessThanOrEqualTo(String value) {
+            addCriterion("refund_state <=", value, "refundState");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundStateLike(String value) {
+            addCriterion("refund_state like", value, "refundState");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundStateNotLike(String value) {
+            addCriterion("refund_state not like", value, "refundState");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundStateIn(List<String> values) {
+            addCriterion("refund_state in", values, "refundState");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundStateNotIn(List<String> values) {
+            addCriterion("refund_state not in", values, "refundState");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundStateBetween(String value1, String value2) {
+            addCriterion("refund_state between", value1, value2, "refundState");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundStateNotBetween(String value1, String value2) {
+            addCriterion("refund_state not between", value1, value2, "refundState");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundRemarksIsNull() {
+            addCriterion("refund_remarks is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundRemarksIsNotNull() {
+            addCriterion("refund_remarks is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundRemarksEqualTo(String value) {
+            addCriterion("refund_remarks =", value, "refundRemarks");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundRemarksNotEqualTo(String value) {
+            addCriterion("refund_remarks <>", value, "refundRemarks");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundRemarksGreaterThan(String value) {
+            addCriterion("refund_remarks >", value, "refundRemarks");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundRemarksGreaterThanOrEqualTo(String value) {
+            addCriterion("refund_remarks >=", value, "refundRemarks");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundRemarksLessThan(String value) {
+            addCriterion("refund_remarks <", value, "refundRemarks");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundRemarksLessThanOrEqualTo(String value) {
+            addCriterion("refund_remarks <=", value, "refundRemarks");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundRemarksLike(String value) {
+            addCriterion("refund_remarks like", value, "refundRemarks");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundRemarksNotLike(String value) {
+            addCriterion("refund_remarks not like", value, "refundRemarks");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundRemarksIn(List<String> values) {
+            addCriterion("refund_remarks in", values, "refundRemarks");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundRemarksNotIn(List<String> values) {
+            addCriterion("refund_remarks not in", values, "refundRemarks");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundRemarksBetween(String value1, String value2) {
+            addCriterion("refund_remarks between", value1, value2, "refundRemarks");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundRemarksNotBetween(String value1, String value2) {
+            addCriterion("refund_remarks not between", value1, value2, "refundRemarks");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundPicIsNull() {
+            addCriterion("refund_pic is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundPicIsNotNull() {
+            addCriterion("refund_pic is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundPicEqualTo(String value) {
+            addCriterion("refund_pic =", value, "refundPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundPicNotEqualTo(String value) {
+            addCriterion("refund_pic <>", value, "refundPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundPicGreaterThan(String value) {
+            addCriterion("refund_pic >", value, "refundPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundPicGreaterThanOrEqualTo(String value) {
+            addCriterion("refund_pic >=", value, "refundPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundPicLessThan(String value) {
+            addCriterion("refund_pic <", value, "refundPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundPicLessThanOrEqualTo(String value) {
+            addCriterion("refund_pic <=", value, "refundPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundPicLike(String value) {
+            addCriterion("refund_pic like", value, "refundPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundPicNotLike(String value) {
+            addCriterion("refund_pic not like", value, "refundPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundPicIn(List<String> values) {
+            addCriterion("refund_pic in", values, "refundPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundPicNotIn(List<String> values) {
+            addCriterion("refund_pic not in", values, "refundPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundPicBetween(String value1, String value2) {
+            addCriterion("refund_pic between", value1, value2, "refundPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundPicNotBetween(String value1, String value2) {
+            addCriterion("refund_pic not between", value1, value2, "refundPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundPriceIsNull() {
+            addCriterion("refund_price is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundPriceIsNotNull() {
+            addCriterion("refund_price is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundPriceEqualTo(BigDecimal value) {
+            addCriterion("refund_price =", value, "refundPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundPriceNotEqualTo(BigDecimal value) {
+            addCriterion("refund_price <>", value, "refundPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundPriceGreaterThan(BigDecimal value) {
+            addCriterion("refund_price >", value, "refundPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundPriceGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("refund_price >=", value, "refundPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundPriceLessThan(BigDecimal value) {
+            addCriterion("refund_price <", value, "refundPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundPriceLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("refund_price <=", value, "refundPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundPriceIn(List<BigDecimal> values) {
+            addCriterion("refund_price in", values, "refundPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundPriceNotIn(List<BigDecimal> values) {
+            addCriterion("refund_price not in", values, "refundPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundPriceBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("refund_price between", value1, value2, "refundPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundPriceNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("refund_price not between", value1, value2, "refundPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundAddressNoIsNull() {
+            addCriterion("refund_address_no is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundAddressNoIsNotNull() {
+            addCriterion("refund_address_no is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundAddressNoEqualTo(String value) {
+            addCriterion("refund_address_no =", value, "refundAddressNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundAddressNoNotEqualTo(String value) {
+            addCriterion("refund_address_no <>", value, "refundAddressNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundAddressNoGreaterThan(String value) {
+            addCriterion("refund_address_no >", value, "refundAddressNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundAddressNoGreaterThanOrEqualTo(String value) {
+            addCriterion("refund_address_no >=", value, "refundAddressNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundAddressNoLessThan(String value) {
+            addCriterion("refund_address_no <", value, "refundAddressNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundAddressNoLessThanOrEqualTo(String value) {
+            addCriterion("refund_address_no <=", value, "refundAddressNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundAddressNoLike(String value) {
+            addCriterion("refund_address_no like", value, "refundAddressNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundAddressNoNotLike(String value) {
+            addCriterion("refund_address_no not like", value, "refundAddressNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundAddressNoIn(List<String> values) {
+            addCriterion("refund_address_no in", values, "refundAddressNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundAddressNoNotIn(List<String> values) {
+            addCriterion("refund_address_no not in", values, "refundAddressNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundAddressNoBetween(String value1, String value2) {
+            addCriterion("refund_address_no between", value1, value2, "refundAddressNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundAddressNoNotBetween(String value1, String value2) {
+            addCriterion("refund_address_no not between", value1, value2, "refundAddressNo");
             return (Criteria) this;
         }
     }
