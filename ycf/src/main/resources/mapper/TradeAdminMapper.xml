@@ -1,8 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="spring.mapper.cvs.TradeAdminMapper">
-
-
+    <resultMap id="BaseResultMap" type="spring.model.MRecoveryGoods">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+        <result column="member_id" jdbcType="BIGINT" property="memberId" />
+        <result column="member_name" jdbcType="VARCHAR" property="memberName" />
+        <result column="order_state" jdbcType="INTEGER" property="orderState" />
+        <result column="z_pic" jdbcType="VARCHAR" property="zPic" />
+        <result column="x_pic" jdbcType="VARCHAR" property="xPic" />
+        <result column="p_pic" jdbcType="VARCHAR" property="pPic" />
+        <result column="goods_brand" jdbcType="VARCHAR" property="goodsBrand" />
+        <result column="goods_condition" jdbcType="INTEGER" property="goodsCondition" />
+        <result column="fresh_used" jdbcType="INTEGER" property="freshUsed" />
+        <result column="goods_price" jdbcType="DECIMAL" property="goodsPrice" />
+        <result column="you_price" jdbcType="DECIMAL" property="youPrice" />
+        <result column="price" jdbcType="DECIMAL" property="price" />
+        <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+        <result column="de_remarks" jdbcType="VARCHAR" property="deRemarks" />
+        <result column="m_fresh_used" jdbcType="INTEGER" property="mFreshUsed" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, order_no, member_id, member_name, order_state, z_pic, x_pic, p_pic, goods_brand,
+    goods_condition, fresh_used, goods_price, you_price, price, remarks, de_remarks,
+    m_fresh_used, create_time
+  </sql>
   <select id="selectOrderList" parameterType="spring.trade.dto.request.AdminOrderReq" resultType="spring.trade.dto.result.AdminTradeResult">
     SELECT
     p.id id,
@@ -68,4 +91,28 @@
 
   </select>
 
+    <select id="selectAdminRecoveryOrderList" resultMap="BaseResultMap" parameterType="spring.trade.dto.request.AdminRecoveryRequest">
+    select
+    <include refid="Base_Column_List" />
+     from
+      m_recovery_goods
+      where
+      1=1
+      <if test="orderState != null and orderState != ''">
+        and order_state = #{orderState}
+      </if>
+      <if test="orderNo != null and orderNo != ''">
+        and order_no LIKE concat("%",#{orderNo},"%")
+      </if>
+      <if test="goodsCondition != null and goodsCondition != ''">
+          and goods_condition = #{goodsCondition}
+      </if>
+       <if test="memberName != null and memberName != ''">
+          and member_name = #{memberName}
+      </if>
+      <if test="startTime != null and endTime != null">
+          and  unix_timestamp(create_time) BETWEEN #{startTime,jdbcType=BIGINT} and #{endTime,jdbcType=BIGINT}
+      </if>
+      order by create_time desc
+    </select>
 </mapper>

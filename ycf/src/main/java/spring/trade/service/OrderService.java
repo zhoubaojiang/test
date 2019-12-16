@@ -10,12 +10,8 @@ import spring.dto.result.BasePage;
 import spring.exception.GoodsException;
 import spring.mapper.*;
 import spring.mapper.cvs.TradeAdminMapper;
-import spring.member.service.MemberService;
 import spring.model.*;
-import spring.trade.dto.request.AdminOrderReq;
-import spring.trade.dto.request.MemberOrderReq;
-import spring.trade.dto.request.OrdersRes;
-import spring.trade.dto.request.RecoveryRequest;
+import spring.trade.dto.request.*;
 import spring.trade.dto.result.AdminTradeDetailsResult;
 import spring.trade.dto.result.AdminTradeResult;
 import spring.trade.dto.result.OrderGoodsListResult;
@@ -24,7 +20,6 @@ import spring.utils.ResultBuilder;
 import spring.wechat.dto.requset.PayReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import spring.wechat.service.WechatService;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,6 +40,9 @@ public class OrderService  {
     private TradeAdminMapper tradeAdminMapper;
     @Autowired
     private MRecoveryGoodsMapper mRecoveryGoodsMapper;
+    @Autowired
+    private UUserMemberMapper uUserMemberMapper;
+
     /**
      * 创建订单
      * @param ordersRes
@@ -226,6 +224,8 @@ public class OrderService  {
         record.setOrderNo(DateUtil.getOrderNumber());
         record.setOrderState(0);
         record.setMemberId(request.getMemberId());
+        UUserMember uUserMember = uUserMemberMapper.selectByPrimaryKey(request.getMemberId());
+        record.setMemberName(uUserMember.getUserName());
         record.setRemarks(request.getRemarks());
         record.setGoodsBrand(request.getGoodsBrand());
         record.setGoodsPrice(request.getGoodsPrice());
@@ -267,5 +267,79 @@ public class OrderService  {
     public BaseCommonResult getRecoveryOrder(Long id) {
         log.info("会员回收商品查询商品详情接口请求参数:{}",id);
         return ResultBuilder.success(mRecoveryGoodsMapper.selectByPrimaryKey(id));
+    }
+
+    public BaseCommonResult<BasePage<MRecoveryGoods>> adminRecoveryOrderList(AdminRecoveryRequest request) {
+        BasePage<MRecoveryGoods> pageResult = new BasePage();
+        log.info("后台管理会员回收商品查询商品列表,请求参数为：{}", request);
+        try {
+            PageHelper.startPage(request.getPage(), request.getPageSize());
+            List<MRecoveryGoods> list = tradeAdminMapper.selectAdminRecoveryOrderList(request);
+            PageInfo<MRecoveryGoods> pageInfo = new PageInfo<>(list);
+            pageResult.setList(list);
+            pageResult.setPageInfo(pageInfo.getPageNum(), pageInfo.getPageSize(), pageInfo.getPages(), pageInfo.getTotal());
+        }catch (GoodsException e) {
+            log.info("后台管理会员回收商品查询商品列表异常，异常信息为：{}", e);
+            ResultBuilder.fail("系统异常");
+        }
+        log.info("后台管理会员回收商品查询商品列表接口结束");
+        return ResultBuilder.success(pageResult);
+    }
+
+    /**
+     * 关闭回收
+     * @param orderNo
+     * @return
+     */
+    public BaseCommonResult deleteRecoveryOrder(Long orderNo) {
+        MRecoveryGoods mRecoveryGoods = new MRecoveryGoods();
+        mRecoveryGoods.setId(orderNo);
+        mRecoveryGoods.setOrderState(6);
+        mRecoveryGoodsMapper.updateByPrimaryKeySelective(mRecoveryGoods);
+        log.info("后台管理会员回收商品订单关闭接口结束:{}",mRecoveryGoods);
+        return ResultBuilder.success(mRecoveryGoods);
+    }
+
+    /**
+     * 确认回收
+     * @param orderNo
+     * @return
+     */
+    public BaseCommonResult updateRecoveryOrder(Long orderNo) {
+        MRecoveryGoods mRecoveryGoods = new MRecoveryGoods();
+        mRecoveryGoods.setId(orderNo);
+        mRecoveryGoods.setOrderState(5);
+        mRecoveryGoodsMapper.updateByPrimaryKeySelective(mRecoveryGoods);
+        log.info("后台管理会员回收商品订单确认接口结束:{}",mRecoveryGoods);
+        return ResultBuilder.success(mRecoveryGoods);
+    }
+
+    /**
+     * 回收订单详细
+     * @param orderNo
+     * @return
+     */
+    public BaseCommonResult<MRecoveryGoods> detailedRecoveryOrder(Long orderNo) {
+        return ResultBuilder.success(mRecoveryGoodsMapper.selectByPrimaryKey(orderNo));
+    }
+
+    /**
+     * 后台管理回收商品
+     * @param request
+     * @return
+     */
+    @Transient
+    public BaseCommonResult<MRecoveryGoods> recoveryOffer(RecoveryOfferRequest request) {
+        log.info("后台管理回收商品审核报价:{}",request);
+        MRecoveryGoods mRecoveryGoods = new MRecoveryGoods();
+        mRecoveryGoods.setId(request.getOrderNo());
+        mRecoveryGoods.setmFreshUsed(request.getMFreshUsed());
+        mRecoveryGoods.setYouPrice(request.getYouPrice());
+        mRecoveryGoods.setPrice(request.getPrice());
+        mRecoveryGoods.setDeRemarks(request.getDeRemarks());
+        mRecoveryGoods.setGoodsCondition(request.getGoodsCondition());
+        mRecoveryGoods.setOrderState(request.getOrderState());
+        mRecoveryGoodsMapper.updateByPrimaryKeySelective(mRecoveryGoods);
+        return ResultBuilder.success(mRecoveryGoods);
     }
 }

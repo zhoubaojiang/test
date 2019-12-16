@@ -9,6 +9,6 @@ public class RecoveryRequest extends PageBeanUtile {
     @ApiModelProperty("用户ID")
     private Long memberId;
 
-    @ApiModelProperty("0:提交回收订单—>1:待确认—>2:已报价—>3:确认回收价格—>4:上门验收—>5:已验收—>6:完成")
+    @ApiModelProperty("提交回收订单—>0:待确认—>1:已报价—>2:确认回收价格—>3:上门验收—>4:已验收—>5:完成->6:取消")
     private Integer orderState;
 }

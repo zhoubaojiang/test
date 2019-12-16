@@ -72,7 +72,7 @@ public class TradeMemberComtroller {
      * @param request
      * @return
      */
-    @ApiOperation(value = "会员回收", httpMethod = "POST")
+    @ApiOperation(value = "会员回收列表", httpMethod = "POST")
     @RequestMapping(value = "/recovery/orderList", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     public BaseCommonResult<BasePage<MRecoveryGoods>> recoveryOrderList(@Validated @RequestBody RecoveryRequest request) {
         return pOrderService.recoveryOrderList(request);
