@@ -95,6 +95,7 @@
     <if test="distinct">
       distinct
     </if>
+    'true' as QUERYID,
     <include refid="Base_Column_List" />
     from p_orders
     <if test="_parameter != null">

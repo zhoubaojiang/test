@@ -90,7 +90,8 @@
         p.id goodsId,
         p.goods_name goodsName,
         p.goods_price goodsPrice,
-        p.discount_price discountPrice
+        p.discount_price discountPrice,
+        p.master_graph  pic
         FROM
         p_goods p
         WHERE

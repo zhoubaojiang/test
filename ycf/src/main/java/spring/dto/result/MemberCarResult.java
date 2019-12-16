@@ -17,4 +17,6 @@ public class MemberCarResult {
     private String memberCarDetailId;
     @ApiModelProperty(value = "是否已出售：0是，1否")
     private String goodsNumType;
+    @ApiModelProperty(value = "商品图片")
+    private String pic;
 }

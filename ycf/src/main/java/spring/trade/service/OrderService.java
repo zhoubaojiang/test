@@ -191,4 +191,18 @@ public class OrderService  {
         return ResultBuilder.success(adminTradeDetailsResult);
     }
 
+    /**
+     * 取消订单
+     * @param orderNo
+     * @return
+     */
+    public BaseCommonResult deleteOrder(Long orderNo) {
+
+        POrders pOrders = pOrdersMapper.selectByPrimaryKey(orderNo);
+        if (pOrders!=null){
+            pOrders.setOrderState("11");
+            pOrdersMapper.updateByPrimaryKeySelective(pOrders);
+        }
+        return ResultBuilder.success(pOrders);
+    }
 }

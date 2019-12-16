@@ -8,7 +8,8 @@
         g.goods_name goodsName,
         g.discount_price discountPrice,
         mm.id memberCarDetailId,
-        g.goods_num_type goodsNumType
+        g.goods_num_type goodsNumType,
+		g.master_graph pic
         FROM
         m_member_car m
         left join m_member_car_detail mm on m.id = mm.member_car_id
