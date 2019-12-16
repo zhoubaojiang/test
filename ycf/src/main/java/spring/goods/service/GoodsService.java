@@ -1,6 +1,5 @@
 package spring.goods.service;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.Transient;
 import spring.dto.BaseCommonResult;
 import spring.dto.result.BasePage;
@@ -16,8 +15,6 @@ import spring.goods.dto.response.RecommendedResponse;
 import spring.mapper.PFirstFictureMapper;
 import spring.mapper.cvs.GoodsMapper;
 import spring.mapper.PGoodsMapper;
-import spring.model.PFirstFicture;
-import spring.model.PFirstFictureExample;
 import spring.model.PGoods;
 import spring.model.PGoodsExample;
 import spring.utils.ResultBuilder;
@@ -42,8 +39,6 @@ public class GoodsService {
     private PGoodsMapper pGoodsMapper;
     @Autowired
     private GoodsMapper goodsMapper;
-    @Value("${ycf.picUrl}")
-    private String picUrl;
     @Autowired
     private PFirstFictureMapper pFirstFictureMapper;
 
@@ -92,14 +87,6 @@ public class GoodsService {
         try {
             PageHelper.startPage(request.getPage(), request.getPageSize());
             List<PGoods> list = goodsMapper.selectGoodsList(request);
-//            for (PGoods goods:list) {
-//                if (goods.getMasterGraph()!= null){
-//                    goods.setMasterGraph(picUrl+goods.getMasterGraph());
-//                }
-//                if (goods.getGoodsPicture()!=null){
-//                    goods.setGoodsPicture(split(goods.getGoodsPicture().split(",")));
-//                }
-//            }
             PageInfo<PGoods> pageInfo = new PageInfo<>(list);
             pageResult.setList(list);
             pageResult.setPageInfo(pageInfo.getPageNum(), pageInfo.getPageSize(), pageInfo.getPages(), pageInfo.getTotal());
@@ -109,19 +96,6 @@ public class GoodsService {
         }
         log.info("分页查询商品列表接口结束");
         return ResultBuilder.success(pageResult);
-    }
-    //图片拼接URL
-    public String split(String[] split){
-        String pic = null;
-        int i = 0;
-        for ( String s :split) {
-            pic = picUrl +s;
-            i++;
-            if (i != 0){
-                pic =pic + ","+ picUrl +s;
-            }
-        }
-        return pic;
     }
     /**
      * 新品推荐
