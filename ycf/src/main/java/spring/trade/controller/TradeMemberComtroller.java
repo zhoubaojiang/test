@@ -83,4 +83,10 @@ public class TradeMemberComtroller {
     public BaseCommonResult getRecoveryOrder(@PathVariable Long id) {
         return pOrderService.getRecoveryOrder(id);
     }
+
+    @ApiOperation(value = "用户确认回收订单", httpMethod = "GET")
+    @RequestMapping(value = "/recovery/{id}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public BaseCommonResult getRecoveryOrderState(@PathVariable Long id) {
+        return pOrderService.getRecoveryOrderState(id);
+    }
 }

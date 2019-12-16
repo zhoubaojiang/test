@@ -342,4 +342,18 @@ public class OrderService  {
         mRecoveryGoodsMapper.updateByPrimaryKeySelective(mRecoveryGoods);
         return ResultBuilder.success(mRecoveryGoods);
     }
+
+    /**
+     * 用户确认回收
+     * @param id
+     * @return
+     */
+    public BaseCommonResult getRecoveryOrderState(Long id) {
+        log.info("后台管理回收商品审核报价:{}",id);
+        MRecoveryGoods mRecoveryGoods = new MRecoveryGoods();
+        mRecoveryGoods.setId(id);
+        mRecoveryGoods.setOrderState(2);
+        mRecoveryGoodsMapper.updateByPrimaryKeySelective(mRecoveryGoods);
+        return ResultBuilder.success(mRecoveryGoods);
+    }
 }
