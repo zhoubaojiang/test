@@ -15,6 +15,7 @@ import spring.model.*;
 import spring.trade.dto.request.AdminOrderReq;
 import spring.trade.dto.request.MemberOrderReq;
 import spring.trade.dto.request.OrdersRes;
+import spring.trade.dto.request.RecoveryRequest;
 import spring.trade.dto.result.AdminTradeDetailsResult;
 import spring.trade.dto.result.AdminTradeResult;
 import spring.trade.dto.result.OrderGoodsListResult;
@@ -233,5 +234,38 @@ public class OrderService  {
         record.setzPic(request.getZPic());
         mRecoveryGoodsMapper.insertSelective(record);
         return ResultBuilder.success(record);
+    }
+
+    /**
+     * 会员回收商品查询
+     * @param request
+     * @return
+     */
+    public BaseCommonResult<BasePage<MRecoveryGoods>> recoveryOrderList(RecoveryRequest request) {
+        BasePage<MRecoveryGoods> pageResult = new BasePage();
+        log.info("会员回收商品查询商品列表,请求参数为：{}", request);
+        try {
+            PageHelper.startPage(request.getPage(), request.getPageSize());
+            MRecoveryGoodsExample example = new MRecoveryGoodsExample ();
+            MRecoveryGoodsExample.Criteria criteria = example.createCriteria();
+            criteria.andMemberIdEqualTo(request.getMemberId());
+            if (request.getOrderState()!=null){
+                criteria.andOrderStateEqualTo(request.getOrderState());
+            }
+            List<MRecoveryGoods> list = mRecoveryGoodsMapper.selectByExample(example);
+            PageInfo<MRecoveryGoods> pageInfo = new PageInfo<>(list);
+            pageResult.setList(list);
+            pageResult.setPageInfo(pageInfo.getPageNum(), pageInfo.getPageSize(), pageInfo.getPages(), pageInfo.getTotal());
+        }catch (GoodsException e) {
+            log.info("会员回收商品查询商品列表异常，异常信息为：{}", e);
+            ResultBuilder.fail("系统异常");
+        }
+        log.info("会员回收商品查询商品列表接口结束");
+        return ResultBuilder.success(pageResult);
+    }
+
+    public BaseCommonResult getRecoveryOrder(Long id) {
+        log.info("会员回收商品查询商品详情接口请求参数:{}",id);
+        return ResultBuilder.success(mRecoveryGoodsMapper.selectByPrimaryKey(id));
     }
 }
