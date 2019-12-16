@@ -10,6 +10,7 @@ import com.aliyun.oss.model.PutObjectResult;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -42,6 +43,8 @@ public class OSSClientUtil {
 	private String bucketName;
 	//图片访问域名
 	private String url;
+	@Value("${ycf.picUrl}")
+	private String picUrl;
 	/**
 	 * 初始化参数数据
 	 * @param endpoint
@@ -74,9 +77,9 @@ public class OSSClientUtil {
 		String fileName = this.uploadImg2Oss(inputStream, originalFilename, filedir); // 上传图片
 		 String imgUrl = this.getImgUrl(fileName,filedir);// 获取url
 		 logger.info("上传图片的url:{}",imgUrl);
-//		 String subString = splitFileUrl(imgUrl); // 保存到数据库的url
+		 String subString = splitFileUrl(imgUrl); // 保存到数据库的url
 //		return "/" + filedir + fileName;
-		return imgUrl;
+		return subString;
 	}
 
 	/**
@@ -94,7 +97,8 @@ public class OSSClientUtil {
 			return fileUrl;
 		}
 		String substring = fileUrl.substring(index + 4);
-		return substring;
+		 substring = substring.substring(0,substring.indexOf("?"));
+		return picUrl + substring;
 	}
 
 	/**

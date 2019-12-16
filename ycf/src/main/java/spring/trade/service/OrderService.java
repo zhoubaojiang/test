@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.annotation.Transient;
 import spring.dto.BaseCommonResult;
+import spring.dto.request.RecoveryOrderRequest;
 import spring.dto.result.BasePage;
 import spring.exception.GoodsException;
 import spring.mapper.*;
@@ -41,6 +42,8 @@ public class OrderService  {
     private POrdersDetailsMapper pOrdersDetailsMapper;
     @Autowired
     private TradeAdminMapper tradeAdminMapper;
+    @Autowired
+    private MRecoveryGoodsMapper mRecoveryGoodsMapper;
     /**
      * 创建订单
      * @param ordersRes
@@ -49,24 +52,26 @@ public class OrderService  {
     @Transient
     public BaseCommonResult<POrders> createOrder(OrdersRes ordersRes) {
         PGoodsExample goodsExample = new PGoodsExample();
-        goodsExample.createCriteria().andIdEqualTo(ordersRes.getGoodsId()).andIsDeleteEqualTo(1).andGoodsNumTypeEqualTo(1);
-        List<PGoods> goodsList = pGoodsMapper.selectByExample(goodsExample);
-        if (goodsList.size() <= 0){
-            return  ResultBuilder.fail("商品已售出");
+        String[] split = ordersRes.getIds().split(",");
+        for (String id:split) {
+            goodsExample.createCriteria().andIdEqualTo(Long.parseLong(id)).andIsDeleteEqualTo(1).andGoodsNumTypeEqualTo(1);
+            List<PGoods> goodsList = pGoodsMapper.selectByExample(goodsExample);
+            if (goodsList.size() <= 0){
+                return  ResultBuilder.fail("商品已售出");
+            }
         }
-        PGoods goods = goodsList.get(0);
+
         UMemberReceiveAddress memberReceiveAddress = memberReceiveAddressMapper.selectByPrimaryKey(ordersRes.getAddressId());
         POrders pOreders = new POrders();
         pOreders.setUserId(ordersRes.getUserId());
         pOreders.setCreateTime(new Date());
-        pOreders.setGoodsNum(1);
+        pOreders.setGoodsNum(ordersRes.getGoodsNum());
         //生成订单号时间戳加随机数
         pOreders.setOrderNo(DateUtil.getOrderNumber());
-        if(ordersRes.getOrderType()==0){//支付方式;0现金，1鱿费
-            pOreders.setTotalPrice(goods.getDiscountPrice());
-        }else {
-            pOreders.setOrderPrice(goods.getTreasureDiscountPrice());
-        }
+        pOreders.setOrderType(ordersRes.getOrderType());
+        //支付金额
+        pOreders.setTotalPrice(ordersRes.getTotalPrice());
+        pOreders.setOrderPrice(ordersRes.getOrderPrice());
         //订单
         pOreders.setOrderState("0");
         //收货人
@@ -80,23 +85,26 @@ public class OrderService  {
         //省市区详细地址
         pOreders.setDetailedAddress(memberReceiveAddress.getProvince()+memberReceiveAddress.getCity()+memberReceiveAddress.getArea()+memberReceiveAddress.getDetailAddress());
         int i = pOrdersMapper.insertSelective(pOreders);
-        //订单明细
-        POrdersDetails pOredersDetails = new POrdersDetails();
-        pOredersDetails.setOrderNo(pOreders.getId());
-        pOredersDetails.setGoodsId(ordersRes.getGoodsId());
-        pOredersDetails.setGoodsPrice(goods.getGoodsPrice());//商品原价
-        pOredersDetails.setGoodsName(goods.getGoodsName());
-        pOredersDetails.setGoodsNum(1);
-        pOredersDetails.setGoodsCondition(goods.getGoodsCondition());//商品品相
-        pOredersDetails.setOrderPrice(goods.getDiscountPrice());
-        if(ordersRes.getOrderType()==0){//支付方式;0现金，1鱿费
-            pOredersDetails.setDiscountPrice(goods.getDiscountPrice());
-        }else {
-            pOredersDetails.setYouPricce(goods.getTreasureDiscountPrice());
-        }
-        pOredersDetails.setGoodsPicture(goods.getMasterGraph());//商品主图
-        pOrdersDetailsMapper.insertSelective(pOredersDetails);
 
+        for (String id:split) {
+            PGoods goods = pGoodsMapper.selectByPrimaryKey(Long.parseLong(id));
+            //订单明细
+            POrdersDetails pOredersDetails = new POrdersDetails();
+            pOredersDetails.setOrderNo(pOreders.getId());
+            pOredersDetails.setGoodsId(goods.getId());
+            pOredersDetails.setGoodsPrice(goods.getGoodsPrice());//商品原价
+            pOredersDetails.setGoodsName(goods.getGoodsName());
+            pOredersDetails.setGoodsNum(1);
+            pOredersDetails.setGoodsCondition(goods.getGoodsCondition());//商品品相
+            pOredersDetails.setOrderPrice(goods.getDiscountPrice());
+            if(ordersRes.getOrderType()==0){//支付方式;0现金，1鱿费
+                pOredersDetails.setDiscountPrice(goods.getDiscountPrice());
+            }else {
+                pOredersDetails.setYouPricce(goods.getTreasureDiscountPrice());
+            }
+            pOredersDetails.setGoodsPicture(goods.getMasterGraph());//商品主图
+            pOrdersDetailsMapper.insertSelective(pOredersDetails);
+        }
         return ResultBuilder.success(pOreders);
     }
 
@@ -204,5 +212,26 @@ public class OrderService  {
             pOrdersMapper.updateByPrimaryKeySelective(pOrders);
         }
         return ResultBuilder.success(pOrders);
+    }
+
+    /**
+     * 会员商品回收
+     * @param request
+     * @return
+     */
+    @Transient
+    public BaseCommonResult<MRecoveryGoods> recoveryOrder(RecoveryOrderRequest request) {
+        MRecoveryGoods record = new MRecoveryGoods();
+        record.setOrderNo(DateUtil.getOrderNumber());
+        record.setOrderState(0);
+        record.setMemberId(request.getMemberId());
+        record.setRemarks(request.getRemarks());
+        record.setGoodsBrand(request.getGoodsBrand());
+        record.setGoodsPrice(request.getGoodsPrice());
+        record.setpPic(request.getPPic());
+        record.setFreshUsed(request.getFreshUsed());
+        record.setzPic(request.getZPic());
+        mRecoveryGoodsMapper.insertSelective(record);
+        return ResultBuilder.success(record);
     }
 }

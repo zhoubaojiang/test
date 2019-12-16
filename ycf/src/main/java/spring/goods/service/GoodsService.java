@@ -223,4 +223,19 @@ public class GoodsService {
         return ResultBuilder.success(pFirstFictures);
     }
 
+    /**
+     * 多个商品详情
+     * @param ids
+     * @return
+     */
+    public BaseCommonResult<List<GoodsDetailsResponse>> goodsIdsDetails(String ids) {
+        List<GoodsDetailsResponse> responses =  new ArrayList<>();
+        String[] idss = ids.split(",");
+        for (String id:idss) {
+            PGoods goods = pGoodsMapper.selectByPrimaryKey(Long.parseLong(id));
+            GoodsDetailsResponse map = dozer.map(goods, GoodsDetailsResponse.class);
+            responses.add(map);
+        }
+        return ResultBuilder.success(responses);
+    }
 }

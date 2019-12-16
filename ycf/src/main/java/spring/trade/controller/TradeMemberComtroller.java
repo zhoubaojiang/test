@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import spring.dto.BaseCommonResult;
+import spring.dto.request.RecoveryOrderRequest;
 import spring.dto.result.BasePage;
+import spring.model.MRecoveryGoods;
 import spring.model.POrders;
 import spring.model.UUserMember;
 import spring.trade.dto.request.MemberOrderReq;
@@ -35,8 +37,6 @@ public class TradeMemberComtroller {
     /**
      *
      * 功能描述:商品列表
-     * @author: xiongkun
-     * @date: 2017年11月27日 下午4:36:51
      * @param request
      * @return
      */
@@ -51,4 +51,19 @@ public class TradeMemberComtroller {
     public BaseCommonResult deleteOrder(@PathVariable Long orderNo) {
         return pOrderService.deleteOrder(orderNo);
     }
+
+
+    /**
+     *
+     * 功能描述:添加回收物品
+     * @param request
+     * @return
+     */
+    @ApiOperation(value = "会员回收", httpMethod = "POST")
+    @RequestMapping(value = "/recovery/order", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    public BaseCommonResult<MRecoveryGoods> recoveryOrder(@Validated @RequestBody RecoveryOrderRequest request) {
+        return pOrderService.recoveryOrder(request);
+    }
+
+
 }

@@ -77,6 +77,17 @@ public class GoodsMemberController {
      * 功能描述:商品详情
      * @return
      */
+    @ApiOperation(value = "多个商品详情", httpMethod = "GET")
+    @RequestMapping(value = "/ids/detail", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public @ResponseBody BaseCommonResult<List<GoodsDetailsResponse>> goodsIdsDetails(@RequestParam(name="ids") String ids) {
+        return goodsService.goodsIdsDetails(ids);
+    }
+
+    /**
+     *
+     * 功能描述:商品详情
+     * @return
+     */
     @ApiOperation(value = "小程序首页图", httpMethod = "GET")
     @RequestMapping(value = "/picList", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
     public @ResponseBody BaseCommonResult<List<PFirstFicture>> picList() {
