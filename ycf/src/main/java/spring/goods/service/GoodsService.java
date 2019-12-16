@@ -189,6 +189,10 @@ public class GoodsService {
         return ResultBuilder.success(map);
     }
 
+    /**
+     * 统计商品状态总数
+     * @return
+     */
     public BaseCommonResult<GoodsStateResponse> goodsState() {
         PGoodsExample example = new PGoodsExample();
         GoodsStateResponse goodsStateResponse = new GoodsStateResponse();
@@ -203,6 +207,11 @@ public class GoodsService {
         goodsStateResponse.setSell(pGoodsMapper.countByExample(example));
         return ResultBuilder.success(goodsStateResponse);
     }
+
+    /**
+     * 小程序首图
+     * @return
+     */
     public BaseCommonResult<List<PFirstFicture>> picList() {
         PFirstFictureExample example = new PFirstFictureExample();
         List<PFirstFicture> pFirstFictures = pFirstFictureMapper.selectByExample(example);
