@@ -21,4 +21,7 @@ public class RecoveryOrderRequest {
     private String pPic;
     @ApiModelProperty("新旧程度:0->全新,1->95新,2->9成新,3->8.5新,4->8成新,5->7成新")
     private Integer freshUsed;
+    @ApiModelProperty(value = "宝贝标题")
+    private String title;
+
 }

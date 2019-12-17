@@ -3,6 +3,7 @@ package spring.trade.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.dozer.DozerBeanMapper;
 import org.springframework.data.annotation.Transient;
 import spring.dto.BaseCommonResult;
 import spring.dto.request.RecoveryOrderRequest;
@@ -21,7 +22,6 @@ import spring.wechat.dto.requset.PayReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -42,7 +42,8 @@ public class OrderService  {
     private MRecoveryGoodsMapper mRecoveryGoodsMapper;
     @Autowired
     private UUserMemberMapper uUserMemberMapper;
-
+    @Autowired
+    private DozerBeanMapper dozer;
     /**
      * 创建订单
      * @param ordersRes
@@ -203,6 +204,7 @@ public class OrderService  {
      * @param orderNo
      * @return
      */
+    @Transient
     public BaseCommonResult deleteOrder(Long orderNo,Integer type) {
 
         POrders pOrders = pOrdersMapper.selectByPrimaryKey(orderNo);
@@ -223,18 +225,12 @@ public class OrderService  {
      */
     @Transient
     public BaseCommonResult<MRecoveryGoods> recoveryOrder(RecoveryOrderRequest request) {
-        MRecoveryGoods record = new MRecoveryGoods();
+        MRecoveryGoods record = dozer.map(request, MRecoveryGoods.class);
         record.setOrderNo(DateUtil.getOrderNumber());
-        record.setOrderState(0);
         record.setMemberId(request.getMemberId());
         UUserMember uUserMember = uUserMemberMapper.selectByPrimaryKey(request.getMemberId());
         record.setMemberName(uUserMember.getUserName());
-        record.setRemarks(request.getRemarks());
-        record.setGoodsBrand(request.getGoodsBrand());
-        record.setGoodsPrice(request.getGoodsPrice());
-        record.setpPic(request.getPPic());
-        record.setFreshUsed(request.getFreshUsed());
-        record.setzPic(request.getZPic());
+        record.setCreateTime(new Date());
         mRecoveryGoodsMapper.insertSelective(record);
         return ResultBuilder.success(record);
     }
