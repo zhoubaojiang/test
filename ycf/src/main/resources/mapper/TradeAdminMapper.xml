@@ -54,7 +54,7 @@
     <if test="startTime != null and endTime!= null">
       and  unix_timestamp(p.create_time) BETWEEN #{startTime,jdbcType=BIGINT} and #{endTime,jdbcType=BIGINT}
     </if>
-    ORDER BY create_time DESC
+    ORDER BY p.create_time DESC
   </select>
 
   <select id="selectAdminOrderDetails" resultType="spring.trade.dto.result.AdminTradeDetailsResult">

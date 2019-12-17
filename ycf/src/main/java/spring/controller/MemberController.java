@@ -6,7 +6,7 @@ import spring.dto.request.*;
 import spring.dto.result.BasePage;
 import spring.dto.result.MemberCarResult;
 import spring.dto.result.MemberLoginResponse;
-import spring.member.service.MemberService;
+import spring.service.MemberService;
 import spring.model.UMemberReceiveAddress;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

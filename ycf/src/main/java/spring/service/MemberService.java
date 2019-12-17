@@ -1,4 +1,4 @@
-package spring.member.service;
+package spring.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
