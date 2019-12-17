@@ -125,7 +125,8 @@
         pd.goods_price goodsPrice,
         pd.discount_price discountPrice,
         pd.goods_picture goodsPicture,
-        pd.goods_num goodsNum
+        pd.goods_num goodsNum,
+        pd.goods_picture goodsPicture
         FROM
         p_orders p
         left join p_orders_details pd on p.id =  pd.order_no

@@ -19,4 +19,7 @@ public class POrdersResult {
     @ApiModelProperty(value = "商品原价")
     private BigDecimal goodsPrice;
 
+    @ApiModelProperty(value = "商品图片")
+    private String goodsPicture;
+
 }
