@@ -142,11 +142,25 @@
         p.order_state orderState,
         p.create_time createTime,
         p.order_price orderPrice,
-        p.goods_num goodsNum
+        p.goods_num goodsNum,
+        p.update_time updateTime,
+        p.send_time sendTime,
+        p.received_name receivedName,
+        p.phone phone,
+        p.province province,
+        p.city city,
+        p.area area,
+        p.address address,
+        p.detailed_address detailedAddress
         FROM
         p_orders p
-        where
-        p.user_id = #{userId}
+        where 1=1
+        <if test="userId != null and userId != ''">
+          and  p.user_id = #{userId}
+        </if>
+        <if test="orderNo != null and orderNo != ''">
+            and p.id = #{orderNo}
+        </if>
         <if test="orderState != null and orderState != ''">
             and p.order_state = #{orderState}
         </if>

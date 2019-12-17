@@ -383,4 +383,21 @@ public class OrderService  {
         pOrdersMapper.updateByPrimaryKeySelective(orders);
         return ResultBuilder.success(orders);
     }
+
+    public BaseCommonResult getOrderDetails(Long orderNo) {
+        log.info("会员订单详情订单ID：{}",orderNo);
+        MemberOrderReq request = new MemberOrderReq();
+        request.setOrderNo(orderNo);
+        List<POrdersListResult> result = tradeAdminMapper.selectMemberTradeList(request);
+        if (result.size()>0){
+            for (POrdersListResult result1:result ) {
+                List<POrdersResult> list = tradeAdminMapper.selectMemberOrderList(result1.getId());
+                if (list.size()>0){
+                    result1.setList(list);
+                }
+            }
+        }
+        log.info("会员订单详情订单返回数据:{}",result);
+        return ResultBuilder.success(result);
+    }
 }

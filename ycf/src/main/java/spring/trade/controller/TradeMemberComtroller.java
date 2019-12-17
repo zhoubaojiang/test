@@ -56,6 +56,14 @@ public class TradeMemberComtroller {
         return pOrderService.deleteOrder(orderNo,type);
     }
 
+    @ApiOperation(value = "订单详情", httpMethod = "GET")
+    @RequestMapping(value = "/order/{orderNo}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public BaseCommonResult getOrderDetails(@PathVariable Long orderNo) {
+        return pOrderService.getOrderDetails(orderNo);
+    }
+
+
+
     @ApiOperation(value = "退货", httpMethod = "POST")
     @RequestMapping(value = "/refund/order", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     public BaseCommonResult<POrders> refundOrder(@Validated @RequestBody RefundOrderReequest request) {
