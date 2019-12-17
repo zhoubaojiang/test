@@ -21,11 +21,14 @@
         <result column="m_fresh_used" jdbcType="INTEGER" property="mFreshUsed" />
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     </resultMap>
+
     <sql id="Base_Column_List">
     id, order_no, member_id, member_name, order_state, z_pic, x_pic, p_pic, goods_brand,
     goods_condition, fresh_used, goods_price, you_price, price, remarks, de_remarks,
     m_fresh_used, create_time
   </sql>
+
+
   <select id="selectOrderList" parameterType="spring.trade.dto.request.AdminOrderReq" resultType="spring.trade.dto.result.AdminTradeResult">
     SELECT
     p.id id,
@@ -114,5 +117,38 @@
           and  unix_timestamp(create_time) BETWEEN #{startTime,jdbcType=BIGINT} and #{endTime,jdbcType=BIGINT}
       </if>
       order by create_time desc
+    </select>
+
+    <select id="selectMemberOrderList"  resultType="spring.trade.dto.result.POrdersResult">
+        SELECT
+        g.goods_name goodsName,
+        pd.goods_price goodsPrice,
+        pd.discount_price discountPrice,
+        pd.goods_picture goodsPicture,
+        pd.goods_num goodsNum
+        FROM
+        p_orders p
+        left join p_orders_details pd on p.id =  pd.order_no
+        left join p_goods g on g.id = pd.goods_id
+        WHERE
+        p.id = #{id}
+    </select>
+
+    <select id="selectMemberTradeList" resultType="spring.trade.dto.result.POrdersListResult" parameterType="spring.trade.dto.request.MemberOrderReq">
+        select
+        p.id id,
+        p.order_no orderNo,
+        p.order_state orderState,
+        p.create_time createTime,
+        p.order_price orderPrice,
+        p.goods_num goodsNum
+        FROM
+        p_orders p
+        where
+        p.user_id = #{userId}
+        <if test="orderState != null and orderState != ''">
+            and p.order_state = #{orderState}
+        </if>
+        order by p.create_time desc
     </select>
 </mapper>

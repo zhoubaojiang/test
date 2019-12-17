@@ -15,6 +15,8 @@ import spring.trade.dto.request.MemberOrderReq;
 import spring.trade.dto.request.OrdersRes;
 import spring.trade.dto.request.RecoveryRequest;
 import spring.trade.dto.request.RefundOrderReequest;
+import spring.trade.dto.result.POrdersListResult;
+import spring.trade.dto.result.POrdersResult;
 import spring.trade.service.OrderService;
 
 @Api(description = "会员订单相关接口列表", basePath = "/ordersCenter/member/orders")
@@ -32,7 +34,7 @@ public class TradeMemberComtroller {
      */
     @ApiOperation(value = "查询会员订单", httpMethod = "POST")
     @RequestMapping(value = "/order", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
-    public BaseCommonResult<BasePage<POrders>> getMemberOrder(@Validated @RequestBody MemberOrderReq request) {
+    public BaseCommonResult<BasePage<POrdersListResult>> getMemberOrder(@Validated @RequestBody MemberOrderReq request) {
         return pOrderService.getMemberOrder(request);
     }
 

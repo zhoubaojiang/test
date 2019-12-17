@@ -13,15 +13,14 @@ import spring.mapper.*;
 import spring.mapper.cvs.TradeAdminMapper;
 import spring.model.*;
 import spring.trade.dto.request.*;
-import spring.trade.dto.result.AdminTradeDetailsResult;
-import spring.trade.dto.result.AdminTradeResult;
-import spring.trade.dto.result.OrderGoodsListResult;
+import spring.trade.dto.result.*;
 import spring.utils.DateUtil;
 import spring.utils.ResultBuilder;
 import spring.wechat.dto.requset.PayReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -141,21 +140,27 @@ public class OrderService  {
             }
     }
 
-    public BaseCommonResult<BasePage<POrders>> getMemberOrder(MemberOrderReq request) {
-        BasePage<POrders> pageResult = new BasePage();
+    /**
+     * 会员订单
+     * @param request
+     * @return
+     */
+    public BaseCommonResult<BasePage<POrdersListResult>> getMemberOrder(MemberOrderReq request) {
+        BasePage<POrdersListResult> pageResult = new BasePage();
         log.info("会员订单分页查询商品列表,请求参数为：{}", request);
         try {
             PageHelper.startPage(request.getPage(), request.getPageSize());
-            POrdersExample example = new POrdersExample();
-            POrdersExample.Criteria criteria = example.createCriteria();
-            if(request.getOrderState()!=null){
-                criteria.andOrderStateEqualTo(request.getOrderState());
+            List<POrdersListResult> result = tradeAdminMapper.selectMemberTradeList(request);
+            if (result.size()>0){
+                for (POrdersListResult result1:result ) {
+                    List<POrdersResult> list = tradeAdminMapper.selectMemberOrderList(result1.getId());
+                    if (list.size()>0){
+                        result1.setList(list);
+                    }
+                }
             }
-            criteria.andUserIdEqualTo(request.getUserId());
-            example.setOrderByClause("create_time desc");
-            List<POrders> list = pOrdersMapper.selectByExample(example);
-            PageInfo<POrders> pageInfo = new PageInfo<>(list);
-            pageResult.setList(list);
+            PageInfo<POrdersListResult> pageInfo = new PageInfo<>(result);
+            pageResult.setList(result);
             pageResult.setPageInfo(pageInfo.getPageNum(), pageInfo.getPageSize(), pageInfo.getPages(), pageInfo.getTotal());
         }catch (GoodsException e) {
             log.info("会员订单分页查询商品列表异常，异常信息为：{}", e);
