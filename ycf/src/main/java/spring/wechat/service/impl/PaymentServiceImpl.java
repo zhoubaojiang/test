@@ -1,5 +1,6 @@
 package spring.wechat.service.impl;
 
+import spring.exception.GoodsException;
 import spring.goods.service.GoodsService;
 import spring.mapper.cvs.GoodsMapper;
 import spring.wechat.commom.*;
@@ -110,7 +111,7 @@ public class PaymentServiceImpl implements PaymentService {
     /**
      * 添加或更新支付记录
      */
-    public int addOrUpdatePaymentRecord(String orderNo, BigDecimal payAmount,String orderState) throws Exception{
+    public int addOrUpdatePaymentRecord(String orderNo, BigDecimal payAmount,String orderState) {
         //订单状态:0待支付,1支付成功,2支付失败,3待发货,4已发货,5确认收货,6订单完成,7申请退款,8退款中,9退款完成,10拒绝退款,11取消订单,12订单关闭
         int[] orderStateList = {1,3,4,5,6,7,8,9,10,11,12};
         if ( ArrayUtils.contains(orderStateList,Integer.parseInt(orderState))){
