@@ -164,6 +164,13 @@
         <if test="orderState != null and orderState != ''">
             and p.order_state = #{orderState}
         </if>
+        <if test="ids != null and ids != ''">
+         and p.order_state in (
+         <foreach collection="ids.split(',')" item="item" index="index" separator=",">
+             #{item}
+         </foreach>
+            )
+        </if>
         order by p.create_time desc
     </select>
 </mapper>
