@@ -40,6 +40,8 @@ public class SmsSendController {
         JedisUtils obj = JedisUtils.getJedisInstance();
         //获取redis中的验证码
         String redisKey= MessageFormat.format(UserConstants.USER_CODE_REDIS_PREFIX,UserConstants.USER_TYPE_MEMBER,phone);
+       String sms = obj.execHgetToCache(redisKey, "code");
+       log.info("sms  code 码=========",sms);
         //短信参数内容
         String sendCode = this.getVerificationCode(phone, UserConstants.USER_TYPE_MEMBER);
         CommonResponse commonResponse = null;
