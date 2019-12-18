@@ -2,6 +2,7 @@ package spring.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.annotation.Transient;
 import spring.dto.BaseCommonResult;
 import spring.dto.request.*;
@@ -26,6 +27,8 @@ import spring.wechat.service.WechatService;
 
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Slf4j
 @Service
@@ -220,5 +223,34 @@ public class MemberService {
         }
         List<UMemberReceiveAddress> uMemberReceiveAddresses = memberReceiveAddressMapper.selectByExample(example);
         return ResultBuilder.success(uMemberReceiveAddresses);
+    }
+
+    /**
+     * 手机号正则表达式
+     * @param str
+     * @return
+     */
+    public static boolean isMobile(String str) {
+        Pattern p = null;
+        Matcher m = null;
+        boolean b = false;
+        String s2="^[1](([3|5|8][\\d])|([4][4,5,6,7,8,9])|([6][2,5,6,7])|([7][^9])|([9][1,8,9]))[\\d]{8}$";// 验证手机号
+        if(StringUtils.isNotBlank(str)){
+            p = Pattern.compile(s2);
+            m = p.matcher(str);
+            b = m.matches();
+        }
+        return b;
+    }
+    public BaseCommonResult binding(BinDingPhonRequest request) {
+        boolean mobile = isMobile(request.getPhone());
+        if (!mobile){
+            return  ResultBuilder.fail("手机格式不正确!");
+        }
+        UUserMember record = new UUserMember ();
+        record.setId(request.getMemberId());
+        record.setPhone(request.getPhone());
+        userMemberMapper.updateByPrimaryKeySelective(record);
+        return ResultBuilder.success(record);
     }
 }

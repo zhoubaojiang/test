@@ -421,4 +421,19 @@ public class OrderService  {
         pOrdersMapper.updateByPrimaryKeySelective(record);
         return ResultBuilder.success(record);
     }
+
+    /**
+     * 上门验收
+     * @param id
+     * @return
+     */
+    @Transient
+    public BaseCommonResult getRecoveryState(Long id) {
+        MRecoveryGoods record = new MRecoveryGoods ();
+        record.setId(id);
+        record.setOrderState(3);
+        mRecoveryGoodsMapper.updateByPrimaryKeySelective(record);
+        log.info("上门验收:{}",record);
+        return ResultBuilder.success(record);
+    }
 }

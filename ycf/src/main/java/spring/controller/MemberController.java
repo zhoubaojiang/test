@@ -80,4 +80,9 @@ public class MemberController {
         return userService.memberCarList(request);
     }
 
+    @ApiOperation(value = "用户绑定手机号")
+    @RequestMapping(value = "/binding", method = RequestMethod.POST)
+    public @ResponseBody BaseCommonResult binding(@Validated @RequestBody BinDingPhonRequest request) {
+        return userService.binding(request);
+    }
 }
