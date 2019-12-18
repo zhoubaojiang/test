@@ -18,14 +18,13 @@
         <result column="price" jdbcType="DECIMAL" property="price" />
         <result column="remarks" jdbcType="VARCHAR" property="remarks" />
         <result column="de_remarks" jdbcType="VARCHAR" property="deRemarks" />
-        <result column="m_fresh_used" jdbcType="INTEGER" property="mFreshUsed" />
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     </resultMap>
 
     <sql id="Base_Column_List">
     id, order_no, member_id, member_name, order_state, z_pic, x_pic, p_pic, goods_brand,
     goods_condition, fresh_used, goods_price, you_price, price, remarks, de_remarks,
-    m_fresh_used, create_time
+     create_time
   </sql>
 
 
@@ -173,4 +172,53 @@
         </if>
         order by p.create_time desc
     </select>
+    <resultMap id="Recovery_BaseResultMap" type="spring.model.MRecoveryGoods">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+        <result column="member_id" jdbcType="BIGINT" property="memberId" />
+        <result column="member_name" jdbcType="VARCHAR" property="memberName" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="order_state" jdbcType="INTEGER" property="orderState" />
+        <result column="z_pic" jdbcType="VARCHAR" property="zPic" />
+        <result column="x_pic" jdbcType="VARCHAR" property="xPic" />
+        <result column="p_pic" jdbcType="VARCHAR" property="pPic" />
+        <result column="goods_brand" jdbcType="VARCHAR" property="goodsBrand" />
+        <result column="goods_condition" jdbcType="INTEGER" property="goodsCondition" />
+        <result column="fresh_used" jdbcType="INTEGER" property="freshUsed" />
+        <result column="goods_price" jdbcType="DECIMAL" property="goodsPrice" />
+        <result column="you_price" jdbcType="DECIMAL" property="youPrice" />
+        <result column="price" jdbcType="DECIMAL" property="price" />
+        <result column="t_fresh_used" jdbcType="INTEGER" property="tFreshUsed" />
+        <result column="t_you_price" jdbcType="DECIMAL" property="tYouPrice" />
+        <result column="t_price" jdbcType="DECIMAL" property="tPrice" />
+        <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+        <result column="de_remarks" jdbcType="VARCHAR" property="deRemarks" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    </resultMap>
+    <sql id="Recovery_Base_Column_List">
+    id, order_no, member_id, member_name, title, order_state, z_pic, x_pic, p_pic, goods_brand,
+    goods_condition, fresh_used, goods_price, you_price, price, t_fresh_used, t_you_price,
+    t_price, remarks, de_remarks, create_time
+  </sql>
+    <select id="selectRecoveryOrderList" parameterType="spring.trade.dto.request.RecoveryRequest" resultMap="Recovery_BaseResultMap">
+        select
+        <include refid="Recovery_Base_Column_List" />
+        from m_recovery_goods
+        where
+        1=1
+        <if test="memberId != null and memberId != ''">
+            and member_id = #{memberId}
+        </if>
+        <if test="orderState != null and orderState != ''">
+            and order_state = #{orderState}
+        </if>
+        <if test="ids != null and ids != ''">
+            and order_state in (
+            <foreach collection="ids.split(',')" item="item" index="index" separator=",">
+                #{item}
+            </foreach>
+            )
+        </if>
+    </select>
+
 </mapper>

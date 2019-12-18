@@ -20,7 +20,7 @@ public class MRecoveryGoods implements Serializable {
     @ApiModelProperty(value = "宝贝标题")
     private String title;
 
-    @ApiModelProperty(value = "提交回收订单—>0:待确认—>1:已报价—>2确认回收价格—>3:上门验收—>4:已验收—>5:完成->6取消->7拒绝")
+    @ApiModelProperty(value = "提交回收订单—>0:待确认—>1:已报价—>2确认回收价格—>3:上门验收—>4:已验收(完成)—>5:取消->6拒绝")
     private Integer orderState;
 
     @ApiModelProperty(value = "商品图片")

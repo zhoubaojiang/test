@@ -62,7 +62,11 @@ public class TradeMemberComtroller {
     public BaseCommonResult getOrderDetails(@PathVariable Long orderNo) {
         return pOrderService.getOrderDetails(orderNo);
     }
-
+    @ApiOperation(value = "会员订单确认收货", httpMethod = "GET")
+    @RequestMapping(value = "/order/confirm/{orderNo}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public BaseCommonResult confirmOrderDetails(@PathVariable Long orderNo) {
+        return pOrderService.confirmOrderDetails(orderNo);
+    }
 
 
     @ApiOperation(value = "退货", httpMethod = "POST")

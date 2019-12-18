@@ -251,13 +251,8 @@ public class OrderService  {
         log.info("会员回收商品查询商品列表,请求参数为：{}", request);
         try {
             PageHelper.startPage(request.getPage(), request.getPageSize());
-            MRecoveryGoodsExample example = new MRecoveryGoodsExample ();
-            MRecoveryGoodsExample.Criteria criteria = example.createCriteria();
-            criteria.andMemberIdEqualTo(request.getMemberId());
-            if (request.getOrderState()!=null){
-                criteria.andOrderStateEqualTo(request.getOrderState());
-            }
-            List<MRecoveryGoods> list = mRecoveryGoodsMapper.selectByExample(example);
+
+            List<MRecoveryGoods> list = tradeAdminMapper.selectRecoveryOrderList(request);
             PageInfo<MRecoveryGoods> pageInfo = new PageInfo<>(list);
             pageResult.setList(list);
             pageResult.setPageInfo(pageInfo.getPageNum(), pageInfo.getPageSize(), pageInfo.getPages(), pageInfo.getTotal());
@@ -313,7 +308,7 @@ public class OrderService  {
     public BaseCommonResult updateRecoveryOrder(Long orderNo) {
         MRecoveryGoods mRecoveryGoods = new MRecoveryGoods();
         mRecoveryGoods.setId(orderNo);
-        mRecoveryGoods.setOrderState(5);
+        mRecoveryGoods.setOrderState(4);
         mRecoveryGoodsMapper.updateByPrimaryKeySelective(mRecoveryGoods);
         log.info("后台管理会员回收商品订单确认接口结束:{}",mRecoveryGoods);
         return ResultBuilder.success(mRecoveryGoods);
@@ -411,5 +406,19 @@ public class OrderService  {
         mRecoveryGoods.setOrderState(request.getOrderState());
         mRecoveryGoodsMapper.updateByPrimaryKeySelective(mRecoveryGoods);
         return ResultBuilder.success(mRecoveryGoods);
+    }
+
+    /**
+     * 确认收货
+     * @param orderNo
+     * @return
+     */
+    @Transient
+    public BaseCommonResult confirmOrderDetails(Long orderNo) {
+        POrders record = new POrders ();
+        record.setId(orderNo);
+        record.setOrderState("6");
+        pOrdersMapper.updateByPrimaryKeySelective(record);
+        return ResultBuilder.success(record);
     }
 }
