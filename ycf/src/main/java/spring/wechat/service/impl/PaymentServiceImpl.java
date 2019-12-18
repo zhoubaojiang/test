@@ -1,5 +1,6 @@
 package spring.wechat.service.impl;
 
+import spring.goods.service.GoodsService;
 import spring.mapper.cvs.GoodsMapper;
 import spring.wechat.commom.*;
 import spring.wechat.config.*;
@@ -32,7 +33,8 @@ public class PaymentServiceImpl implements PaymentService {
     private WechatProperty wechatProperty;
     @Autowired
     private GoodsMapper goodsMapper;
-
+    @Autowired
+    private GoodsService goodsService;
 
     @Override
     public Map<String, Object> xcxPayment(String orderNum, BigDecimal money, String openId,String orderState) throws Exception {
@@ -62,12 +64,14 @@ public class PaymentServiceImpl implements PaymentService {
                 resultMap.put("returnCode", "SUCCESS");
                 resultMap.put("returnMsg", "OK");
                 LOGGER.info("【小程序支付】统一下单成功，返回参数:"+resultMap);
+                goodsService.updateGoodsNnumType(orderNum);
             }else{
                 resultMap.put("returnCode", resMap.get("return_code"));
                 resultMap.put("returnMsg", resMap.get("return_msg"));
                 LOGGER.info("【小程序支付】统一下单失败，失败原因:"+resMap.get("return_msg"));
             }
         }
+
         return resultMap;
     }
 

@@ -42,22 +42,22 @@
       <if test="id != null">
         and id = #{id}
       </if>
-      <if test="goodsName != null">
+      <if test="goodsName != null and goodsName != ''">
         and goods_name like concat('%',#{goodsName},'%')
       </if>
-      <if test="pmsType != null">
+      <if test="pmsType != null and pmsType != ''">
       and pms_type = #{pmsType}
       </if>
-      <if test="goodsCondition != null">
+      <if test="goodsCondition != null and goodsCondition != ''">
       and goods_condition = #{goodsCondition}
       </if>
       <if test="highPrice != null and lowPrice != null">
       and (goods_price &gt;= #{highPrice} and goods_price  &lt;= #{lowPrice} )
       </if>
-      <if test="goodsState !=  null">
+      <if test="goodsState !=  null and goodsState!= ''">
       and goods_state = #{goodsState}
       </if>
-      <if test="goodsNumType != null">
+      <if test="goodsNumType != null and goodsNumType != ''">
       and goods_num_type = #{goodsNumType}
       </if>
     </where>
@@ -75,13 +75,13 @@
     p_goods p
     WHERE
     p.is_delete = 1 and goods_num_type = 1
-    <if test="pmsType != null">
+    <if test="pmsType != null and pmsType != ''">
       and p.pms_type = #{pmsType}
     </if>
-    <if test="goodDesc !=  null">
+    <if test="goodDesc !=  null and goodDesc != null">
       order by p.create_time desc
     </if>
-    <if test="orderByClause != null">
+    <if test="orderByClause != null and orderByClause != ''">
       order by ${orderByClause}
     </if>
   </select>
@@ -90,18 +90,19 @@
         p.id goodsId,
         p.goods_name goodsName,
         p.goods_price goodsPrice,
-        p.discount_price discountPrice
+        p.discount_price discountPrice,
+        p.master_graph  pic
         FROM
         p_goods p
         WHERE
-        p.is_delete = 1 and goods_number = 1
-        <if test="goodsName != null">
+        p.is_delete = 1 and goods_num_type = 1
+        <if test="goodsName != null and goodsName != ''">
             and p.goods_name like concat('%',#{goodsName},'%')
         </if>
-        <if test="goodDesc !=  null">
+        <if test="goodDesc !=  null and goodDesc != ''">
             order by p.create_time desc
         </if>
-        <if test="orderByClause != null">
+        <if test="orderByClause != null and orderByClause != ''">
             order by ${orderByClause}
         </if>
     </select>

@@ -13,12 +13,11 @@ import spring.goods.dto.response.GoodsMemberResponse;
 import spring.goods.dto.response.GoodsStateResponse;
 import spring.goods.dto.response.RecommendedResponse;
 import spring.mapper.PFirstFictureMapper;
+import spring.mapper.POrdersDetailsMapper;
+import spring.mapper.POrdersMapper;
 import spring.mapper.cvs.GoodsMapper;
 import spring.mapper.PGoodsMapper;
-import spring.model.PFirstFicture;
-import spring.model.PFirstFictureExample;
-import spring.model.PGoods;
-import spring.model.PGoodsExample;
+import spring.model.*;
 import spring.utils.ResultBuilder;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -43,7 +42,8 @@ public class GoodsService {
     private GoodsMapper goodsMapper;
     @Autowired
     private PFirstFictureMapper pFirstFictureMapper;
-
+    @Autowired
+    private POrdersDetailsMapper ordersDetailsMapper;
     /**
      * 添加商品
      * @param request
@@ -237,5 +237,22 @@ public class GoodsService {
             responses.add(map);
         }
         return ResultBuilder.success(responses);
+    }
+    @Transient
+    public void updateGoodsNnumType(String orderNum) throws GoodsException {
+        POrdersDetailsExample example = new POrdersDetailsExample();
+        example.createCriteria().andOrderNoEqualTo(Long.parseLong(orderNum));
+        List<POrdersDetails> pOrdersDetails = ordersDetailsMapper.selectByExample(example);
+        if (pOrdersDetails.size()>0){
+            for (POrdersDetails details:pOrdersDetails ) {
+                PGoods goods = pGoodsMapper.selectByPrimaryKey(details.getGoodsId());
+                if (goods != null && goods.getGoodsNumType()==1){
+                    goods.setGoodsNumType(0);
+                    pGoodsMapper.updateByPrimaryKeySelective(goods);
+                }else {
+                    throw  new GoodsException(99999,"此商品"+goods.getGoodsName()+"已售出");
+                }
+            }
+        }
     }
 }

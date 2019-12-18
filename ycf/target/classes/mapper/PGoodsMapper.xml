@@ -21,6 +21,7 @@
     <result column="content_details" jdbcType="VARCHAR" property="contentDetails" />
     <result column="master_graph" jdbcType="VARCHAR" property="masterGraph" />
     <result column="goods_picture" jdbcType="VARCHAR" property="goodsPicture" />
+    <result column="goods_detail_pic" jdbcType="VARCHAR" property="goodsDetailPic" />
     <result column="goods_state" jdbcType="INTEGER" property="goodsState" />
     <result column="goods_type" jdbcType="INTEGER" property="goodsType" />
     <result column="goods_num_type" jdbcType="INTEGER" property="goodsNumType" />
@@ -89,13 +90,15 @@
     id, goods_name, pms_type, goods_brand, goods_condition, goods_number, goods_price, 
     fresh_used, discount, discount_price, treasure_discount, treasure_discount_price, 
     express, express_id, express_name, goods_service, content_details, master_graph, 
-    goods_picture, goods_state, goods_type, goods_num_type, create_time, is_delete
+    goods_picture, goods_detail_pic, goods_state, goods_type, goods_num_type, create_time, 
+    is_delete
   </sql>
   <select id="selectByExample" parameterType="spring.model.PGoodsExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
+    'true' as QUERYID,
     <include refid="Base_Column_List" />
     from p_goods
     <if test="_parameter != null">
@@ -131,18 +134,18 @@
       treasure_discount, treasure_discount_price, 
       express, express_id, express_name, 
       goods_service, content_details, master_graph, 
-      goods_picture, goods_state, goods_type, 
-      goods_num_type, create_time, is_delete
-      )
+      goods_picture, goods_detail_pic, goods_state, 
+      goods_type, goods_num_type, create_time, 
+      is_delete)
     values (#{goodsName,jdbcType=VARCHAR}, #{pmsType,jdbcType=BIGINT}, #{goodsBrand,jdbcType=VARCHAR}, 
       #{goodsCondition,jdbcType=INTEGER}, #{goodsNumber,jdbcType=INTEGER}, #{goodsPrice,jdbcType=DECIMAL}, 
       #{freshUsed,jdbcType=INTEGER}, #{discount,jdbcType=DECIMAL}, #{discountPrice,jdbcType=DECIMAL}, 
       #{treasureDiscount,jdbcType=DECIMAL}, #{treasureDiscountPrice,jdbcType=DECIMAL}, 
       #{express,jdbcType=INTEGER}, #{expressId,jdbcType=BIGINT}, #{expressName,jdbcType=VARCHAR}, 
       #{goodsService,jdbcType=VARCHAR}, #{contentDetails,jdbcType=VARCHAR}, #{masterGraph,jdbcType=VARCHAR}, 
-      #{goodsPicture,jdbcType=VARCHAR}, #{goodsState,jdbcType=INTEGER}, #{goodsType,jdbcType=INTEGER}, 
-      #{goodsNumType,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=INTEGER}
-      )
+      #{goodsPicture,jdbcType=VARCHAR}, #{goodsDetailPic,jdbcType=VARCHAR}, #{goodsState,jdbcType=INTEGER}, 
+      #{goodsType,jdbcType=INTEGER}, #{goodsNumType,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{isDelete,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="spring.model.PGoods">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -203,6 +206,9 @@
       </if>
       <if test="goodsPicture != null">
         goods_picture,
+      </if>
+      <if test="goodsDetailPic != null">
+        goods_detail_pic,
       </if>
       <if test="goodsState != null">
         goods_state,
@@ -274,6 +280,9 @@
       </if>
       <if test="goodsPicture != null">
         #{goodsPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsDetailPic != null">
+        #{goodsDetailPic,jdbcType=VARCHAR},
       </if>
       <if test="goodsState != null">
         #{goodsState,jdbcType=INTEGER},
@@ -358,6 +367,9 @@
       <if test="record.goodsPicture != null">
         goods_picture = #{record.goodsPicture,jdbcType=VARCHAR},
       </if>
+      <if test="record.goodsDetailPic != null">
+        goods_detail_pic = #{record.goodsDetailPic,jdbcType=VARCHAR},
+      </if>
       <if test="record.goodsState != null">
         goods_state = #{record.goodsState,jdbcType=INTEGER},
       </if>
@@ -399,6 +411,7 @@
       content_details = #{record.contentDetails,jdbcType=VARCHAR},
       master_graph = #{record.masterGraph,jdbcType=VARCHAR},
       goods_picture = #{record.goodsPicture,jdbcType=VARCHAR},
+      goods_detail_pic = #{record.goodsDetailPic,jdbcType=VARCHAR},
       goods_state = #{record.goodsState,jdbcType=INTEGER},
       goods_type = #{record.goodsType,jdbcType=INTEGER},
       goods_num_type = #{record.goodsNumType,jdbcType=INTEGER},
@@ -465,6 +478,9 @@
       <if test="goodsPicture != null">
         goods_picture = #{goodsPicture,jdbcType=VARCHAR},
       </if>
+      <if test="goodsDetailPic != null">
+        goods_detail_pic = #{goodsDetailPic,jdbcType=VARCHAR},
+      </if>
       <if test="goodsState != null">
         goods_state = #{goodsState,jdbcType=INTEGER},
       </if>
@@ -503,6 +519,7 @@
       content_details = #{contentDetails,jdbcType=VARCHAR},
       master_graph = #{masterGraph,jdbcType=VARCHAR},
       goods_picture = #{goodsPicture,jdbcType=VARCHAR},
+      goods_detail_pic = #{goodsDetailPic,jdbcType=VARCHAR},
       goods_state = #{goodsState,jdbcType=INTEGER},
       goods_type = #{goodsType,jdbcType=INTEGER},
       goods_num_type = #{goodsNumType,jdbcType=INTEGER},

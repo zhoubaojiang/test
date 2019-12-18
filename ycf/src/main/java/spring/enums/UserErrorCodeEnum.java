@@ -100,7 +100,7 @@ public enum UserErrorCodeEnum {
 
 
 
-
+    REDIS_LOCK_FAIL(88801,"Redis锁被占用"),
 
 
     //解析ecexl数据异常

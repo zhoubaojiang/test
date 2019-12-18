@@ -1,6 +1,11 @@
 package spring.wechat.controller;
 
+import spring.config.redis.util.RedisLockUtil;
 import spring.dto.BaseCommonResult;
+import spring.enums.UserErrorCodeEnum;
+import spring.exception.GoodsException;
+import spring.exception.MemberException;
+import spring.goods.service.GoodsService;
 import spring.model.POrders;
 import spring.trade.service.OrderService;
 import spring.utils.ResultBuilder;
@@ -34,6 +39,8 @@ public class PaymentController {
     private OrderService orderService;
     @Autowired
     private WechatService wechatService;
+
+
     @ApiOperation(value = "获取微信唯一OPEN_ID", httpMethod = "GET")
     @RequestMapping(value ="/getOperatorIdOrderList/{code}",method = RequestMethod.GET)
     public BaseCommonResult<WechatAppIdResult> getOperatorIdOrderList(@PathVariable String code) throws Exception{
@@ -60,11 +67,29 @@ public class PaymentController {
         if(orderInfo.size() == 0){
             return ResultBuilder.fail("订单不存在！");
         }else if( Integer.parseInt(orderInfo.get(0).getOrderState()) > 0){
-            //订单状态:0待支付,1支付中,2支付失败,3支付成功,4待发货,5已发货,6确认收货,7订单完成,8申请退款,9退款中,10退款完成,11拒绝退款,12取消订单
+            //订单状态:0待支付,1支付成功,2支付失败,3待发货,4已发货,5确认收货,6订单完成,7申请退款,8退款中,9退款完成,10拒绝退款,11取消订单,12订单关闭
             return ResultBuilder.fail("订单已支付或者已取消!");
         }else{
             logger.info("【小程序支付服务】请求订单编号:["+orderInfo.get(0).getOrderNo()+"]");
-            Map<String, Object> resMap = paymentService.xcxPayment(orderInfo.get(0).getOrderNo(),orderInfo.get(0).getOrderPrice(),req.getOpenId(),orderInfo.get(0).getOrderState());
+            POrders orders = orderInfo.get(0);
+            //加redis锁，解决一个会员同时多次请求支付
+            Map<String, Object> resMap =  RedisLockUtil.executeSynchOperate((locked) ->
+            {
+                Map<String, Object> lockVO=null;
+                try {
+                    if (!locked) {
+                        throw new GoodsException(UserErrorCodeEnum.REDIS_LOCK_FAIL.getCode(), UserErrorCodeEnum.REDIS_LOCK_FAIL.getMsg());
+                    }
+                    lockVO = paymentService.xcxPayment(orders.getOrderNo(),orders.getOrderPrice(),req.getOpenId(),orders.getOrderState());
+                } catch (MemberException e){
+                    throw new MemberException(e.getErrorCode(), e.getMessage());
+                }catch(GoodsException e){
+                    throw new MemberException(e.getResponseCode(), e.getMessage());
+                } catch (Exception e) {
+                     e.printStackTrace();
+                }
+                return lockVO;
+            } ,"order_No"+orders.getOrderNo(), 3000)  ;
             if("SUCCESS".equals(resMap.get("returnCode")) && "OK".equals(resMap.get("returnMsg"))){
                 //统一下单成功
                 resMap.remove("returnCode");

@@ -105,7 +105,6 @@ public class DateUtil {
      */
     public static final String DATE_FORMAT_MMDDHHMI = "MM-dd HH:mm";
 
-
     /* ************工具方法***************   */
 
     public static String getOrderNumber() {
@@ -189,5 +188,15 @@ public class DateUtil {
         }
         return days;
     }
-
+    /**
+     * 计算时间差值（单位为秒）
+     * @param time1 时间1
+     * @param time2 时间2
+     * @return 差值
+     */
+    public static Long minus(Date time1, Date time2) {
+            long millisecond = time1.getTime() - time2.getTime();
+             millisecond = millisecond / 1000/60;
+            return millisecond;
+    }
 }

@@ -8,21 +8,9 @@ package spring.goods.common;
  * @since 1.0
  */
 public class GoodsConstants {
-	//体检机构是否删除标记 0正常 1.已删除
-	public static final Integer HEALTH_CENTER_IS_DELETE_YES = 0;
-	public static final Integer HEALTH_CENTER_IS_DELETE_NO = 1;
-
-	//体检状态(0:未使用,1:已预约,2:已使用,3:已过期)
-	public static final Integer HEALTH_CENTER_STATUS_NO = 0;
-	public static final Integer HEALTH_CENTER_STATUS_APPOINT = 1;
-	public static final Integer HEALTH_CENTER_STATUS_USE = 2;
-	public static final Integer HEALTH_CENTER_STATUS_STALE= 3;
 
 
 
-	//体检机构是否删除标记 1.商家 2.会员
-	public static final Integer HEALTH_CENTER_TYPE_MEMBER = 2;
-	public static final Integer HEALTH_CENTER_TYPE_MERCHANT = 1;
 
 
 	//固定销售量
@@ -104,27 +92,9 @@ public class GoodsConstants {
 	/** 等待审核	未上架	批量上/下架*/
 	public static final String GOODS_PUBLISH_WAIT_ZERO_IS_ONLIVE_TWO_ISONLIVE = "请先提交到审核";
 
-	/** 用户类型 */
-	public static final String USER_AGENT = "1";// 代理商
-	public static final String USER_SUPPLIER = "2";// 商户
-	public static final String USER_BACK = "3";// 后台
 
-	/** 系统 */
-	public static final String USER_AGENT_BACK = "1";// 代理商后台
-	public static final String USER_SUPPLIER_BACK = "2";// 商户后台
-	public static final String USER_BIG_BACK = "3";// 大后台
 
-	/**五福商城商品*/
-	public static final String GOODS_PLATFROM_SOURCE_WF = "1";
-	/**合作商2平台商品*/
-	public static final String GOODS_PLATFROM_SOURCE_IH = "2";
-	/**顺道商城商品*/
-	public static final String GOODS_PLATFROM_SOURCE_SD = "3";
 
-	/**运费模板状态***/
-	public static final Byte FREIGHT_TEMPLATE_STATUS_ENABLE = 1;
-	public static final Byte FREIGHT_TEMPLATE_STATUS_DISENABLE = 2;
-	
 	/**请求参数校验失败*/
 	public static final String SD_PARAMS_VALID_ERROR = "请求参数校验失败";
 	/**商品下架失败*/
