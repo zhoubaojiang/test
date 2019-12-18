@@ -338,7 +338,7 @@ public class OrderService  {
         log.info("后台管理回收商品审核报价:{}",request);
         MRecoveryGoods mRecoveryGoods = new MRecoveryGoods();
         mRecoveryGoods.setId(request.getOrderNo());
-        mRecoveryGoods.setmFreshUsed(request.getMFreshUsed());
+        mRecoveryGoods.setFreshUsed(request.getFreshUsed());
         mRecoveryGoods.setYouPrice(request.getYouPrice());
         mRecoveryGoods.setPrice(request.getPrice());
         mRecoveryGoods.setDeRemarks(request.getDeRemarks());
@@ -399,5 +399,17 @@ public class OrderService  {
         }
         log.info("会员订单详情订单返回数据:{}",result);
         return ResultBuilder.success(result);
+    }
+
+    public BaseCommonResult<MRecoveryGoods> eRecoveryOffer(RecoveryOfferRequest request) {
+        log.info("后台管理回收商品二次报价:{}",request);
+        MRecoveryGoods mRecoveryGoods = new MRecoveryGoods();
+        mRecoveryGoods.setId(request.getOrderNo());
+        mRecoveryGoods.settFreshUsed(request.getFreshUsed());
+        mRecoveryGoods.settYouPrice(request.getYouPrice());
+        mRecoveryGoods.settPrice(request.getPrice());
+        mRecoveryGoods.setOrderState(request.getOrderState());
+        mRecoveryGoodsMapper.updateByPrimaryKeySelective(mRecoveryGoods);
+        return ResultBuilder.success(mRecoveryGoods);
     }
 }

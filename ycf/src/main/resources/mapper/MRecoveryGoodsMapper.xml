@@ -17,9 +17,11 @@
     <result column="goods_price" jdbcType="DECIMAL" property="goodsPrice" />
     <result column="you_price" jdbcType="DECIMAL" property="youPrice" />
     <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="t_fresh_used" jdbcType="INTEGER" property="tFreshUsed" />
+    <result column="t_you_price" jdbcType="DECIMAL" property="tYouPrice" />
+    <result column="t_price" jdbcType="DECIMAL" property="tPrice" />
     <result column="remarks" jdbcType="VARCHAR" property="remarks" />
     <result column="de_remarks" jdbcType="VARCHAR" property="deRemarks" />
-    <result column="m_fresh_used" jdbcType="INTEGER" property="mFreshUsed" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -82,8 +84,8 @@
   </sql>
   <sql id="Base_Column_List">
     id, order_no, member_id, member_name, title, order_state, z_pic, x_pic, p_pic, goods_brand, 
-    goods_condition, fresh_used, goods_price, you_price, price, remarks, de_remarks, 
-    m_fresh_used, create_time
+    goods_condition, fresh_used, goods_price, you_price, price, t_fresh_used, t_you_price, 
+    t_price, remarks, de_remarks, create_time
   </sql>
   <select id="selectByExample" parameterType="spring.model.MRecoveryGoodsExample" resultMap="BaseResultMap">
     select
@@ -124,16 +126,16 @@
       title, order_state, z_pic, 
       x_pic, p_pic, goods_brand, 
       goods_condition, fresh_used, goods_price, 
-      you_price, price, remarks, 
-      de_remarks, m_fresh_used, create_time
-      )
+      you_price, price, t_fresh_used, 
+      t_you_price, t_price, remarks, 
+      de_remarks, create_time)
     values (#{orderNo,jdbcType=VARCHAR}, #{memberId,jdbcType=BIGINT}, #{memberName,jdbcType=VARCHAR}, 
       #{title,jdbcType=VARCHAR}, #{orderState,jdbcType=INTEGER}, #{zPic,jdbcType=VARCHAR}, 
       #{xPic,jdbcType=VARCHAR}, #{pPic,jdbcType=VARCHAR}, #{goodsBrand,jdbcType=VARCHAR}, 
       #{goodsCondition,jdbcType=INTEGER}, #{freshUsed,jdbcType=INTEGER}, #{goodsPrice,jdbcType=DECIMAL}, 
-      #{youPrice,jdbcType=DECIMAL}, #{price,jdbcType=DECIMAL}, #{remarks,jdbcType=VARCHAR}, 
-      #{deRemarks,jdbcType=VARCHAR}, #{mFreshUsed,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
-      )
+      #{youPrice,jdbcType=DECIMAL}, #{price,jdbcType=DECIMAL}, #{tFreshUsed,jdbcType=INTEGER}, 
+      #{tYouPrice,jdbcType=DECIMAL}, #{tPrice,jdbcType=DECIMAL}, #{remarks,jdbcType=VARCHAR}, 
+      #{deRemarks,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="spring.model.MRecoveryGoods">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -183,14 +185,20 @@
       <if test="price != null">
         price,
       </if>
+      <if test="tFreshUsed != null">
+        t_fresh_used,
+      </if>
+      <if test="tYouPrice != null">
+        t_you_price,
+      </if>
+      <if test="tPrice != null">
+        t_price,
+      </if>
       <if test="remarks != null">
         remarks,
       </if>
       <if test="deRemarks != null">
         de_remarks,
-      </if>
-      <if test="mFreshUsed != null">
-        m_fresh_used,
       </if>
       <if test="createTime != null">
         create_time,
@@ -239,14 +247,20 @@
       <if test="price != null">
         #{price,jdbcType=DECIMAL},
       </if>
+      <if test="tFreshUsed != null">
+        #{tFreshUsed,jdbcType=INTEGER},
+      </if>
+      <if test="tYouPrice != null">
+        #{tYouPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="tPrice != null">
+        #{tPrice,jdbcType=DECIMAL},
+      </if>
       <if test="remarks != null">
         #{remarks,jdbcType=VARCHAR},
       </if>
       <if test="deRemarks != null">
         #{deRemarks,jdbcType=VARCHAR},
-      </if>
-      <if test="mFreshUsed != null">
-        #{mFreshUsed,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -307,14 +321,20 @@
       <if test="record.price != null">
         price = #{record.price,jdbcType=DECIMAL},
       </if>
+      <if test="record.tFreshUsed != null">
+        t_fresh_used = #{record.tFreshUsed,jdbcType=INTEGER},
+      </if>
+      <if test="record.tYouPrice != null">
+        t_you_price = #{record.tYouPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.tPrice != null">
+        t_price = #{record.tPrice,jdbcType=DECIMAL},
+      </if>
       <if test="record.remarks != null">
         remarks = #{record.remarks,jdbcType=VARCHAR},
       </if>
       <if test="record.deRemarks != null">
         de_remarks = #{record.deRemarks,jdbcType=VARCHAR},
-      </if>
-      <if test="record.mFreshUsed != null">
-        m_fresh_used = #{record.mFreshUsed,jdbcType=INTEGER},
       </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -341,9 +361,11 @@
       goods_price = #{record.goodsPrice,jdbcType=DECIMAL},
       you_price = #{record.youPrice,jdbcType=DECIMAL},
       price = #{record.price,jdbcType=DECIMAL},
+      t_fresh_used = #{record.tFreshUsed,jdbcType=INTEGER},
+      t_you_price = #{record.tYouPrice,jdbcType=DECIMAL},
+      t_price = #{record.tPrice,jdbcType=DECIMAL},
       remarks = #{record.remarks,jdbcType=VARCHAR},
       de_remarks = #{record.deRemarks,jdbcType=VARCHAR},
-      m_fresh_used = #{record.mFreshUsed,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -394,14 +416,20 @@
       <if test="price != null">
         price = #{price,jdbcType=DECIMAL},
       </if>
+      <if test="tFreshUsed != null">
+        t_fresh_used = #{tFreshUsed,jdbcType=INTEGER},
+      </if>
+      <if test="tYouPrice != null">
+        t_you_price = #{tYouPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="tPrice != null">
+        t_price = #{tPrice,jdbcType=DECIMAL},
+      </if>
       <if test="remarks != null">
         remarks = #{remarks,jdbcType=VARCHAR},
       </if>
       <if test="deRemarks != null">
         de_remarks = #{deRemarks,jdbcType=VARCHAR},
-      </if>
-      <if test="mFreshUsed != null">
-        m_fresh_used = #{mFreshUsed,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -425,9 +453,11 @@
       goods_price = #{goodsPrice,jdbcType=DECIMAL},
       you_price = #{youPrice,jdbcType=DECIMAL},
       price = #{price,jdbcType=DECIMAL},
+      t_fresh_used = #{tFreshUsed,jdbcType=INTEGER},
+      t_you_price = #{tYouPrice,jdbcType=DECIMAL},
+      t_price = #{tPrice,jdbcType=DECIMAL},
       remarks = #{remarks,jdbcType=VARCHAR},
       de_remarks = #{deRemarks,jdbcType=VARCHAR},
-      m_fresh_used = #{mFreshUsed,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>

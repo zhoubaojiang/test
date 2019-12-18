@@ -11,7 +11,7 @@ public class RecoveryOfferRequest {
     private Long orderNo;
 
     @ApiModelProperty(value = "新旧程度:0->全新,1->95新,2->9成新,3->8.5新,4->8成新,5->7成新(后台选择)")
-    private Integer mFreshUsed;
+    private Integer freshUsed;
 
     @ApiModelProperty(value = "鱿费")
     private BigDecimal youPrice;

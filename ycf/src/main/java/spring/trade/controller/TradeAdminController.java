@@ -89,4 +89,10 @@ public class TradeAdminController {
     public BaseCommonResult<MRecoveryGoods> recoveryOffer(@Validated @RequestBody RecoveryOfferRequest request) {
         return pOrderService.recoveryOffer(request);
     }
+
+    @ApiOperation(value = "会员回收二次报价", httpMethod = "POST")
+    @RequestMapping(value = "/recovery/two/offer", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    public BaseCommonResult<MRecoveryGoods> eRecoveryOffer(@Validated @RequestBody RecoveryOfferRequest request) {
+        return pOrderService.eRecoveryOffer(request);
+    }
 }

@@ -1076,6 +1076,186 @@ public class MRecoveryGoodsExample {
             return (Criteria) this;
         }
 
+        public Criteria andTFreshUsedIsNull() {
+            addCriterion("t_fresh_used is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTFreshUsedIsNotNull() {
+            addCriterion("t_fresh_used is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTFreshUsedEqualTo(Integer value) {
+            addCriterion("t_fresh_used =", value, "tFreshUsed");
+            return (Criteria) this;
+        }
+
+        public Criteria andTFreshUsedNotEqualTo(Integer value) {
+            addCriterion("t_fresh_used <>", value, "tFreshUsed");
+            return (Criteria) this;
+        }
+
+        public Criteria andTFreshUsedGreaterThan(Integer value) {
+            addCriterion("t_fresh_used >", value, "tFreshUsed");
+            return (Criteria) this;
+        }
+
+        public Criteria andTFreshUsedGreaterThanOrEqualTo(Integer value) {
+            addCriterion("t_fresh_used >=", value, "tFreshUsed");
+            return (Criteria) this;
+        }
+
+        public Criteria andTFreshUsedLessThan(Integer value) {
+            addCriterion("t_fresh_used <", value, "tFreshUsed");
+            return (Criteria) this;
+        }
+
+        public Criteria andTFreshUsedLessThanOrEqualTo(Integer value) {
+            addCriterion("t_fresh_used <=", value, "tFreshUsed");
+            return (Criteria) this;
+        }
+
+        public Criteria andTFreshUsedIn(List<Integer> values) {
+            addCriterion("t_fresh_used in", values, "tFreshUsed");
+            return (Criteria) this;
+        }
+
+        public Criteria andTFreshUsedNotIn(List<Integer> values) {
+            addCriterion("t_fresh_used not in", values, "tFreshUsed");
+            return (Criteria) this;
+        }
+
+        public Criteria andTFreshUsedBetween(Integer value1, Integer value2) {
+            addCriterion("t_fresh_used between", value1, value2, "tFreshUsed");
+            return (Criteria) this;
+        }
+
+        public Criteria andTFreshUsedNotBetween(Integer value1, Integer value2) {
+            addCriterion("t_fresh_used not between", value1, value2, "tFreshUsed");
+            return (Criteria) this;
+        }
+
+        public Criteria andTYouPriceIsNull() {
+            addCriterion("t_you_price is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTYouPriceIsNotNull() {
+            addCriterion("t_you_price is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTYouPriceEqualTo(BigDecimal value) {
+            addCriterion("t_you_price =", value, "tYouPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andTYouPriceNotEqualTo(BigDecimal value) {
+            addCriterion("t_you_price <>", value, "tYouPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andTYouPriceGreaterThan(BigDecimal value) {
+            addCriterion("t_you_price >", value, "tYouPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andTYouPriceGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("t_you_price >=", value, "tYouPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andTYouPriceLessThan(BigDecimal value) {
+            addCriterion("t_you_price <", value, "tYouPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andTYouPriceLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("t_you_price <=", value, "tYouPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andTYouPriceIn(List<BigDecimal> values) {
+            addCriterion("t_you_price in", values, "tYouPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andTYouPriceNotIn(List<BigDecimal> values) {
+            addCriterion("t_you_price not in", values, "tYouPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andTYouPriceBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("t_you_price between", value1, value2, "tYouPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andTYouPriceNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("t_you_price not between", value1, value2, "tYouPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andTPriceIsNull() {
+            addCriterion("t_price is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTPriceIsNotNull() {
+            addCriterion("t_price is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTPriceEqualTo(BigDecimal value) {
+            addCriterion("t_price =", value, "tPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andTPriceNotEqualTo(BigDecimal value) {
+            addCriterion("t_price <>", value, "tPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andTPriceGreaterThan(BigDecimal value) {
+            addCriterion("t_price >", value, "tPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andTPriceGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("t_price >=", value, "tPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andTPriceLessThan(BigDecimal value) {
+            addCriterion("t_price <", value, "tPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andTPriceLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("t_price <=", value, "tPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andTPriceIn(List<BigDecimal> values) {
+            addCriterion("t_price in", values, "tPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andTPriceNotIn(List<BigDecimal> values) {
+            addCriterion("t_price not in", values, "tPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andTPriceBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("t_price between", value1, value2, "tPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andTPriceNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("t_price not between", value1, value2, "tPrice");
+            return (Criteria) this;
+        }
+
         public Criteria andRemarksIsNull() {
             addCriterion("remarks is null");
             return (Criteria) this;
@@ -1213,66 +1393,6 @@ public class MRecoveryGoodsExample {
 
         public Criteria andDeRemarksNotBetween(String value1, String value2) {
             addCriterion("de_remarks not between", value1, value2, "deRemarks");
-            return (Criteria) this;
-        }
-
-        public Criteria andMFreshUsedIsNull() {
-            addCriterion("m_fresh_used is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andMFreshUsedIsNotNull() {
-            addCriterion("m_fresh_used is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andMFreshUsedEqualTo(Integer value) {
-            addCriterion("m_fresh_used =", value, "mFreshUsed");
-            return (Criteria) this;
-        }
-
-        public Criteria andMFreshUsedNotEqualTo(Integer value) {
-            addCriterion("m_fresh_used <>", value, "mFreshUsed");
-            return (Criteria) this;
-        }
-
-        public Criteria andMFreshUsedGreaterThan(Integer value) {
-            addCriterion("m_fresh_used >", value, "mFreshUsed");
-            return (Criteria) this;
-        }
-
-        public Criteria andMFreshUsedGreaterThanOrEqualTo(Integer value) {
-            addCriterion("m_fresh_used >=", value, "mFreshUsed");
-            return (Criteria) this;
-        }
-
-        public Criteria andMFreshUsedLessThan(Integer value) {
-            addCriterion("m_fresh_used <", value, "mFreshUsed");
-            return (Criteria) this;
-        }
-
-        public Criteria andMFreshUsedLessThanOrEqualTo(Integer value) {
-            addCriterion("m_fresh_used <=", value, "mFreshUsed");
-            return (Criteria) this;
-        }
-
-        public Criteria andMFreshUsedIn(List<Integer> values) {
-            addCriterion("m_fresh_used in", values, "mFreshUsed");
-            return (Criteria) this;
-        }
-
-        public Criteria andMFreshUsedNotIn(List<Integer> values) {
-            addCriterion("m_fresh_used not in", values, "mFreshUsed");
-            return (Criteria) this;
-        }
-
-        public Criteria andMFreshUsedBetween(Integer value1, Integer value2) {
-            addCriterion("m_fresh_used between", value1, value2, "mFreshUsed");
-            return (Criteria) this;
-        }
-
-        public Criteria andMFreshUsedNotBetween(Integer value1, Integer value2) {
-            addCriterion("m_fresh_used not between", value1, value2, "mFreshUsed");
             return (Criteria) this;
         }
 

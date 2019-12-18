@@ -2,6 +2,7 @@ package spring.trade.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -52,7 +53,7 @@ public class TradeMemberComtroller {
 
     @ApiOperation(value = "取消订单", httpMethod = "GET")
     @RequestMapping(value = "/delete/order/{orderNo}/{type}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public BaseCommonResult deleteOrder(@PathVariable Long orderNo,@PathVariable Integer type) {
+    public BaseCommonResult deleteOrder(@PathVariable Long orderNo,@ApiParam("取消订单原因:0:我不想买了,1信息填写错误,2重新下单,3其他原因") @PathVariable Integer type) {
         return pOrderService.deleteOrder(orderNo,type);
     }
 

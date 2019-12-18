@@ -50,14 +50,20 @@ public class MRecoveryGoods implements Serializable {
     @ApiModelProperty(value = "现金")
     private BigDecimal price;
 
+    @ApiModelProperty(value = "二次报价新旧程度:0->全新,1->95新,2->9成新,3->8.5新,4->8成新,5->7成新")
+    private Integer tFreshUsed;
+
+    @ApiModelProperty(value = "二次报价鱿费")
+    private BigDecimal tYouPrice;
+
+    @ApiModelProperty(value = "二次报价现金")
+    private BigDecimal tPrice;
+
     @ApiModelProperty(value = "备注")
     private String remarks;
 
     @ApiModelProperty(value = "拒绝理由")
     private String deRemarks;
-
-    @ApiModelProperty(value = "新旧程度:0->全新,1->95新,2->9成新,3->8.5新,4->8成新,5->7成新(后台选择)")
-    private Integer mFreshUsed;
 
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
@@ -184,6 +190,30 @@ public class MRecoveryGoods implements Serializable {
         this.price = price;
     }
 
+    public Integer gettFreshUsed() {
+        return tFreshUsed;
+    }
+
+    public void settFreshUsed(Integer tFreshUsed) {
+        this.tFreshUsed = tFreshUsed;
+    }
+
+    public BigDecimal gettYouPrice() {
+        return tYouPrice;
+    }
+
+    public void settYouPrice(BigDecimal tYouPrice) {
+        this.tYouPrice = tYouPrice;
+    }
+
+    public BigDecimal gettPrice() {
+        return tPrice;
+    }
+
+    public void settPrice(BigDecimal tPrice) {
+        this.tPrice = tPrice;
+    }
+
     public String getRemarks() {
         return remarks;
     }
@@ -198,14 +228,6 @@ public class MRecoveryGoods implements Serializable {
 
     public void setDeRemarks(String deRemarks) {
         this.deRemarks = deRemarks;
-    }
-
-    public Integer getmFreshUsed() {
-        return mFreshUsed;
-    }
-
-    public void setmFreshUsed(Integer mFreshUsed) {
-        this.mFreshUsed = mFreshUsed;
     }
 
     public Date getCreateTime() {
@@ -237,9 +259,11 @@ public class MRecoveryGoods implements Serializable {
         sb.append(", goodsPrice=").append(goodsPrice);
         sb.append(", youPrice=").append(youPrice);
         sb.append(", price=").append(price);
+        sb.append(", tFreshUsed=").append(tFreshUsed);
+        sb.append(", tYouPrice=").append(tYouPrice);
+        sb.append(", tPrice=").append(tPrice);
         sb.append(", remarks=").append(remarks);
         sb.append(", deRemarks=").append(deRemarks);
-        sb.append(", mFreshUsed=").append(mFreshUsed);
         sb.append(", createTime=").append(createTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
