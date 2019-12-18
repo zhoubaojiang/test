@@ -44,7 +44,13 @@ public class PaymentServiceImpl implements PaymentService {
         SortedMap<String, Object> resultMap = new TreeMap<String, Object>();
         //生成支付金额，开发环境处理支付金额数到0.01、0.02、0.03元
         //添加或更新支付记录(参数跟进自己业务需求添加)
-        int flag = this.addOrUpdatePaymentRecord(orderNum, money,orderState);
+        int flag = 0;
+        try{
+            flag = this.addOrUpdatePaymentRecord(orderNum, money,orderState);
+        }catch (GoodsException e){
+            resultMap.put("code", e.getResponseCode());
+            resultMap.put("msg", e.getMessage());
+        }
         if(flag == 0){
             resultMap.put("returnCode", "FAIL");
             resultMap.put("returnMsg", "此订单已支付！");
@@ -120,8 +126,8 @@ public class PaymentServiceImpl implements PaymentService {
         }
         List<PayOrderGoodsNumRes> payOrderGoodsNumRes = goodsMapper.selectOrderGoodsNum(orderNo);
         for (PayOrderGoodsNumRes payOrderGoodsNumRes1 :payOrderGoodsNumRes) {
-            if (payOrderGoodsNumRes1.getGoodsNumType().equals("0")){//已售出
-                return 1;
+            if (payOrderGoodsNumRes1.getGoodsNumType()==0){//已售出
+                throw  new GoodsException(99999,"此商品"+payOrderGoodsNumRes1.getGoodsName()+"已售出");
             }
         }
         return 2;
