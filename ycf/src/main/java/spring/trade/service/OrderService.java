@@ -264,7 +264,7 @@ public class OrderService  {
         return ResultBuilder.success(pageResult);
     }
 
-    public BaseCommonResult getRecoveryOrder(Long id) {
+    public BaseCommonResult<MRecoveryGoods> getRecoveryOrder(Long id) {
         log.info("会员回收商品查询商品详情接口请求参数:{}",id);
         return ResultBuilder.success(mRecoveryGoodsMapper.selectByPrimaryKey(id));
     }

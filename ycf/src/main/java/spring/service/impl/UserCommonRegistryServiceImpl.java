@@ -85,7 +85,7 @@ public class UserCommonRegistryServiceImpl implements UserCommonRegistryService 
         TonKenUtile.setResultToken(result, loginDto, userManual);
         result.setLoginAccount(mUser.getLoginAccount());
         result.setUserName(mUser.getUserName());
-        result.setUserId(String.valueOf(mUser.getUserId()));
+        result.setLoginId(String.valueOf(mUser.getUserId()));
         result.setUserType(Constants.USER_TYPE_BACKEND);
         return ResultBuilder.success(result);
     }

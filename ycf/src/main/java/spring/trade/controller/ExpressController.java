@@ -29,7 +29,7 @@ public class ExpressController {
      * @param expressNo
      * @return
      */
-    @ApiOperation(value = "订单详情", httpMethod = "GET")
+    @ApiOperation(value = "物流查询", httpMethod = "GET")
     @RequestMapping(value = "/expre/{expressNo}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
     public BaseCommonResult getExpress(@ApiParam("物流单号") @PathVariable String expressNo) {
         String host = "https://wuliu.market.alicloudapi.com";

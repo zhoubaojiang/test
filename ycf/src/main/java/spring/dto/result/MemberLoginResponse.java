@@ -18,4 +18,7 @@ public class MemberLoginResponse extends UserLoginResponse{
 
     @ApiModelProperty(value = "用户头像")
     private String picUrl;
+
+    @ApiModelProperty(value = "用户手机号")
+    private String phone;
 }

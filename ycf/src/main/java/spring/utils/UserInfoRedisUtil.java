@@ -287,7 +287,7 @@ public class UserInfoRedisUtil {
 		String loginInfoStr = JedisUtils.getJedisInstance().execGetFromCache(loginId + "-" + userType + "-" + channelId);
 		UserLoginResponse loginInfo = JSON.parseObject(loginInfoStr, UserLoginResponse.class);
 		if(loginInfo !=  null){
-			return Long.parseLong(loginInfo.getUserId());
+			return Long.parseLong(loginInfo.getLoginId());
 		}
 		return null;
 	}

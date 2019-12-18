@@ -102,7 +102,7 @@ public class TradeMemberComtroller {
 
     @ApiOperation(value = "回收订单详情", httpMethod = "GET")
     @RequestMapping(value = "/recovery/order/{id}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public BaseCommonResult getRecoveryOrder(@PathVariable Long id) {
+    public BaseCommonResult<MRecoveryGoods> getRecoveryOrder(@PathVariable Long id) {
         return pOrderService.getRecoveryOrder(id);
     }
 
