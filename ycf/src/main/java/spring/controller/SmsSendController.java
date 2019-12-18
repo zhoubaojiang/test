@@ -42,7 +42,13 @@ public class SmsSendController {
         String redisKey= MessageFormat.format(UserConstants.USER_CODE_REDIS_PREFIX,UserConstants.USER_TYPE_MEMBER,phone);
         //短信参数内容
         String sendCode = this.getVerificationCode(phone, UserConstants.USER_TYPE_MEMBER);
-        CommonResponse commonResponse = AliyunSmsUtils.sendSmsCode(phone, sendCode);
+        CommonResponse commonResponse = null;
+        try {
+             commonResponse = AliyunSmsUtils.sendSmsCode(phone, sendCode);
+        }catch (Exception e){
+            log.info("短信发送失败:{}",e.getMessage());
+            return ResultBuilder.fail("短信发送失败");
+        }
         log.info("sendSmsResponse:{}",commonResponse);
         HashMap<String, String> map = new HashMap();
         map.put("code",sendCode);
@@ -94,8 +100,8 @@ public class SmsSendController {
      * 保存验证码到Redis
      */
     public void insertVerificationCodeRedis(UserVerificationCodeVO vo) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-
-        int seconds = 600;
+        //300=5分钟
+        int seconds = 300;
         String redisKey=MessageFormat.format(UserConstants.USER_CODE_REDIS_PREFIX,vo.getUserType(),vo.getAccount());
         Map<String, String> map = Maps.newHashMap();
         if (vo != null) {

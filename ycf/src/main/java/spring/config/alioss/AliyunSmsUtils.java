@@ -20,7 +20,7 @@ public class AliyunSmsUtils {
     // TODO 此处需要替换成开发者自己的AK(在阿里云访问控制台寻找)
     private static  String accessKeyId = "LTAI4FwH6EPUWguF1v9maxDT";  // TODO 修改成自己的
     private static String accessKeySecret ="8zMjEie2eXZ3ArlOfYaB6iKa0mU7Ch";   // TODO 修改成自己的
-    private static String signName = "test";
+    private static String signName = "鱿来游趣";
     private static String templateCode ="SMS_180352911";
 
     public static CommonResponse sendSmsCode(String phone, String code) throws ClientException {
@@ -29,13 +29,13 @@ public class AliyunSmsUtils {
         CommonRequest request = new CommonRequest();
         request.setMethod(MethodType.POST);
         request.setDomain("dysmsapi.aliyuncs.com");
-        request.setVersion("2019-12-18");
+        request.setVersion("2017-05-25");
         request.setAction("SendSms");
         request.putQueryParameter("RegionId", "cn-hangzhou");
         request.putQueryParameter("PhoneNumbers", phone);
         request.putQueryParameter("SignName", signName);
-        request.putQueryParameter("TemplateCode", templateCode);
-        request.putQueryParameter("TemplateParam", code);
+        request.putQueryParameter("TemplateCode",templateCode );
+        request.putQueryParameter("TemplateParam", "{\"code\":\"" + code + "\"}");
         CommonResponse response = client.getCommonResponse(request);
         System.out.println(response.getData());
         return response;
