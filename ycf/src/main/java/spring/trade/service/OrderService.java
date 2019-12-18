@@ -118,26 +118,28 @@ public class OrderService  {
     /**
      * 修改订单状态
      * @param orderInfo
-     * @param i
+     * @param i 1支付成功 2支付失败
      */
     @Transient
     public void updateOrder(POrders orderInfo, String i) {
-        POrders record = new POrders();
-        record.setId(orderInfo.getId());
-        record.setOrderState(i);
-        pOrdersMapper.updateByPrimaryKeySelective( record);
-            POrdersDetailsExample example = new POrdersDetailsExample();
-            example.createCriteria().andOrderNoEqualTo(orderInfo.getId());
-            List<POrdersDetails> pOrdersDetails = pOrdersDetailsMapper.selectByExample(example);
-            for (POrdersDetails details:pOrdersDetails) {
-                PGoods pGoods = pGoodsMapper.selectByPrimaryKey(details.getGoodsId());
-                if (i.equals("1")){
-                    pGoods.setGoodsNumType(0);
-                }else {
-                    pGoods.setGoodsNumType(1);
-                }
-                pGoodsMapper.updateByPrimaryKeySelective(pGoods);
+        if(i.equals("1")){
+            POrders record = new POrders();
+            record.setId(orderInfo.getId());
+            record.setOrderState(i);
+            pOrdersMapper.updateByPrimaryKeySelective( record);
+        }
+        POrdersDetailsExample example = new POrdersDetailsExample();
+        example.createCriteria().andOrderNoEqualTo(orderInfo.getId());
+        List<POrdersDetails> pOrdersDetails = pOrdersDetailsMapper.selectByExample(example);
+        for (POrdersDetails details:pOrdersDetails) {
+            PGoods pGoods = pGoodsMapper.selectByPrimaryKey(details.getGoodsId());
+            if (!i.equals("1")){
+                pGoods.setGoodsNumType(0);
+            }else {
+                pGoods.setGoodsNumType(1);
             }
+            pGoodsMapper.updateByPrimaryKeySelective(pGoods);
+        }
     }
 
     /**
