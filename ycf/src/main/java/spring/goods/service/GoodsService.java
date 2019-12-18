@@ -44,6 +44,8 @@ public class GoodsService {
     private PFirstFictureMapper pFirstFictureMapper;
     @Autowired
     private POrdersDetailsMapper ordersDetailsMapper;
+    @Autowired
+    private POrdersMapper ordersMapper;
     /**
      * 添加商品
      * @param request
@@ -240,19 +242,25 @@ public class GoodsService {
     }
     @Transient
     public void updateGoodsNnumType(String orderNum) throws GoodsException {
-        POrdersDetailsExample example = new POrdersDetailsExample();
-        example.createCriteria().andOrderNoEqualTo(Long.parseLong(orderNum));
-        List<POrdersDetails> pOrdersDetails = ordersDetailsMapper.selectByExample(example);
-        if (pOrdersDetails.size()>0){
-            for (POrdersDetails details:pOrdersDetails ) {
-                PGoods goods = pGoodsMapper.selectByPrimaryKey(details.getGoodsId());
-                if (goods != null && goods.getGoodsNumType()==1){
-                    goods.setGoodsNumType(0);
-                    pGoodsMapper.updateByPrimaryKeySelective(goods);
-                }else {
-                    throw  new GoodsException(99999,"此商品"+goods.getGoodsName()+"已售出");
+        POrdersExample example = new POrdersExample ();
+        example.createCriteria().andOrderNoEqualTo(orderNum);
+        List<POrders> pOrders = ordersMapper.selectByExample(example);
+        if (pOrders.size()>0){
+            POrdersDetailsExample detailsExample = new POrdersDetailsExample();
+            detailsExample.createCriteria().andOrderNoEqualTo(pOrders.get(0).getId());
+            List<POrdersDetails> pOrdersDetails = ordersDetailsMapper.selectByExample(detailsExample);
+            if (pOrdersDetails.size()>0){
+                for (POrdersDetails details:pOrdersDetails ) {
+                    PGoods goods = pGoodsMapper.selectByPrimaryKey(details.getGoodsId());
+                    if (goods != null && goods.getGoodsNumType()==1){
+                        goods.setGoodsNumType(0);
+                        pGoodsMapper.updateByPrimaryKeySelective(goods);
+                    }else {
+                        throw  new GoodsException(99999,"此商品"+goods.getGoodsName()+"已售出");
+                    }
                 }
             }
         }
+
     }
 }

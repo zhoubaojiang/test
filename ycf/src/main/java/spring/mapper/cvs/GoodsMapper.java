@@ -16,5 +16,5 @@ public interface GoodsMapper {
 
     List<RecommendedResponse> searchlist(RecommendedRequest requset);
 
-    PayOrderGoodsNumRes selectOrderGoodsNum(@Param("orderNo")String orderNo);
+    List<PayOrderGoodsNumRes> selectOrderGoodsNum(@Param("orderNo")String orderNo);
 }

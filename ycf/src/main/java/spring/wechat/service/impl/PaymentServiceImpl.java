@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -117,9 +118,11 @@ public class PaymentServiceImpl implements PaymentService {
         if ( ArrayUtils.contains(orderStateList,Integer.parseInt(orderState))){
             return 0;//此订单已支付
         }
-        PayOrderGoodsNumRes payOrderGoodsNumRes = goodsMapper.selectOrderGoodsNum(orderNo);
-        if (payOrderGoodsNumRes.getGoodsNumType().equals("0")){//已售出
-            return 1;
+        List<PayOrderGoodsNumRes> payOrderGoodsNumRes = goodsMapper.selectOrderGoodsNum(orderNo);
+        for (PayOrderGoodsNumRes payOrderGoodsNumRes1 :payOrderGoodsNumRes) {
+            if (payOrderGoodsNumRes1.getGoodsNumType().equals("0")){//已售出
+                return 1;
+            }
         }
         return 2;
     }
