@@ -10,6 +10,7 @@ import spring.dto.result.*;
 import spring.exception.GoodsException;
 import spring.mapper.*;
 import spring.mapper.cvs.MemberCarMapper;
+import spring.mapper.cvs.MemberOrderMapper;
 import spring.mapper.cvs.TradeAdminMapper;
 import spring.model.*;
 import spring.utils.Constants;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Service;
 import spring.wechat.service.WechatService;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -50,6 +52,11 @@ public class MemberService {
     private MRecoveryGoodsMapper recoveryGoodsMapper;
     @Autowired
     private TradeAdminMapper tradeAdminMapper;
+    @Autowired
+    private MemberOrderMapper memberOrderMapper;
+    @Autowired
+    private MMemberJbMapper memberJbMapper;
+
     @Transient
     public BaseCommonResult<UUserMember> register(MemberRequest record) {
         log.info("会员注册请求参数:{}",record);
@@ -289,13 +296,13 @@ public class MemberService {
      * @return
      */
     @Transient
-    public BaseCommonResult getjinbi(Long memberId, int type) {
+    public BaseCommonResult<UUserMember> getjinbi(Long memberId, int type) {
         //1:关注公众号,2登录领取,3首次卖出,4首次购买,5鱿费获取
         UUserMemberExample example = new UUserMemberExample ();
         List<UUserMember> uUserMembers = userMemberMapper.selectByExample(example);
         if (uUserMembers.size()>0){
             UUserMember uUserMember = uUserMembers.get(0);
-
+            MMemberJb record = new MMemberJb ();
             if (type == 1){//1:关注公众号
                 BigDecimal gold = uUserMember.getGold();
                 uUserMember.setGold(gold.add(new BigDecimal(10000)));
@@ -330,9 +337,38 @@ public class MemberService {
                 uUserMember.setlType(i);
                 userMemberMapper.updateByPrimaryKeySelective(uUserMember);
             }
+            record.setCreateTime(new Date());
+            record.setMemberId(uUserMember.getId());
+            record.setPrice(uUserMember.getGold());
+            memberJbMapper.insertSelective(record);
             return ResultBuilder.success(uUserMember);
         }else {
             return ResultBuilder.fail("用户不存在");
         }
+    }
+
+    /**
+     * 1:鱿费,2金币,3现金
+     * @param memberId
+     * @param type
+     * @return
+     */
+    public BaseCommonResult<List<GetMemberResult>> getmember(Long memberId, int type) {
+        List<GetMemberResult> getMemberResults = new ArrayList<>();
+        if (type == 1){
+            getMemberResults = memberOrderMapper.selectYouFei(memberId);
+        }else  if (type ==2){
+            MMemberJbExample example = new MMemberJbExample ();
+            example.createCriteria().andMemberIdEqualTo(memberId);
+            List<MMemberJb> mMemberJbs = memberJbMapper.selectByExample(example);
+            for (MMemberJb jb:mMemberJbs) {
+                GetMemberResult map = dozerMapper.map(jb, GetMemberResult.class);
+                map.setName("金币收入");
+                getMemberResults.add(map);
+            }
+        }else {
+            getMemberResults = memberOrderMapper.selectPrice(memberId);
+        }
+        return ResultBuilder.success(getMemberResults);
     }
 }

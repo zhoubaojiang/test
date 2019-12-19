@@ -4,14 +4,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import spring.mapper.PGoodsMapper;
-import spring.mapper.POrdersDetailsMapper;
-import spring.mapper.POrdersMapper;
+import spring.mapper.*;
 import spring.mapper.cvs.TradeAdminMapper;
 import spring.model.*;
 import spring.utils.DateUtil;
 
 import java.beans.Transient;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +26,10 @@ public class ScheduledTasks {
          private PGoodsMapper goodsMapper;
         @Autowired
         private TradeAdminMapper tradeAdminMapper;
-
+         @Autowired
+        private MMemberInterestMapper interestMapper;
+         @Autowired
+         private UUserMemberMapper memberMapper;
         @Transient
 //	    @Scheduled(cron="0 1 * * * ?")
 	    public void reportCurrentTime() {
@@ -63,4 +65,26 @@ public class ScheduledTasks {
     public void updateMember() {
       int i =  tradeAdminMapper.updateMemberCount();
     }
+
+    /**
+     * 每天零时清空累计获取次数
+     */
+//    @Scheduled(cron="0 0/1 * * * ?")
+    @Transient
+    public void interestMember() {
+        UUserMemberExample example = new UUserMemberExample ();
+        List<UUserMember> uUserMembers = memberMapper.selectByExample(example);
+        if (uUserMembers.size()>0){
+            //获取用户鱿费
+            for (UUserMember member:uUserMembers) {
+                if (member.getYuanBao().intValue()!= 0){
+                    MMemberInterest record = new MMemberInterest ();
+                    record.setYouPrice(member.getYuanBao().multiply(new BigDecimal(0.0245)));
+                    record.setMemberId(member.getId());
+                    interestMapper.insertSelective(record);
+                }
+            }
+        }
+    }
+
 }

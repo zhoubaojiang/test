@@ -4,10 +4,8 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.validation.annotation.Validated;
 import spring.dto.BaseCommonResult;
 import spring.dto.request.*;
-import spring.dto.result.BasePage;
-import spring.dto.result.MemberCarResult;
-import spring.dto.result.MemberLoginResponse;
-import spring.dto.result.MemberPriceReslut;
+import spring.dto.result.*;
+import spring.model.UUserMember;
 import spring.service.MemberService;
 import spring.model.UMemberReceiveAddress;
 import io.swagger.annotations.Api;
@@ -15,6 +13,8 @@ import io.swagger.annotations.ApiOperation;
 import jdk.nashorn.internal.runtime.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @Logger
@@ -96,8 +96,13 @@ public class MemberController {
 
     @ApiOperation(value = "登录账号领取金币")
     @RequestMapping(value = "/jinbi/{memberId}/{type}", method = RequestMethod.GET)
-    public @ResponseBody BaseCommonResult  getjinbi(@PathVariable Long memberId,@ApiParam("1:关注公众号,2登录领取,3首次卖出,4首次购买,5鱿费获取") @PathVariable int type) {
+    public @ResponseBody BaseCommonResult<UUserMember>  getjinbi(@PathVariable Long memberId, @ApiParam("1:关注公众号,2登录领取,3首次卖出,4首次购买,5鱿费获取") @PathVariable int type) {
         return userService.getjinbi(memberId,type);
     }
 
+    @ApiOperation(value = "用户鱿费金币现金明细")
+    @RequestMapping(value = "/member/{memberId}/{type}", method = RequestMethod.GET)
+    public @ResponseBody BaseCommonResult<List<GetMemberResult>>  getmember(@PathVariable Long memberId, @ApiParam("1:鱿费,2金币,3现金") @PathVariable int type) {
+        return userService.getmember(memberId,type);
+    }
 }
