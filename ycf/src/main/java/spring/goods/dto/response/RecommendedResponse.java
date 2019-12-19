@@ -17,4 +17,6 @@ public class RecommendedResponse {
     private BigDecimal discountPrice;
     @ApiModelProperty(value = "商品图片")
     private String pic;
+    @ApiModelProperty(value = "元宝折扣价")
+    private BigDecimal treasureDiscountPrice;
 }

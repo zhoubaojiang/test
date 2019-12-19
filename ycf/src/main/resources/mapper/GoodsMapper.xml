@@ -70,7 +70,8 @@
     p.goods_name goodsName,
     p.goods_price goodsPrice,
     p.discount_price discountPrice,
-    p.master_graph pic
+    p.master_graph pic,
+    p.treasure_discount_price treasureDiscountPrice
     FROM
     p_goods p
     WHERE
@@ -91,7 +92,8 @@
         p.goods_name goodsName,
         p.goods_price goodsPrice,
         p.discount_price discountPrice,
-        p.master_graph  pic
+        p.master_graph  pic,
+        p.treasure_discount_price treasureDiscountPrice
         FROM
         p_goods p
         WHERE
