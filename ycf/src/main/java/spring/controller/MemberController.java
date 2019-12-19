@@ -111,5 +111,10 @@ public class MemberController {
         return userService.getMemberWallet(memberId);
     }
 
-
+    @ApiOperation(value = "解锁金币")
+    @RequestMapping(value = "/money/{memberId}/{type}", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseCommonResult getMoney(@PathVariable Long memberId,@ApiParam("1:解锁10元,2解锁30元,3解锁50元,4解锁100元")@PathVariable int type) {
+        return userService.getMoney(memberId,type);
+    }
 }

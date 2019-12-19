@@ -343,6 +343,7 @@ public class MemberService {
             record.setCreateTime(new Date());
             record.setMemberId(uUserMember.getId());
             record.setPrice(uUserMember.getGold());
+            record.setType(1);
             memberJbMapper.insertSelective(record);
             return ResultBuilder.success(uUserMember);
         }else {
@@ -391,5 +392,50 @@ public class MemberService {
             map.setGetMemberResults(getMemberResults);
         }
         return ResultBuilder.success(map);
+    }
+
+    /**
+     * 1:解锁10元,2解锁30元,3解锁50元,4解锁100元
+     * 100000，300000，500000，1000000
+     * @param memberId
+     * @param type
+     * @return
+     */
+    @Transient
+    public BaseCommonResult getMoney(Long memberId, int type) {
+        UUserMember uUserMember = userMemberMapper.selectByPrimaryKey(memberId);
+        BigDecimal gold = uUserMember.getGold();
+        MMemberJb record = new MMemberJb ();
+        if (type == 1){
+            if (gold.intValue()<100000){
+                ResultBuilder.fail("金币不够");
+            }
+            uUserMember.setGold(gold.subtract(new BigDecimal(100000)));
+            record.setPrice(new BigDecimal(100000));
+        }else if (type == 2){
+            if (gold.intValue()<300000){
+                ResultBuilder.fail("金币不够");
+            }
+            uUserMember.setGold(gold.subtract(new BigDecimal(300000)));
+            record.setPrice(new BigDecimal(300000));
+        }else if (type == 3){
+            if (gold.intValue()<500000){
+                ResultBuilder.fail("金币不够");
+            }
+            uUserMember.setGold(gold.subtract(new BigDecimal(500000)));
+            record.setPrice(new BigDecimal(500000));
+        }else {
+            if (gold.intValue()<1000000){
+                ResultBuilder.fail("金币不够");
+            }
+            uUserMember.setGold(gold.subtract(new BigDecimal(1000000)));
+            record.setPrice(new BigDecimal(1000000));
+        }
+        userMemberMapper.updateByPrimaryKeySelective(uUserMember);
+        record.setMemberId(memberId);
+        record.setCreateTime(new Date());
+        record.setType(2);
+        memberJbMapper.insertSelective(record);
+        return ResultBuilder.success(uUserMember);
     }
 }

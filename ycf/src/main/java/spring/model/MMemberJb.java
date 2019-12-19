@@ -15,6 +15,9 @@ public class MMemberJb implements Serializable {
     @ApiModelProperty(value = "金币")
     private BigDecimal price;
 
+    @ApiModelProperty(value = "1:收益,2扣除")
+    private Integer type;
+
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
 
@@ -44,6 +47,14 @@ public class MMemberJb implements Serializable {
         this.price = price;
     }
 
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -61,6 +72,7 @@ public class MMemberJb implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", memberId=").append(memberId);
         sb.append(", price=").append(price);
+        sb.append(", type=").append(type);
         sb.append(", createTime=").append(createTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
