@@ -1,11 +1,13 @@
 package spring.controller;
 
+import io.swagger.annotations.ApiParam;
 import org.springframework.validation.annotation.Validated;
 import spring.dto.BaseCommonResult;
 import spring.dto.request.*;
 import spring.dto.result.BasePage;
 import spring.dto.result.MemberCarResult;
 import spring.dto.result.MemberLoginResponse;
+import spring.dto.result.MemberPriceReslut;
 import spring.service.MemberService;
 import spring.model.UMemberReceiveAddress;
 import io.swagger.annotations.Api;
@@ -85,4 +87,17 @@ public class MemberController {
     public @ResponseBody BaseCommonResult binding(@Validated @RequestBody BinDingPhonRequest request) {
         return userService.binding(request);
     }
+
+    @ApiOperation(value = "用户信息")
+    @RequestMapping(value = "/login/{memberId}", method = RequestMethod.GET)
+    public @ResponseBody BaseCommonResult<MemberPriceReslut>  getlogin(@PathVariable Long memberId) {
+        return userService.getlogin(memberId);
+    }
+
+    @ApiOperation(value = "登录账号领取金币")
+    @RequestMapping(value = "/jinbi/{memberId}/{type}", method = RequestMethod.GET)
+    public @ResponseBody BaseCommonResult  getjinbi(@PathVariable Long memberId,@ApiParam("1:关注公众号,2登录领取,3首次卖出,4首次购买,5鱿费获取") @PathVariable int type) {
+        return userService.getjinbi(memberId,type);
+    }
+
 }

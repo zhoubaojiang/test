@@ -18,14 +18,35 @@ public class UUserMember implements Serializable {
     @ApiModelProperty(value = "手机号码")
     private String phone;
 
-    @ApiModelProperty(value = "元宝")
+    @ApiModelProperty(value = "鱿费")
     private BigDecimal yuanBao;
+
+    @ApiModelProperty(value = "鱿费累计收益")
+    private BigDecimal youPrice;
 
     @ApiModelProperty(value = "金币")
     private BigDecimal gold;
 
+    @ApiModelProperty(value = "累计赚取金币")
+    private BigDecimal tGold;
+
     @ApiModelProperty(value = "现金")
     private BigDecimal price;
+
+    @ApiModelProperty(value = "首次卖出物品是否已领取:0是,1否")
+    private Integer tType;
+
+    @ApiModelProperty(value = "首次购买物品是否已领取:0是,1否")
+    private Integer wType;
+
+    @ApiModelProperty(value = "是否已关注0是 1否")
+    private Integer gType;
+
+    @ApiModelProperty(value = "是否首次登录0是1否")
+    private Integer cType;
+
+    @ApiModelProperty(value = "可领取次数")
+    private Integer lType;
 
     @ApiModelProperty(value = "支付宝授权code")
     private String openId;
@@ -81,6 +102,14 @@ public class UUserMember implements Serializable {
         this.yuanBao = yuanBao;
     }
 
+    public BigDecimal getYouPrice() {
+        return youPrice;
+    }
+
+    public void setYouPrice(BigDecimal youPrice) {
+        this.youPrice = youPrice;
+    }
+
     public BigDecimal getGold() {
         return gold;
     }
@@ -89,12 +118,60 @@ public class UUserMember implements Serializable {
         this.gold = gold;
     }
 
+    public BigDecimal gettGold() {
+        return tGold;
+    }
+
+    public void settGold(BigDecimal tGold) {
+        this.tGold = tGold;
+    }
+
     public BigDecimal getPrice() {
         return price;
     }
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public Integer gettType() {
+        return tType;
+    }
+
+    public void settType(Integer tType) {
+        this.tType = tType;
+    }
+
+    public Integer getwType() {
+        return wType;
+    }
+
+    public void setwType(Integer wType) {
+        this.wType = wType;
+    }
+
+    public Integer getgType() {
+        return gType;
+    }
+
+    public void setgType(Integer gType) {
+        this.gType = gType;
+    }
+
+    public Integer getcType() {
+        return cType;
+    }
+
+    public void setcType(Integer cType) {
+        this.cType = cType;
+    }
+
+    public Integer getlType() {
+        return lType;
+    }
+
+    public void setlType(Integer lType) {
+        this.lType = lType;
     }
 
     public String getOpenId() {
@@ -140,8 +217,15 @@ public class UUserMember implements Serializable {
         sb.append(", passWord=").append(passWord);
         sb.append(", phone=").append(phone);
         sb.append(", yuanBao=").append(yuanBao);
+        sb.append(", youPrice=").append(youPrice);
         sb.append(", gold=").append(gold);
+        sb.append(", tGold=").append(tGold);
         sb.append(", price=").append(price);
+        sb.append(", tType=").append(tType);
+        sb.append(", wType=").append(wType);
+        sb.append(", gType=").append(gType);
+        sb.append(", cType=").append(cType);
+        sb.append(", lType=").append(lType);
         sb.append(", openId=").append(openId);
         sb.append(", appId=").append(appId);
         sb.append(", picUrl=").append(picUrl);

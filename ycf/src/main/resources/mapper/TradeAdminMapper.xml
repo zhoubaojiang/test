@@ -221,4 +221,13 @@
         </if>
     </select>
 
+    <select id="selectSumPrice" resultType="spring.dto.result.MemberSumPrice">
+     SELECT
+	IFNULL(sum( price ),0) price
+    FROM
+        m_recovery_goods
+    WHERE
+    member_id = #{memberId} and DATE_FORMAT(create_time,'%Y-%d-%m') = DATE_FORMAT(NOW(),'%Y-%d-%m')
+    AND order_state = 4
+    </select>
 </mapper>

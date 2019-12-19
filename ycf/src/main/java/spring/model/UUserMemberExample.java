@@ -436,6 +436,66 @@ public class UUserMemberExample {
             return (Criteria) this;
         }
 
+        public Criteria andYouPriceIsNull() {
+            addCriterion("you_price is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andYouPriceIsNotNull() {
+            addCriterion("you_price is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andYouPriceEqualTo(BigDecimal value) {
+            addCriterion("you_price =", value, "youPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andYouPriceNotEqualTo(BigDecimal value) {
+            addCriterion("you_price <>", value, "youPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andYouPriceGreaterThan(BigDecimal value) {
+            addCriterion("you_price >", value, "youPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andYouPriceGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("you_price >=", value, "youPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andYouPriceLessThan(BigDecimal value) {
+            addCriterion("you_price <", value, "youPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andYouPriceLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("you_price <=", value, "youPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andYouPriceIn(List<BigDecimal> values) {
+            addCriterion("you_price in", values, "youPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andYouPriceNotIn(List<BigDecimal> values) {
+            addCriterion("you_price not in", values, "youPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andYouPriceBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("you_price between", value1, value2, "youPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andYouPriceNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("you_price not between", value1, value2, "youPrice");
+            return (Criteria) this;
+        }
+
         public Criteria andGoldIsNull() {
             addCriterion("gold is null");
             return (Criteria) this;
@@ -496,6 +556,66 @@ public class UUserMemberExample {
             return (Criteria) this;
         }
 
+        public Criteria andTGoldIsNull() {
+            addCriterion("t_gold is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTGoldIsNotNull() {
+            addCriterion("t_gold is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTGoldEqualTo(BigDecimal value) {
+            addCriterion("t_gold =", value, "tGold");
+            return (Criteria) this;
+        }
+
+        public Criteria andTGoldNotEqualTo(BigDecimal value) {
+            addCriterion("t_gold <>", value, "tGold");
+            return (Criteria) this;
+        }
+
+        public Criteria andTGoldGreaterThan(BigDecimal value) {
+            addCriterion("t_gold >", value, "tGold");
+            return (Criteria) this;
+        }
+
+        public Criteria andTGoldGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("t_gold >=", value, "tGold");
+            return (Criteria) this;
+        }
+
+        public Criteria andTGoldLessThan(BigDecimal value) {
+            addCriterion("t_gold <", value, "tGold");
+            return (Criteria) this;
+        }
+
+        public Criteria andTGoldLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("t_gold <=", value, "tGold");
+            return (Criteria) this;
+        }
+
+        public Criteria andTGoldIn(List<BigDecimal> values) {
+            addCriterion("t_gold in", values, "tGold");
+            return (Criteria) this;
+        }
+
+        public Criteria andTGoldNotIn(List<BigDecimal> values) {
+            addCriterion("t_gold not in", values, "tGold");
+            return (Criteria) this;
+        }
+
+        public Criteria andTGoldBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("t_gold between", value1, value2, "tGold");
+            return (Criteria) this;
+        }
+
+        public Criteria andTGoldNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("t_gold not between", value1, value2, "tGold");
+            return (Criteria) this;
+        }
+
         public Criteria andPriceIsNull() {
             addCriterion("price is null");
             return (Criteria) this;
@@ -553,6 +673,306 @@ public class UUserMemberExample {
 
         public Criteria andPriceNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("price not between", value1, value2, "price");
+            return (Criteria) this;
+        }
+
+        public Criteria andTTypeIsNull() {
+            addCriterion("t_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTTypeIsNotNull() {
+            addCriterion("t_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTTypeEqualTo(Integer value) {
+            addCriterion("t_type =", value, "tType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTTypeNotEqualTo(Integer value) {
+            addCriterion("t_type <>", value, "tType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTTypeGreaterThan(Integer value) {
+            addCriterion("t_type >", value, "tType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("t_type >=", value, "tType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTTypeLessThan(Integer value) {
+            addCriterion("t_type <", value, "tType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("t_type <=", value, "tType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTTypeIn(List<Integer> values) {
+            addCriterion("t_type in", values, "tType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTTypeNotIn(List<Integer> values) {
+            addCriterion("t_type not in", values, "tType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTTypeBetween(Integer value1, Integer value2) {
+            addCriterion("t_type between", value1, value2, "tType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("t_type not between", value1, value2, "tType");
+            return (Criteria) this;
+        }
+
+        public Criteria andWTypeIsNull() {
+            addCriterion("w_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWTypeIsNotNull() {
+            addCriterion("w_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWTypeEqualTo(Integer value) {
+            addCriterion("w_type =", value, "wType");
+            return (Criteria) this;
+        }
+
+        public Criteria andWTypeNotEqualTo(Integer value) {
+            addCriterion("w_type <>", value, "wType");
+            return (Criteria) this;
+        }
+
+        public Criteria andWTypeGreaterThan(Integer value) {
+            addCriterion("w_type >", value, "wType");
+            return (Criteria) this;
+        }
+
+        public Criteria andWTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("w_type >=", value, "wType");
+            return (Criteria) this;
+        }
+
+        public Criteria andWTypeLessThan(Integer value) {
+            addCriterion("w_type <", value, "wType");
+            return (Criteria) this;
+        }
+
+        public Criteria andWTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("w_type <=", value, "wType");
+            return (Criteria) this;
+        }
+
+        public Criteria andWTypeIn(List<Integer> values) {
+            addCriterion("w_type in", values, "wType");
+            return (Criteria) this;
+        }
+
+        public Criteria andWTypeNotIn(List<Integer> values) {
+            addCriterion("w_type not in", values, "wType");
+            return (Criteria) this;
+        }
+
+        public Criteria andWTypeBetween(Integer value1, Integer value2) {
+            addCriterion("w_type between", value1, value2, "wType");
+            return (Criteria) this;
+        }
+
+        public Criteria andWTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("w_type not between", value1, value2, "wType");
+            return (Criteria) this;
+        }
+
+        public Criteria andGTypeIsNull() {
+            addCriterion("g_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGTypeIsNotNull() {
+            addCriterion("g_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGTypeEqualTo(Integer value) {
+            addCriterion("g_type =", value, "gType");
+            return (Criteria) this;
+        }
+
+        public Criteria andGTypeNotEqualTo(Integer value) {
+            addCriterion("g_type <>", value, "gType");
+            return (Criteria) this;
+        }
+
+        public Criteria andGTypeGreaterThan(Integer value) {
+            addCriterion("g_type >", value, "gType");
+            return (Criteria) this;
+        }
+
+        public Criteria andGTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("g_type >=", value, "gType");
+            return (Criteria) this;
+        }
+
+        public Criteria andGTypeLessThan(Integer value) {
+            addCriterion("g_type <", value, "gType");
+            return (Criteria) this;
+        }
+
+        public Criteria andGTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("g_type <=", value, "gType");
+            return (Criteria) this;
+        }
+
+        public Criteria andGTypeIn(List<Integer> values) {
+            addCriterion("g_type in", values, "gType");
+            return (Criteria) this;
+        }
+
+        public Criteria andGTypeNotIn(List<Integer> values) {
+            addCriterion("g_type not in", values, "gType");
+            return (Criteria) this;
+        }
+
+        public Criteria andGTypeBetween(Integer value1, Integer value2) {
+            addCriterion("g_type between", value1, value2, "gType");
+            return (Criteria) this;
+        }
+
+        public Criteria andGTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("g_type not between", value1, value2, "gType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCTypeIsNull() {
+            addCriterion("c_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCTypeIsNotNull() {
+            addCriterion("c_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCTypeEqualTo(Integer value) {
+            addCriterion("c_type =", value, "cType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCTypeNotEqualTo(Integer value) {
+            addCriterion("c_type <>", value, "cType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCTypeGreaterThan(Integer value) {
+            addCriterion("c_type >", value, "cType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("c_type >=", value, "cType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCTypeLessThan(Integer value) {
+            addCriterion("c_type <", value, "cType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("c_type <=", value, "cType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCTypeIn(List<Integer> values) {
+            addCriterion("c_type in", values, "cType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCTypeNotIn(List<Integer> values) {
+            addCriterion("c_type not in", values, "cType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCTypeBetween(Integer value1, Integer value2) {
+            addCriterion("c_type between", value1, value2, "cType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("c_type not between", value1, value2, "cType");
+            return (Criteria) this;
+        }
+
+        public Criteria andLTypeIsNull() {
+            addCriterion("l_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLTypeIsNotNull() {
+            addCriterion("l_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLTypeEqualTo(Integer value) {
+            addCriterion("l_type =", value, "lType");
+            return (Criteria) this;
+        }
+
+        public Criteria andLTypeNotEqualTo(Integer value) {
+            addCriterion("l_type <>", value, "lType");
+            return (Criteria) this;
+        }
+
+        public Criteria andLTypeGreaterThan(Integer value) {
+            addCriterion("l_type >", value, "lType");
+            return (Criteria) this;
+        }
+
+        public Criteria andLTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("l_type >=", value, "lType");
+            return (Criteria) this;
+        }
+
+        public Criteria andLTypeLessThan(Integer value) {
+            addCriterion("l_type <", value, "lType");
+            return (Criteria) this;
+        }
+
+        public Criteria andLTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("l_type <=", value, "lType");
+            return (Criteria) this;
+        }
+
+        public Criteria andLTypeIn(List<Integer> values) {
+            addCriterion("l_type in", values, "lType");
+            return (Criteria) this;
+        }
+
+        public Criteria andLTypeNotIn(List<Integer> values) {
+            addCriterion("l_type not in", values, "lType");
+            return (Criteria) this;
+        }
+
+        public Criteria andLTypeBetween(Integer value1, Integer value2) {
+            addCriterion("l_type between", value1, value2, "lType");
+            return (Criteria) this;
+        }
+
+        public Criteria andLTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("l_type not between", value1, value2, "lType");
             return (Criteria) this;
         }
 

@@ -1,6 +1,7 @@
 package spring.mapper.cvs;
 
 
+import spring.dto.result.MemberSumPrice;
 import spring.model.MRecoveryGoods;
 import spring.trade.dto.request.AdminOrderReq;
 import spring.trade.dto.request.AdminRecoveryRequest;
@@ -25,4 +26,6 @@ public interface TradeAdminMapper {
     List<POrdersListResult> selectMemberTradeList(MemberOrderReq request);
 
     List<MRecoveryGoods> selectRecoveryOrderList(RecoveryRequest request);
+
+    MemberSumPrice selectSumPrice(Long memberId);
 }

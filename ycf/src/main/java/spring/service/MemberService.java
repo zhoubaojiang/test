@@ -6,15 +6,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.annotation.Transient;
 import spring.dto.BaseCommonResult;
 import spring.dto.request.*;
-import spring.dto.result.BasePage;
-import spring.dto.result.MemberCarResult;
-import spring.dto.result.MemberLoginResponse;
+import spring.dto.result.*;
 import spring.exception.GoodsException;
-import spring.mapper.MMemberCarDetailMapper;
-import spring.mapper.MMemberCarMapper;
-import spring.mapper.UMemberReceiveAddressMapper;
-import spring.mapper.UUserMemberMapper;
+import spring.mapper.*;
 import spring.mapper.cvs.MemberCarMapper;
+import spring.mapper.cvs.TradeAdminMapper;
 import spring.model.*;
 import spring.utils.Constants;
 import spring.utils.ResultBuilder;
@@ -25,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import spring.wechat.service.WechatService;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -47,7 +44,12 @@ public class MemberService {
     private MemberCarMapper memberCarMapper;
     @Autowired
     private WechatService wechatService;
-
+    @Autowired
+    private POrdersMapper ordersMapper;
+    @Autowired
+    private MRecoveryGoodsMapper recoveryGoodsMapper;
+    @Autowired
+    private TradeAdminMapper tradeAdminMapper;
     @Transient
     public BaseCommonResult<UUserMember> register(MemberRequest record) {
         log.info("会员注册请求参数:{}",record);
@@ -253,5 +255,84 @@ public class MemberService {
         record.setPhone(request.getPhone());
         userMemberMapper.updateByPrimaryKeySelective(record);
         return ResultBuilder.success(record);
+    }
+
+    /**
+     * 获取用户金额
+     * @param memberId
+     * @return
+     */
+    public BaseCommonResult<MemberPriceReslut> getlogin(Long memberId) {
+        UUserMember uUserMember = userMemberMapper.selectByPrimaryKey(memberId);
+        MemberPriceReslut map = dozerMapper.map(uUserMember, MemberPriceReslut.class);
+        //获取用户卖出物品
+        MRecoveryGoodsExample recoveryGoodsExample = new MRecoveryGoodsExample ();
+        recoveryGoodsExample.createCriteria().andMemberIdEqualTo(uUserMember.getId()).andOrderStateEqualTo(4);
+        long r = recoveryGoodsMapper.countByExample(recoveryGoodsExample);
+        map.setTcount(r);
+        //获取用户首次购买
+        POrdersExample ordersExample = new POrdersExample ();
+        ordersExample.createCriteria().andUserIdEqualTo(memberId).andOrderNoEqualTo("6").andOrderNoEqualTo("5");
+        long o = ordersMapper.countByExample(ordersExample);
+        map.setYcount(o);
+        //获取用户满100鱿费可领取次数
+        MemberSumPrice price = tradeAdminMapper.selectSumPrice(memberId);
+        BigDecimal divide = price.getPrice().divide(new BigDecimal(100), 2, BigDecimal.ROUND_DOWN);
+        map.setLcount(divide.intValue());
+        return ResultBuilder.success(map);
+    }
+
+    /**
+     * 任务领取奖励
+     * @param memberId
+     * @param type
+     * @return
+     */
+    @Transient
+    public BaseCommonResult getjinbi(Long memberId, int type) {
+        //1:关注公众号,2登录领取,3首次卖出,4首次购买,5鱿费获取
+        UUserMemberExample example = new UUserMemberExample ();
+        List<UUserMember> uUserMembers = userMemberMapper.selectByExample(example);
+        if (uUserMembers.size()>0){
+            UUserMember uUserMember = uUserMembers.get(0);
+
+            if (type == 1){//1:关注公众号
+                BigDecimal gold = uUserMember.getGold();
+                uUserMember.setGold(gold.add(new BigDecimal(10000)));
+                uUserMember.settGold(uUserMember.gettGold().add(new BigDecimal(10000)));//累计金币
+                uUserMember.setgType(0);
+                userMemberMapper.updateByPrimaryKeySelective(uUserMember);
+            }else if (type == 2){//2登录领取
+                uUserMember.setGold(uUserMember.getGold().add(new BigDecimal(108)));
+                uUserMember.settGold(uUserMember.gettGold().add(new BigDecimal(108)));//累计金币
+                uUserMember.setcType(0);
+                userMemberMapper.updateByPrimaryKeySelective(uUserMember);
+            }else if (type == 3){//3首次卖出
+                uUserMember.setGold(uUserMember.getGold().add(new BigDecimal(20000)));
+                uUserMember.settGold(uUserMember.gettGold().add(new BigDecimal(20000)));//累计金币
+                uUserMember.settType(0);
+                userMemberMapper.updateByPrimaryKeySelective(uUserMember);
+            }else if (type == 4){//4首次购买
+                uUserMember.setGold(uUserMember.getGold().add(new BigDecimal(20000)));
+                uUserMember.settGold(uUserMember.gettGold().add(new BigDecimal(20000)));//累计金币
+                uUserMember.setwType(0);
+                userMemberMapper.updateByPrimaryKeySelective(uUserMember);
+            }else if (type == 5){//5鱿费获取
+                uUserMember.setGold(uUserMember.getGold().add(new BigDecimal(20000)));
+                uUserMember.settGold(uUserMember.gettGold().add(new BigDecimal(20000)));//累计金币
+                MemberSumPrice price = tradeAdminMapper.selectSumPrice(memberId);
+                BigDecimal divide = price.getPrice().divide(new BigDecimal(100), 2, BigDecimal.ROUND_DOWN);
+                if (divide.intValue()<=uUserMember.getlType()){
+                    return ResultBuilder.fail("领取次数不足");
+                }
+               int i = uUserMember.getlType()+1;
+                log.info("已领次数:{}",i);
+                uUserMember.setlType(i);
+                userMemberMapper.updateByPrimaryKeySelective(uUserMember);
+            }
+            return ResultBuilder.success(uUserMember);
+        }else {
+            return ResultBuilder.fail("用户不存在");
+        }
     }
 }
