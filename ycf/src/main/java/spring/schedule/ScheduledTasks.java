@@ -81,6 +81,7 @@ public class ScheduledTasks {
                     MMemberInterest record = new MMemberInterest ();
                     record.setYouPrice(member.getYuanBao().multiply(new BigDecimal(0.0245)));
                     record.setMemberId(member.getId());
+                    record.setCreateTime(new Date());
                     interestMapper.insertSelective(record);
                     //鱿费累计收益
                     member.setYouPrice(member.getYouPrice().add(record.getYouPrice() ));
