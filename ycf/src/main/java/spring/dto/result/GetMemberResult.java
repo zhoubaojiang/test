@@ -16,4 +16,8 @@ public class GetMemberResult {
 
     @ApiModelProperty("时间")
     private Date createTime;
+
+    @ApiModelProperty(value = "1:收益,2扣除")
+    private Integer type;
+
 }
