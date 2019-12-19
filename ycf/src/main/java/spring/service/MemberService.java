@@ -175,6 +175,9 @@ public class MemberService {
     //添加会员购物信息
     @Transient
     public BaseCommonResult addCar(MemberCarRequest request) {
+        if (request.getGoodsId()==null){
+            ResultBuilder.fail("请选择商品!");
+        }
         MMemberCar record = new MMemberCar();
         record.setMemberId(request.getMemberId());
         MMemberCarExample example = new MMemberCarExample();
