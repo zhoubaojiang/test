@@ -191,7 +191,7 @@ public class MemberService {
         }
         //插入中间表
         MMemberCarDetail memberCarDetail = new MMemberCarDetail();
-        memberCarDetail.setGoodsId(request.getGoodsId());
+        memberCarDetail.setGoodsId(request.getGoodsId().longValue());
         memberCarDetail.setMemberCarId(record.getId());
         mMemberCarDetailMapper.insertSelective(memberCarDetail);
         return ResultBuilder.success(record);
@@ -201,7 +201,7 @@ public class MemberService {
     public BaseCommonResult deleteCar(MemberCarRequest request) {
         log.info("会员购物车删除,请求参数为：{}", request);
         MMemberCarDetailExample example = new MMemberCarDetailExample();
-        example.createCriteria().andGoodsIdEqualTo(request.getGoodsId()).andIdEqualTo(request.getMemberCarDetailId());
+        example.createCriteria().andGoodsIdEqualTo(request.getGoodsId().longValue()).andIdEqualTo(request.getMemberCarDetailId());
         int i = mMemberCarDetailMapper.deleteByExample(example);
         log.info("会员购物车删除,成功：{}", i);
         return ResultBuilder.success();

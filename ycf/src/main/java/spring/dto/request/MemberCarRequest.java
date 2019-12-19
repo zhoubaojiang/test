@@ -10,7 +10,7 @@ public class MemberCarRequest {
     private String memberId;
 
     @ApiModelProperty(value = "商品ID")
-    private Long goodsId;
+    private Integer goodsId;
 
     @ApiModelProperty(value = "删除使用参数  购物车商品列表 memberCarDetailId")
     private Long memberCarDetailId;
