@@ -45,7 +45,7 @@ public class UUserMember implements Serializable {
     @ApiModelProperty(value = "是否首次登录0是1否")
     private Integer cType;
 
-    @ApiModelProperty(value = "可领取次数")
+    @ApiModelProperty(value = "鱿费领取金币已领取次数")
     private Integer lType;
 
     @ApiModelProperty(value = "支付宝授权code")

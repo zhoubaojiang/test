@@ -82,6 +82,10 @@ public class ScheduledTasks {
                     record.setYouPrice(member.getYuanBao().multiply(new BigDecimal(0.0245)));
                     record.setMemberId(member.getId());
                     interestMapper.insertSelective(record);
+                    //鱿费累计收益
+                    member.setYouPrice(member.getYouPrice().add(record.getYouPrice() ));
+                    member.setYuanBao(member.getYuanBao().add(record.getYouPrice() ));
+                    memberMapper.updateByPrimaryKeySelective(member);
                 }
             }
         }

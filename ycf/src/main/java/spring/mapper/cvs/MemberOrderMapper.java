@@ -8,4 +8,6 @@ public interface MemberOrderMapper {
     List<GetMemberResult> selectYouFei(Long memberId);
 
     List<GetMemberResult> selectPrice(Long memberId);
+
+    List<GetMemberResult> selectMemberWallet(Long memberId);
 }

@@ -88,7 +88,7 @@ public class MemberController {
         return userService.binding(request);
     }
 
-    @ApiOperation(value = "用户信息")
+    @ApiOperation(value = "任务领取用户信息")
     @RequestMapping(value = "/login/{memberId}", method = RequestMethod.GET)
     public @ResponseBody BaseCommonResult<MemberPriceReslut>  getlogin(@PathVariable Long memberId) {
         return userService.getlogin(memberId);
@@ -105,4 +105,11 @@ public class MemberController {
     public @ResponseBody BaseCommonResult<List<GetMemberResult>>  getmember(@PathVariable Long memberId, @ApiParam("1:鱿费,2金币,3现金") @PathVariable int type) {
         return userService.getmember(memberId,type);
     }
+    @ApiOperation(value = "用户钱包")
+    @RequestMapping(value = "/wallet/{memberId}", method = RequestMethod.GET)
+    public @ResponseBody BaseCommonResult<MemberWalletResult>  getMemberWallet(@PathVariable Long memberId) {
+        return userService.getMemberWallet(memberId);
+    }
+
+
 }

@@ -371,4 +371,22 @@ public class MemberService {
         }
         return ResultBuilder.success(getMemberResults);
     }
+
+    /**
+     * 鱿费 现金收益
+     * @param memberId
+     * @return
+     */
+    public BaseCommonResult<MemberWalletResult> getMemberWallet(Long memberId) {
+        UUserMember uUserMember = userMemberMapper.selectByPrimaryKey(memberId);
+        if (uUserMember != null){
+            ResultBuilder.fail("用户不存在");
+        }
+        MemberWalletResult map = dozerMapper.map(uUserMember, MemberWalletResult.class);
+        List<GetMemberResult> getMemberResults = memberOrderMapper.selectMemberWallet(memberId);
+        if (getMemberResults.size()>0){
+            map.setGetMemberResults(getMemberResults);
+        }
+        return ResultBuilder.success(map);
+    }
 }

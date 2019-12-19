@@ -40,7 +40,7 @@
         <!--<table tableName="%">-->
             <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
-        <table schema="mybatis" tableName="u_user_member" domainObjectName="UUserMember"
+        <table schema="mybatis" tableName="m_member_jb" domainObjectName="MMemberJb"
                enableCountByExample="true" enableUpdateByExample="true"
                enableDeleteByExample="true" enableSelectByExample="true"
                selectByExampleQueryId="true">
