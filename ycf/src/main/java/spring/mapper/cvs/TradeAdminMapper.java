@@ -28,4 +28,7 @@ public interface TradeAdminMapper {
     List<MRecoveryGoods> selectRecoveryOrderList(RecoveryRequest request);
 
     MemberSumPrice selectSumPrice(Long memberId);
+
+    int updateMemberCount();
+
 }

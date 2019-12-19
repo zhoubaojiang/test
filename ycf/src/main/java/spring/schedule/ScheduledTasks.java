@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import spring.mapper.PGoodsMapper;
 import spring.mapper.POrdersDetailsMapper;
 import spring.mapper.POrdersMapper;
+import spring.mapper.cvs.TradeAdminMapper;
 import spring.model.*;
 import spring.utils.DateUtil;
 
@@ -24,6 +25,9 @@ public class ScheduledTasks {
         private POrdersDetailsMapper ordersDetailsMapper;
          @Autowired
          private PGoodsMapper goodsMapper;
+        @Autowired
+        private TradeAdminMapper tradeAdminMapper;
+
         @Transient
 //	    @Scheduled(cron="0 1 * * * ?")
 	    public void reportCurrentTime() {
@@ -51,4 +55,12 @@ public class ScheduledTasks {
                 }
             }
         }
+
+    /**
+     * 每天零时清空累计获取次数
+     */
+//    @Scheduled(cron="0 1 * * * ?")
+    public void updateMember() {
+      int i =  tradeAdminMapper.updateMemberCount();
+    }
 }

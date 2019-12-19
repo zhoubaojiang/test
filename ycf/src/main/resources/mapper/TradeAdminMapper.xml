@@ -230,4 +230,8 @@
     member_id = #{memberId} and DATE_FORMAT(create_time,'%Y-%d-%m') = DATE_FORMAT(NOW(),'%Y-%d-%m')
     AND order_state = 4
     </select>
+
+    <update id="updateMemberCount">
+        UPDATE u_user_member SET l_type=0
+    </update>
 </mapper>
