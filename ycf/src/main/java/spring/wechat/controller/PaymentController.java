@@ -95,7 +95,7 @@ public class PaymentController {
                 return lockVO;
             } ,"order_No"+orders.getOrderNo(), 3000)  ;
 
-            UUserMember uUserMember = userMemberMapper.selectByPrimaryKey(orderInfo.get(0).getId());
+            UUserMember uUserMember = userMemberMapper.selectByPrimaryKey(orderInfo.get(0).getUserId());
             if (uUserMember.getButton() == 1){
                 uUserMember.setButton(0);
                 userMemberMapper.updateByPrimaryKey(uUserMember);
