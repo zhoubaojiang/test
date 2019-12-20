@@ -125,7 +125,7 @@ public class OrderService  {
         if(i.equals("1")){
             POrders record = new POrders();
             record.setId(orderInfo.getId());
-            record.setOrderState(i);
+            record.setOrderState("3");
             record.setUpdateTime(new Date());
             pOrdersMapper.updateByPrimaryKeySelective( record);
         }
