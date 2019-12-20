@@ -112,7 +112,11 @@ public class GoodsService {
         try {
             PageHelper.startPage(requset.getPage(), requset.getPageSize());
             PGoodsExample example = new PGoodsExample();
-            example.createCriteria().andGoodsTypeEqualTo(0).andGoodsStateEqualTo(0).andGoodsNumTypeEqualTo(1);
+            PGoodsExample.Criteria criteria = example.createCriteria();
+            criteria .andGoodsTypeEqualTo(0).andGoodsStateEqualTo(0).andGoodsNumTypeEqualTo(1);
+            if (requset.getPmsType()!= null){
+                criteria.andPmsTypeEqualTo(requset.getPmsType());
+            }
             example.setOrderByClause("create_time desc");
             List<PGoods> list = pGoodsMapper.selectByExample(example);
           List<GoodsMemberResponse> goodsMemberResponseList = new ArrayList<>();
