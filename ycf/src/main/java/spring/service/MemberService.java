@@ -175,8 +175,9 @@ public class MemberService {
     //添加会员购物信息
     @Transient
     public BaseCommonResult addCar(MemberCarRequest request) {
+        log.info("添加购物车请求参数:{}",request);
         if (request.getGoodsId()==null){
-            ResultBuilder.fail("请选择商品!");
+         return  ResultBuilder.fail("请选择商品!");
         }
         MMemberCar record = new MMemberCar();
         record.setMemberId(request.getMemberId());
@@ -188,6 +189,12 @@ public class MemberService {
         }else {
             record.setCreateTime(new Date());
             mMemberCarMapper.insertSelective(record);
+        }
+        MMemberCarDetailExample memberCarDetailExample = new MMemberCarDetailExample ();
+        memberCarDetailExample.createCriteria().andGoodsIdEqualTo(request.getGoodsId().longValue());
+        List<MMemberCarDetail> mMemberCarDetails = mMemberCarDetailMapper.selectByExample(memberCarDetailExample);
+        if (mMemberCarDetails.size()>0){
+            return ResultBuilder.fail("此商品已在购物车");
         }
         //插入中间表
         MMemberCarDetail memberCarDetail = new MMemberCarDetail();

@@ -13,7 +13,7 @@
         FROM
         m_member_car m
         left join m_member_car_detail mm on m.id = mm.member_car_id
-        left join p_goods g on mm.goods_id = g.id
+        join p_goods g on mm.goods_id = g.id
         WHERE
         m.member_id =  #{memberId}
     order by m.create_time desc
