@@ -128,18 +128,15 @@ public class OrderService  {
             record.setOrderState("3");
             record.setUpdateTime(new Date());
             pOrdersMapper.updateByPrimaryKeySelective( record);
-        }
-        POrdersDetailsExample example = new POrdersDetailsExample();
-        example.createCriteria().andOrderNoEqualTo(orderInfo.getId());
-        List<POrdersDetails> pOrdersDetails = pOrdersDetailsMapper.selectByExample(example);
-        for (POrdersDetails details:pOrdersDetails) {
-            PGoods pGoods = pGoodsMapper.selectByPrimaryKey(details.getGoodsId());
-            if (!i.equals("1")){
-                pGoods.setGoodsNumType(0);
-            }else {
+        }else {
+            POrdersDetailsExample example = new POrdersDetailsExample();
+            example.createCriteria().andOrderNoEqualTo(orderInfo.getId());
+            List<POrdersDetails> pOrdersDetails = pOrdersDetailsMapper.selectByExample(example);
+            for (POrdersDetails details:pOrdersDetails) {
+                PGoods pGoods = pGoodsMapper.selectByPrimaryKey(details.getGoodsId());
                 pGoods.setGoodsNumType(1);
+                pGoodsMapper.updateByPrimaryKeySelective(pGoods);
             }
-            pGoodsMapper.updateByPrimaryKeySelective(pGoods);
         }
     }
 
