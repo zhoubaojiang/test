@@ -111,6 +111,7 @@ public class MemberService {
             result.setGold(userMember.getGold());
             result.setPhone(userMember.getPhone());
             result.setUserType(Constants.USER_TYPE_MEMBER);
+            result.setButton(userMember.getButton());
         return ResultBuilder.success(result);
     }
 
@@ -450,6 +451,13 @@ public class MemberService {
         record.setCreateTime(new Date());
         record.setType(2);
         memberJbMapper.insertSelective(record);
+        return ResultBuilder.success(uUserMember);
+    }
+    @Transient
+    public BaseCommonResult getButton(Long memberId) {
+        UUserMember uUserMember = userMemberMapper.selectByPrimaryKey(memberId);
+        uUserMember.setButton(0);
+        userMemberMapper.updateByPrimaryKey(uUserMember);
         return ResultBuilder.success(uUserMember);
     }
 }

@@ -1186,6 +1186,66 @@ public class UUserMemberExample {
             return (Criteria) this;
         }
 
+        public Criteria andButtonIsNull() {
+            addCriterion("button is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andButtonIsNotNull() {
+            addCriterion("button is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andButtonEqualTo(Integer value) {
+            addCriterion("button =", value, "button");
+            return (Criteria) this;
+        }
+
+        public Criteria andButtonNotEqualTo(Integer value) {
+            addCriterion("button <>", value, "button");
+            return (Criteria) this;
+        }
+
+        public Criteria andButtonGreaterThan(Integer value) {
+            addCriterion("button >", value, "button");
+            return (Criteria) this;
+        }
+
+        public Criteria andButtonGreaterThanOrEqualTo(Integer value) {
+            addCriterion("button >=", value, "button");
+            return (Criteria) this;
+        }
+
+        public Criteria andButtonLessThan(Integer value) {
+            addCriterion("button <", value, "button");
+            return (Criteria) this;
+        }
+
+        public Criteria andButtonLessThanOrEqualTo(Integer value) {
+            addCriterion("button <=", value, "button");
+            return (Criteria) this;
+        }
+
+        public Criteria andButtonIn(List<Integer> values) {
+            addCriterion("button in", values, "button");
+            return (Criteria) this;
+        }
+
+        public Criteria andButtonNotIn(List<Integer> values) {
+            addCriterion("button not in", values, "button");
+            return (Criteria) this;
+        }
+
+        public Criteria andButtonBetween(Integer value1, Integer value2) {
+            addCriterion("button between", value1, value2, "button");
+            return (Criteria) this;
+        }
+
+        public Criteria andButtonNotBetween(Integer value1, Integer value2) {
+            addCriterion("button not between", value1, value2, "button");
+            return (Criteria) this;
+        }
+
         public Criteria andCreateTimeIsNull() {
             addCriterion("create_time is null");
             return (Criteria) this;

@@ -19,6 +19,7 @@
     <result column="open_id" jdbcType="VARCHAR" property="openId" />
     <result column="app_id" jdbcType="VARCHAR" property="appId" />
     <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
+    <result column="button" jdbcType="INTEGER" property="button" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -81,7 +82,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, user_name, pass_word, phone, yuan_bao, you_price, gold, t_gold, price, t_type, 
-    w_type, g_type, c_type, l_type, open_id, app_id, pic_url, create_time
+    w_type, g_type, c_type, l_type, open_id, app_id, pic_url, button, create_time
   </sql>
   <select id="selectByExample" parameterType="spring.model.UUserMemberExample" resultMap="BaseResultMap">
     select
@@ -123,13 +124,15 @@
       t_gold, price, t_type, 
       w_type, g_type, c_type, 
       l_type, open_id, app_id, 
-      pic_url, create_time)
+      pic_url, button, create_time
+      )
     values (#{userName,jdbcType=VARCHAR}, #{passWord,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
       #{yuanBao,jdbcType=DECIMAL}, #{youPrice,jdbcType=DECIMAL}, #{gold,jdbcType=DECIMAL}, 
       #{tGold,jdbcType=DECIMAL}, #{price,jdbcType=DECIMAL}, #{tType,jdbcType=INTEGER}, 
       #{wType,jdbcType=INTEGER}, #{gType,jdbcType=INTEGER}, #{cType,jdbcType=INTEGER}, 
       #{lType,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, #{appId,jdbcType=VARCHAR}, 
-      #{picUrl,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+      #{picUrl,jdbcType=VARCHAR}, #{button,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="spring.model.UUserMember">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -185,6 +188,9 @@
       <if test="picUrl != null">
         pic_url,
       </if>
+      <if test="button != null">
+        button,
+      </if>
       <if test="createTime != null">
         create_time,
       </if>
@@ -237,6 +243,9 @@
       </if>
       <if test="picUrl != null">
         #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="button != null">
+        #{button,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -303,6 +312,9 @@
       <if test="record.picUrl != null">
         pic_url = #{record.picUrl,jdbcType=VARCHAR},
       </if>
+      <if test="record.button != null">
+        button = #{record.button,jdbcType=INTEGER},
+      </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
@@ -330,6 +342,7 @@
       open_id = #{record.openId,jdbcType=VARCHAR},
       app_id = #{record.appId,jdbcType=VARCHAR},
       pic_url = #{record.picUrl,jdbcType=VARCHAR},
+      button = #{record.button,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -386,6 +399,9 @@
       <if test="picUrl != null">
         pic_url = #{picUrl,jdbcType=VARCHAR},
       </if>
+      <if test="button != null">
+        button = #{button,jdbcType=INTEGER},
+      </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -410,6 +426,7 @@
       open_id = #{openId,jdbcType=VARCHAR},
       app_id = #{appId,jdbcType=VARCHAR},
       pic_url = #{picUrl,jdbcType=VARCHAR},
+      button = #{button,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>

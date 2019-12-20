@@ -21,4 +21,7 @@ public class MemberLoginResponse extends UserLoginResponse{
 
     @ApiModelProperty(value = "用户手机号")
     private String phone;
+
+    @ApiModelProperty(value = "是否同意0:是1:否")
+    private Integer button;
 }

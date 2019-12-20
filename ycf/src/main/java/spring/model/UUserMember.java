@@ -57,6 +57,9 @@ public class UUserMember implements Serializable {
     @ApiModelProperty(value = "用户头像")
     private String picUrl;
 
+    @ApiModelProperty(value = "是否同意0:是1:否")
+    private Integer button;
+
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
 
@@ -198,6 +201,14 @@ public class UUserMember implements Serializable {
         this.picUrl = picUrl;
     }
 
+    public Integer getButton() {
+        return button;
+    }
+
+    public void setButton(Integer button) {
+        this.button = button;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -229,6 +240,7 @@ public class UUserMember implements Serializable {
         sb.append(", openId=").append(openId);
         sb.append(", appId=").append(appId);
         sb.append(", picUrl=").append(picUrl);
+        sb.append(", button=").append(button);
         sb.append(", createTime=").append(createTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
