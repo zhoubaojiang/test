@@ -36,7 +36,7 @@ public class SmsSendController {
 
     @ApiOperation(value = "短信发送", notes = "短信发送")
     @RequestMapping(value = "/send/{phone}", method = RequestMethod.GET)
-    public BaseCommonResult sendSms(@PathVariable String phone) throws ClientException, ParseException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public BaseCommonResult sendSms(@PathVariable String phone) {
         JedisUtils obj = JedisUtils.getJedisInstance();
         //获取redis中的验证码
         String redisKey= MessageFormat.format(UserConstants.USER_CODE_REDIS_PREFIX,UserConstants.USER_TYPE_MEMBER,phone);
@@ -88,7 +88,7 @@ public class SmsSendController {
 
 
 
-    private String getVerificationCode(String account,String userType) throws ParseException {
+    private String getVerificationCode(String account,String userType)  {
         JedisUtils obj = JedisUtils.getJedisInstance();
         String redisKey=MessageFormat.format(UserConstants.USER_CODE_REDIS_PREFIX,userType,account);
         //获取redis中的验证码
@@ -102,7 +102,7 @@ public class SmsSendController {
     /**
      * 保存验证码到Redis
      */
-    public void insertVerificationCodeRedis(UserVerificationCodeVO vo) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    public void insertVerificationCodeRedis(UserVerificationCodeVO vo) {
         //300=5分钟
         int seconds = 300;
         String redisKey=MessageFormat.format(UserConstants.USER_CODE_REDIS_PREFIX,vo.getUserType(),vo.getAccount());
