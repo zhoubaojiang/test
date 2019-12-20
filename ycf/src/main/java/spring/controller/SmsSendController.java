@@ -1,31 +1,23 @@
 package spring.controller;
-
 import com.aliyuncs.CommonResponse;
-import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
-import com.aliyuncs.exceptions.ClientException;
 import com.google.common.collect.Maps;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cglib.beans.BeanMap;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import spring.config.alioss.AliyunSmsUtils;
 import spring.config.redis.util.JedisUtils;
 import spring.dto.BaseCommonResult;
-import spring.dto.request.UserAccountRequest;
 import spring.dto.result.UserVerificationCodeVO;
 import spring.enums.UserErrorCodeEnum;
 import spring.exception.UserConstants;
 import spring.utils.GenerateCodeUtil;
 import spring.utils.ResultBuilder;
 
-import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
-import java.text.ParseException;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 @Api(tags = "短信发送",basePath = "/smsCenter/sms")
