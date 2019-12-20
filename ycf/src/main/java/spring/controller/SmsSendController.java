@@ -82,6 +82,7 @@ public class SmsSendController {
         if (!smscode.equals(code)){
             return   ResultBuilder.fail("验证码错误!");
         }
+        JedisUtils.getJedisInstance().execDelToCache(UserConstants.USER_CODE_REDIS_PREFIX+":" + phone);// 删除该key
       return   ResultBuilder.success();
     }
 
