@@ -55,8 +55,6 @@ public class SmsSendController {
             return ResultBuilder.fail("短信发送失败");
         }
         log.info("sendSmsResponse:{}",commonResponse);
-        HashMap<String, String> map = new HashMap();
-        map.put("code",sendCode);
         log.info("短信验证码:{}",sendCode);
         //redis信息内容
         UserVerificationCodeVO vo=new UserVerificationCodeVO();
