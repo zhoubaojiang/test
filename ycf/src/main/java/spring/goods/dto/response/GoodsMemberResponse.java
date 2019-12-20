@@ -16,6 +16,9 @@ public class GoodsMemberResponse {
     @ApiModelProperty(value = "折扣价")
     private BigDecimal discountPrice;
 
+    @ApiModelProperty(value = "元宝折扣价")
+    private BigDecimal treasureDiscountPrice;
+
     @ApiModelProperty(value = "商品主图")
     private String masterGraph;
 
