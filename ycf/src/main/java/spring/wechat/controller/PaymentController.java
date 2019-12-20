@@ -7,7 +7,9 @@ import spring.enums.UserErrorCodeEnum;
 import spring.exception.GoodsException;
 import spring.exception.MemberException;
 import spring.goods.service.GoodsService;
+import spring.mapper.UUserMemberMapper;
 import spring.model.POrders;
+import spring.model.UUserMember;
 import spring.trade.service.OrderService;
 import spring.utils.ResultBuilder;
 import spring.wechat.dto.requset.PayReq;
@@ -40,7 +42,8 @@ public class PaymentController {
     private OrderService orderService;
     @Autowired
     private WechatService wechatService;
-
+    @Autowired
+    private UUserMemberMapper userMemberMapper;
 
     @ApiOperation(value = "获取微信唯一OPEN_ID", httpMethod = "GET")
     @RequestMapping(value ="/getOperatorIdOrderList/{code}",method = RequestMethod.GET)
@@ -91,6 +94,10 @@ public class PaymentController {
                 }
                 return lockVO;
             } ,"order_No"+orders.getOrderNo(), 3000)  ;
+
+            UUserMember uUserMember = userMemberMapper.selectByPrimaryKey(orderInfo.get(0).getId());
+            uUserMember.setButton(0);
+            userMemberMapper.updateByPrimaryKey(uUserMember);
             if("SUCCESS".equals(resMap.get("returnCode")) && "OK".equals(resMap.get("returnMsg"))){
                 //统一下单成功
                 resMap.remove("returnCode");

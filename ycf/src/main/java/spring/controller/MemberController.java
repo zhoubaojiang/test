@@ -29,12 +29,6 @@ public class MemberController {
     public @ResponseBody BaseCommonResult<MemberLoginResponse>  login(@RequestBody MemberRequest record) {
         return userService.login(record);
     }
-    @ApiOperation(value = "是否同意鱿来游趣条款")
-    @RequestMapping(value = "/button/{memberId}", method = RequestMethod.GET)
-    public @ResponseBody BaseCommonResult getButton(@PathVariable Long memberId) {
-        return userService.getButton(memberId);
-    }
-
     @ApiOperation(value = "登出")
     @RequestMapping(value = "/logout/{code}", method = RequestMethod.GET)
     public @ResponseBody BaseCommonResult loginOut(@PathVariable String code) {

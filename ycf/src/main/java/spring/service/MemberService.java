@@ -453,11 +453,4 @@ public class MemberService {
         memberJbMapper.insertSelective(record);
         return ResultBuilder.success(uUserMember);
     }
-    @Transient
-    public BaseCommonResult getButton(Long memberId) {
-        UUserMember uUserMember = userMemberMapper.selectByPrimaryKey(memberId);
-        uUserMember.setButton(0);
-        userMemberMapper.updateByPrimaryKey(uUserMember);
-        return ResultBuilder.success(uUserMember);
-    }
 }
