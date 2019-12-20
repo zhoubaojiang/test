@@ -42,6 +42,9 @@ public class SmsSendController {
         String redisKey= MessageFormat.format(UserConstants.USER_CODE_REDIS_PREFIX,UserConstants.USER_TYPE_MEMBER,phone);
        String sms = obj.execHgetToCache(redisKey, "code");
        log.info("sms  code 码=========",sms);
+       if(sms != null){
+         return   ResultBuilder.fail("请五分钟后再获取验证码!");
+       }
         //短信参数内容
         String sendCode = this.getVerificationCode(phone, UserConstants.USER_TYPE_MEMBER);
         CommonResponse commonResponse = null;
