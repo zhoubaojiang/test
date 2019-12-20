@@ -14,7 +14,7 @@ public class RecommendedRequest extends PageBeanUtile {
     @ApiModelProperty(value = "上新:0->上新")
     private Integer goodDesc;
 
-    @ApiModelProperty(value = "排序：降序goods_price DESC,goods_price ASC升序")
+    @ApiModelProperty(value = "排序：降序discount_price DESC,discount_price ASC升序")
     private String orderByClause;
 
 }
