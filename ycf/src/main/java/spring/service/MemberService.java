@@ -309,8 +309,10 @@ public class MemberService {
     public BaseCommonResult<UUserMember> getjinbi(Long memberId, int type) {
         //1:关注公众号,2登录领取,3首次卖出,4首次购买,5鱿费获取
         UUserMemberExample example = new UUserMemberExample ();
+        example.createCriteria().andIdEqualTo(memberId);
         List<UUserMember> uUserMembers = userMemberMapper.selectByExample(example);
         if (uUserMembers.size()>0){
+            log.info("任务领取奖励memberId,type:{},{}",memberId,type);
             UUserMember uUserMember = uUserMembers.get(0);
             MMemberJb record = new MMemberJb ();
             if (type == 1){//1:关注公众号
@@ -357,6 +359,7 @@ public class MemberService {
             record.setPrice(uUserMember.getGold());
             record.setType(1);
             memberJbMapper.insertSelective(record);
+            log.info("任务领取奖励memberId:{}",uUserMember.getId());
             return ResultBuilder.success(uUserMember);
         }else {
             return ResultBuilder.fail("用户不存在");
