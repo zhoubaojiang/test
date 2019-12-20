@@ -1,5 +1,6 @@
 package spring.wechat.controller;
 
+import io.swagger.annotations.ApiParam;
 import spring.config.redis.util.RedisLockUtil;
 import spring.dto.BaseCommonResult;
 import spring.enums.UserErrorCodeEnum;
@@ -104,6 +105,33 @@ public class PaymentController {
         }
 
     }
+
+
+
+
+
+    @ApiOperation(value = "支付回调接口", httpMethod = "GET")
+    @RequestMapping(value ="/toPay/{orderNo}/{type}",method = RequestMethod.GET)
+    public BaseCommonResult getOperatorIdOrderList(@PathVariable String orderNo,@ApiParam("1支付成功2支付失败") @PathVariable int type) {
+        logger.info("支付回调接口请求参数:"+orderNo+"成功与失败:"+type);
+        PayReq req = new PayReq();
+        req.setOrderNo(orderNo);
+        List<POrders> orderInfo = orderService.getOrder(req);
+        if (orderInfo.size()>0){
+            if (type == 1){
+                orderService.updateOrder(orderInfo.get(0),"1");
+            }else{
+                orderService.updateOrder(orderInfo.get(0),"2");
+            }
+        }
+        return ResultBuilder.success();
+    }
+
+
+
+
+
+
 
 
     /**
