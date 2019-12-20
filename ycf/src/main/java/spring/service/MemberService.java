@@ -318,21 +318,25 @@ public class MemberService {
                 uUserMember.setGold(gold.add(new BigDecimal(10000)));
                 uUserMember.settGold(uUserMember.gettGold().add(new BigDecimal(10000)));//累计金币
                 uUserMember.setgType(0);
+                record.setName("关注公众号");
                 userMemberMapper.updateByPrimaryKeySelective(uUserMember);
             }else if (type == 2){//2登录领取
                 uUserMember.setGold(uUserMember.getGold().add(new BigDecimal(108)));
                 uUserMember.settGold(uUserMember.gettGold().add(new BigDecimal(108)));//累计金币
                 uUserMember.setcType(0);
+                record.setName("登录账号");
                 userMemberMapper.updateByPrimaryKeySelective(uUserMember);
             }else if (type == 3){//3首次卖出
                 uUserMember.setGold(uUserMember.getGold().add(new BigDecimal(20000)));
                 uUserMember.settGold(uUserMember.gettGold().add(new BigDecimal(20000)));//累计金币
                 uUserMember.settType(0);
+                record.setName("首次卖出物品");
                 userMemberMapper.updateByPrimaryKeySelective(uUserMember);
             }else if (type == 4){//4首次购买
                 uUserMember.setGold(uUserMember.getGold().add(new BigDecimal(20000)));
                 uUserMember.settGold(uUserMember.gettGold().add(new BigDecimal(20000)));//累计金币
                 uUserMember.setwType(0);
+                record.setName("首次购买物品");
                 userMemberMapper.updateByPrimaryKeySelective(uUserMember);
             }else if (type == 5){//5鱿费获取
                 uUserMember.setGold(uUserMember.getGold().add(new BigDecimal(20000)));
@@ -345,6 +349,7 @@ public class MemberService {
                int i = uUserMember.getlType()+1;
                 log.info("已领次数:{}",i);
                 uUserMember.setlType(i);
+                record.setName("没获得100鱿费");
                 userMemberMapper.updateByPrimaryKeySelective(uUserMember);
             }
             record.setCreateTime(new Date());
@@ -374,7 +379,6 @@ public class MemberService {
             List<MMemberJb> mMemberJbs = memberJbMapper.selectByExample(example);
             for (MMemberJb jb:mMemberJbs) {
                 GetMemberResult map = dozerMapper.map(jb, GetMemberResult.class);
-                map.setName("金币收入");
                 getMemberResults.add(map);
             }
         }else {

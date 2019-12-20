@@ -18,6 +18,9 @@ public class MMemberJb implements Serializable {
     @ApiModelProperty(value = "1:收益,2扣除")
     private Integer type;
 
+    @ApiModelProperty(value = "来源名称")
+    private String name;
+
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
 
@@ -55,6 +58,14 @@ public class MMemberJb implements Serializable {
         this.type = type;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -73,6 +84,7 @@ public class MMemberJb implements Serializable {
         sb.append(", memberId=").append(memberId);
         sb.append(", price=").append(price);
         sb.append(", type=").append(type);
+        sb.append(", name=").append(name);
         sb.append(", createTime=").append(createTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

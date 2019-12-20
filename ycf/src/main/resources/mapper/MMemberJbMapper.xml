@@ -6,6 +6,7 @@
     <result column="member_id" jdbcType="BIGINT" property="memberId" />
     <result column="price" jdbcType="DECIMAL" property="price" />
     <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -67,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, member_id, price, type, create_time
+    id, member_id, price, type, name, create_time
   </sql>
   <select id="selectByExample" parameterType="spring.model.MMemberJbExample" resultMap="BaseResultMap">
     select
@@ -105,9 +106,9 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into m_member_jb (member_id, price, type, 
-      create_time)
+      name, create_time)
     values (#{memberId,jdbcType=BIGINT}, #{price,jdbcType=DECIMAL}, #{type,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP})
+      #{name,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="spring.model.MMemberJb">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -124,6 +125,9 @@
       <if test="type != null">
         type,
       </if>
+      <if test="name != null">
+        name,
+      </if>
       <if test="createTime != null">
         create_time,
       </if>
@@ -137,6 +141,9 @@
       </if>
       <if test="type != null">
         #{type,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -164,6 +171,9 @@
       <if test="record.type != null">
         type = #{record.type,jdbcType=INTEGER},
       </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
@@ -178,6 +188,7 @@
       member_id = #{record.memberId,jdbcType=BIGINT},
       price = #{record.price,jdbcType=DECIMAL},
       type = #{record.type,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -195,6 +206,9 @@
       <if test="type != null">
         type = #{type,jdbcType=INTEGER},
       </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -206,6 +220,7 @@
     set member_id = #{memberId,jdbcType=BIGINT},
       price = #{price,jdbcType=DECIMAL},
       type = #{type,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
