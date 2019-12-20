@@ -96,8 +96,10 @@ public class PaymentController {
             } ,"order_No"+orders.getOrderNo(), 3000)  ;
 
             UUserMember uUserMember = userMemberMapper.selectByPrimaryKey(orderInfo.get(0).getId());
-            uUserMember.setButton(0);
-            userMemberMapper.updateByPrimaryKey(uUserMember);
+            if (uUserMember.getButton() == 1){
+                uUserMember.setButton(0);
+                userMemberMapper.updateByPrimaryKey(uUserMember);
+            }
             if("SUCCESS".equals(resMap.get("returnCode")) && "OK".equals(resMap.get("returnMsg"))){
                 //统一下单成功
                 resMap.remove("returnCode");
