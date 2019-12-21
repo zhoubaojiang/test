@@ -93,7 +93,7 @@ public class PaymentController {
                      e.printStackTrace();
                 }
                 return lockVO;
-            } ,"order_No"+orders.getOrderNo(), 3000)  ;
+            } ,"order_No"+orders.getOrderNo(), 3000);
 
             UUserMember uUserMember = userMemberMapper.selectByPrimaryKey(orderInfo.get(0).getUserId());
             if (uUserMember.getButton() == 1){
@@ -112,11 +112,7 @@ public class PaymentController {
                 return ResultBuilder.fail(returnMsg.toString());
             }
         }
-
     }
-
-
-
 
 
     @ApiOperation(value = "支付回调接口", httpMethod = "GET")

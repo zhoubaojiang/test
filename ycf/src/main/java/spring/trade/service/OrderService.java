@@ -50,6 +50,7 @@ public class OrderService  {
      */
     @Transient
     public BaseCommonResult<POrders> createOrder(OrdersRes ordersRes) {
+        log.info("会员订单创建传入参数:{}",ordersRes);
         PGoodsExample goodsExample = new PGoodsExample();
         String[] split = ordersRes.getIds().split(",");
         for (String id:split) {
