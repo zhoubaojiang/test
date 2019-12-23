@@ -66,9 +66,6 @@ public class ScheduledTasks {
       int i =  tradeAdminMapper.updateMemberCount();
     }
 
-    /**
-     * 每天零时清空累计获取次数
-     */
 //    @Scheduled(cron="0 0/1 * * * ?")
     @Transient
     public void interestMember() {
