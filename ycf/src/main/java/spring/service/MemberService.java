@@ -316,6 +316,8 @@ public class MemberService {
             log.info("任务领取奖励memberId,type:{},{}",memberId,type);
             UUserMember uUserMember = uUserMembers.get(0);
             MMemberJb record = new MMemberJb ();
+            uUserMember.setGold(uUserMember.getGold().add(new BigDecimal(20000)));
+            uUserMember.settGold(uUserMember.gettGold().add(new BigDecimal(20000)));//累计金币
             if (type == 1){//1:关注公众号
                 BigDecimal gold = uUserMember.getGold();
                 uUserMember.setGold(gold.add(new BigDecimal(10000)));
@@ -330,20 +332,14 @@ public class MemberService {
                 record.setName("登录账号");
                 userMemberMapper.updateByPrimaryKeySelective(uUserMember);
             }else if (type == 3){//3首次卖出
-                uUserMember.setGold(uUserMember.getGold().add(new BigDecimal(20000)));
-                uUserMember.settGold(uUserMember.gettGold().add(new BigDecimal(20000)));//累计金币
                 uUserMember.settType(0);
                 record.setName("首次卖出物品");
                 userMemberMapper.updateByPrimaryKeySelective(uUserMember);
             }else if (type == 4){//4首次购买
-                uUserMember.setGold(uUserMember.getGold().add(new BigDecimal(20000)));
-                uUserMember.settGold(uUserMember.gettGold().add(new BigDecimal(20000)));//累计金币
                 uUserMember.setwType(0);
                 record.setName("首次购买物品");
                 userMemberMapper.updateByPrimaryKeySelective(uUserMember);
             }else if (type == 5){//5鱿费获取
-                uUserMember.setGold(uUserMember.getGold().add(new BigDecimal(20000)));
-                uUserMember.settGold(uUserMember.gettGold().add(new BigDecimal(20000)));//累计金币
                 MemberSumPrice price = tradeAdminMapper.selectSumPrice(memberId);
                 BigDecimal divide = price.getPrice().divide(new BigDecimal(100), 2, BigDecimal.ROUND_DOWN);
                 if (divide.intValue()<=uUserMember.getlType()){
