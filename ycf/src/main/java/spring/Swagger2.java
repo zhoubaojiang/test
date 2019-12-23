@@ -30,7 +30,6 @@ public class Swagger2 {
 		return new ApiInfoBuilder()
 				.title("springboot利用swagger构建api文档")
 				.description("简单优雅的restful风格")
-				.termsOfServiceUrl("https://gitee.com/shenzhanwang/projects")
 				.version(VERSION)
 				.build();
 	}
