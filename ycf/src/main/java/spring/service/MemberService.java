@@ -192,7 +192,7 @@ public class MemberService {
             mMemberCarMapper.insertSelective(record);
         }
         MMemberCarDetailExample memberCarDetailExample = new MMemberCarDetailExample ();
-        memberCarDetailExample.createCriteria().andGoodsIdEqualTo(request.getGoodsId().longValue());
+        memberCarDetailExample.createCriteria().andGoodsIdEqualTo(request.getGoodsId().longValue()).andMemberCarIdEqualTo(record.getId());
         List<MMemberCarDetail> mMemberCarDetails = mMemberCarDetailMapper.selectByExample(memberCarDetailExample);
         if (mMemberCarDetails.size()>0){
             return ResultBuilder.fail("此商品已在购物车");

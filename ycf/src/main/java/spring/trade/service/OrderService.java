@@ -231,6 +231,7 @@ public class OrderService  {
      */
     @Transient
     public BaseCommonResult<MRecoveryGoods> recoveryOrder(RecoveryOrderRequest request) {
+        log.info("会员商品回收:{}",request);
         MRecoveryGoods record = dozer.map(request, MRecoveryGoods.class);
         record.setOrderNo(DateUtil.getOrderNumber());
         record.setMemberId(request.getMemberId());
@@ -239,6 +240,7 @@ public class OrderService  {
         record.setMemberName(uUserMember.getUserName());
         record.setCreateTime(new Date());
         mRecoveryGoodsMapper.insertSelective(record);
+        log.info("会员商品回收结束:{}",record);
         return ResultBuilder.success(record);
     }
 
