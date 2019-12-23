@@ -235,7 +235,10 @@ public class OrderService  {
         MRecoveryGoods record = dozer.map(request, MRecoveryGoods.class);
         record.setOrderNo(DateUtil.getOrderNumber());
         record.setMemberId(request.getMemberId());
+        record.setzPic(request.getZPic());
+        record.setpPic(request.getPPic());
         record.setOrderState(0);
+        log.info("会员商品回收:{}",record);
         UUserMember uUserMember = uUserMemberMapper.selectByPrimaryKey(request.getMemberId());
         record.setMemberName(uUserMember.getUserName());
         record.setCreateTime(new Date());
