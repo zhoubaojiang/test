@@ -150,9 +150,6 @@ public class OrderService  {
         BasePage<POrdersListResult> pageResult = new BasePage();
         log.info("会员订单分页查询商品列表,请求参数为：{}", request);
         try {
-            if (request.getUserId()==null){
-                return ResultBuilder.fail("获取用户数据失败");
-            }
             PageHelper.startPage(request.getPage(), request.getPageSize());
             List<POrdersListResult> result = tradeAdminMapper.selectMemberTradeList(request);
             if (result.size()>0){
