@@ -5,14 +5,9 @@ import spring.exception.BaseApiCode;
 /**
  * 自定义状态码，继承基础状态码类：BaseApiCode
 *
- * @author wenwj 
- * @date: 2017年11月15日 上午10:25:10 
-* @since 1.0
  */
 public class GoodsApiCode extends BaseApiCode {
 
-	/** 体检卡详情数据不存在*/
-	public static final Integer DATA_ISNULL_FAIL = 10851;
 
 	/** 请求参数校验失败*/
 	public static final Integer PARAMS_CHECK_FAIL = 10850;
@@ -159,10 +154,10 @@ public class GoodsApiCode extends BaseApiCode {
 
 
 	//-------------------------第三方商城接入----------------------------
-	
+
 	/**操作第三方库存失败**/
 	public static final Integer GOODS_THIRD_STOCK_ERROR = 10872;
-	
+
 	/**操作第三方规格失败**/
 	public static final Integer GOODS_THIRD_SPEC_ERROR = 10873;
 

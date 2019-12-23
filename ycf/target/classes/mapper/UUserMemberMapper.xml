@@ -7,11 +7,19 @@
     <result column="pass_word" jdbcType="VARCHAR" property="passWord" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="yuan_bao" jdbcType="DECIMAL" property="yuanBao" />
+    <result column="you_price" jdbcType="DECIMAL" property="youPrice" />
     <result column="gold" jdbcType="DECIMAL" property="gold" />
+    <result column="t_gold" jdbcType="DECIMAL" property="tGold" />
     <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="t_type" jdbcType="INTEGER" property="tType" />
+    <result column="w_type" jdbcType="INTEGER" property="wType" />
+    <result column="g_type" jdbcType="INTEGER" property="gType" />
+    <result column="c_type" jdbcType="INTEGER" property="cType" />
+    <result column="l_type" jdbcType="INTEGER" property="lType" />
     <result column="open_id" jdbcType="VARCHAR" property="openId" />
     <result column="app_id" jdbcType="VARCHAR" property="appId" />
     <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
+    <result column="button" jdbcType="INTEGER" property="button" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -73,14 +81,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_name, pass_word, phone, yuan_bao, gold, price, open_id, app_id, pic_url, 
-    create_time
+    id, user_name, pass_word, phone, yuan_bao, you_price, gold, t_gold, price, t_type, 
+    w_type, g_type, c_type, l_type, open_id, app_id, pic_url, button, create_time
   </sql>
   <select id="selectByExample" parameterType="spring.model.UUserMemberExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
+    'true' as QUERYID,
     <include refid="Base_Column_List" />
     from u_user_member
     <if test="_parameter != null">
@@ -111,13 +120,19 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into u_user_member (user_name, pass_word, phone, 
-      yuan_bao, gold, price, 
-      open_id, app_id, pic_url, 
-      create_time)
+      yuan_bao, you_price, gold, 
+      t_gold, price, t_type, 
+      w_type, g_type, c_type, 
+      l_type, open_id, app_id, 
+      pic_url, button, create_time
+      )
     values (#{userName,jdbcType=VARCHAR}, #{passWord,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{yuanBao,jdbcType=DECIMAL}, #{gold,jdbcType=DECIMAL}, #{price,jdbcType=DECIMAL}, 
-      #{openId,jdbcType=VARCHAR}, #{appId,jdbcType=VARCHAR}, #{picUrl,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP})
+      #{yuanBao,jdbcType=DECIMAL}, #{youPrice,jdbcType=DECIMAL}, #{gold,jdbcType=DECIMAL}, 
+      #{tGold,jdbcType=DECIMAL}, #{price,jdbcType=DECIMAL}, #{tType,jdbcType=INTEGER}, 
+      #{wType,jdbcType=INTEGER}, #{gType,jdbcType=INTEGER}, #{cType,jdbcType=INTEGER}, 
+      #{lType,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, #{appId,jdbcType=VARCHAR}, 
+      #{picUrl,jdbcType=VARCHAR}, #{button,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="spring.model.UUserMember">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -137,11 +152,32 @@
       <if test="yuanBao != null">
         yuan_bao,
       </if>
+      <if test="youPrice != null">
+        you_price,
+      </if>
       <if test="gold != null">
         gold,
       </if>
+      <if test="tGold != null">
+        t_gold,
+      </if>
       <if test="price != null">
         price,
+      </if>
+      <if test="tType != null">
+        t_type,
+      </if>
+      <if test="wType != null">
+        w_type,
+      </if>
+      <if test="gType != null">
+        g_type,
+      </if>
+      <if test="cType != null">
+        c_type,
+      </if>
+      <if test="lType != null">
+        l_type,
       </if>
       <if test="openId != null">
         open_id,
@@ -151,6 +187,9 @@
       </if>
       <if test="picUrl != null">
         pic_url,
+      </if>
+      <if test="button != null">
+        button,
       </if>
       <if test="createTime != null">
         create_time,
@@ -169,11 +208,32 @@
       <if test="yuanBao != null">
         #{yuanBao,jdbcType=DECIMAL},
       </if>
+      <if test="youPrice != null">
+        #{youPrice,jdbcType=DECIMAL},
+      </if>
       <if test="gold != null">
         #{gold,jdbcType=DECIMAL},
       </if>
+      <if test="tGold != null">
+        #{tGold,jdbcType=DECIMAL},
+      </if>
       <if test="price != null">
         #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="tType != null">
+        #{tType,jdbcType=INTEGER},
+      </if>
+      <if test="wType != null">
+        #{wType,jdbcType=INTEGER},
+      </if>
+      <if test="gType != null">
+        #{gType,jdbcType=INTEGER},
+      </if>
+      <if test="cType != null">
+        #{cType,jdbcType=INTEGER},
+      </if>
+      <if test="lType != null">
+        #{lType,jdbcType=INTEGER},
       </if>
       <if test="openId != null">
         #{openId,jdbcType=VARCHAR},
@@ -183,6 +243,9 @@
       </if>
       <if test="picUrl != null">
         #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="button != null">
+        #{button,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -213,11 +276,32 @@
       <if test="record.yuanBao != null">
         yuan_bao = #{record.yuanBao,jdbcType=DECIMAL},
       </if>
+      <if test="record.youPrice != null">
+        you_price = #{record.youPrice,jdbcType=DECIMAL},
+      </if>
       <if test="record.gold != null">
         gold = #{record.gold,jdbcType=DECIMAL},
       </if>
+      <if test="record.tGold != null">
+        t_gold = #{record.tGold,jdbcType=DECIMAL},
+      </if>
       <if test="record.price != null">
         price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.tType != null">
+        t_type = #{record.tType,jdbcType=INTEGER},
+      </if>
+      <if test="record.wType != null">
+        w_type = #{record.wType,jdbcType=INTEGER},
+      </if>
+      <if test="record.gType != null">
+        g_type = #{record.gType,jdbcType=INTEGER},
+      </if>
+      <if test="record.cType != null">
+        c_type = #{record.cType,jdbcType=INTEGER},
+      </if>
+      <if test="record.lType != null">
+        l_type = #{record.lType,jdbcType=INTEGER},
       </if>
       <if test="record.openId != null">
         open_id = #{record.openId,jdbcType=VARCHAR},
@@ -227,6 +311,9 @@
       </if>
       <if test="record.picUrl != null">
         pic_url = #{record.picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.button != null">
+        button = #{record.button,jdbcType=INTEGER},
       </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -243,11 +330,19 @@
       pass_word = #{record.passWord,jdbcType=VARCHAR},
       phone = #{record.phone,jdbcType=VARCHAR},
       yuan_bao = #{record.yuanBao,jdbcType=DECIMAL},
+      you_price = #{record.youPrice,jdbcType=DECIMAL},
       gold = #{record.gold,jdbcType=DECIMAL},
+      t_gold = #{record.tGold,jdbcType=DECIMAL},
       price = #{record.price,jdbcType=DECIMAL},
+      t_type = #{record.tType,jdbcType=INTEGER},
+      w_type = #{record.wType,jdbcType=INTEGER},
+      g_type = #{record.gType,jdbcType=INTEGER},
+      c_type = #{record.cType,jdbcType=INTEGER},
+      l_type = #{record.lType,jdbcType=INTEGER},
       open_id = #{record.openId,jdbcType=VARCHAR},
       app_id = #{record.appId,jdbcType=VARCHAR},
       pic_url = #{record.picUrl,jdbcType=VARCHAR},
+      button = #{record.button,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -268,11 +363,32 @@
       <if test="yuanBao != null">
         yuan_bao = #{yuanBao,jdbcType=DECIMAL},
       </if>
+      <if test="youPrice != null">
+        you_price = #{youPrice,jdbcType=DECIMAL},
+      </if>
       <if test="gold != null">
         gold = #{gold,jdbcType=DECIMAL},
       </if>
+      <if test="tGold != null">
+        t_gold = #{tGold,jdbcType=DECIMAL},
+      </if>
       <if test="price != null">
         price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="tType != null">
+        t_type = #{tType,jdbcType=INTEGER},
+      </if>
+      <if test="wType != null">
+        w_type = #{wType,jdbcType=INTEGER},
+      </if>
+      <if test="gType != null">
+        g_type = #{gType,jdbcType=INTEGER},
+      </if>
+      <if test="cType != null">
+        c_type = #{cType,jdbcType=INTEGER},
+      </if>
+      <if test="lType != null">
+        l_type = #{lType,jdbcType=INTEGER},
       </if>
       <if test="openId != null">
         open_id = #{openId,jdbcType=VARCHAR},
@@ -282,6 +398,9 @@
       </if>
       <if test="picUrl != null">
         pic_url = #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="button != null">
+        button = #{button,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -295,11 +414,19 @@
       pass_word = #{passWord,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       yuan_bao = #{yuanBao,jdbcType=DECIMAL},
+      you_price = #{youPrice,jdbcType=DECIMAL},
       gold = #{gold,jdbcType=DECIMAL},
+      t_gold = #{tGold,jdbcType=DECIMAL},
       price = #{price,jdbcType=DECIMAL},
+      t_type = #{tType,jdbcType=INTEGER},
+      w_type = #{wType,jdbcType=INTEGER},
+      g_type = #{gType,jdbcType=INTEGER},
+      c_type = #{cType,jdbcType=INTEGER},
+      l_type = #{lType,jdbcType=INTEGER},
       open_id = #{openId,jdbcType=VARCHAR},
       app_id = #{appId,jdbcType=VARCHAR},
       pic_url = #{picUrl,jdbcType=VARCHAR},
+      button = #{button,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>

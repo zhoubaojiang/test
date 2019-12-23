@@ -3,7 +3,6 @@ package spring.enums;
 import lombok.Getter;
 
 /**用户中心错误码描述
- * Created by jiangzf on 2017/6/2.
  */
 public enum UserErrorCodeEnum {
     SUCCESS(10000,"成功"),

@@ -6,13 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import spring.utils.alioss.OSSClientUtil;
 
-/**
- * 
- * 
- * @author wenwj 
- * @date: 2017年11月22日 下午3:25:41 
-* @since 1.0
- */
 @Configuration
 @Slf4j
 public class AliossConfig {

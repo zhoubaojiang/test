@@ -4,10 +4,8 @@ import lombok.Getter;
 import spring.enums.UserErrorCodeEnum;
 
 /**
- * @author wangdg
  * @ClassName: MemberException
  * @Description:  会员异常
- * @date 2017/6/12 16:30
  */
 public class MemberException extends RuntimeException{
     @Getter

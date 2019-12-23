@@ -10,14 +10,12 @@ import spring.service.MemberService;
 import spring.model.UMemberReceiveAddress;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import jdk.nashorn.internal.runtime.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@Logger
 @Api(tags = "/memberCenter/members", description = "会员管理")
 @RequestMapping("/memberCenter/members")
 public class MemberController {

@@ -4,7 +4,6 @@ import lombok.Getter;
 import spring.enums.UserErrorCodeEnum;
 
 /** 异常处理
- * Created by jiangzf on 2017/6/2.
  */
 public class UserException extends BaseServiceException {
     @Getter

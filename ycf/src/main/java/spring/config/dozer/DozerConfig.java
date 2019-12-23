@@ -4,9 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @author DG
  * @Description:    对 象转换
- * @date 2017/9/15 16:59
  */
 @Configuration
 public class DozerConfig {

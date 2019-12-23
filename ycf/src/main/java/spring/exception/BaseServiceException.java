@@ -4,10 +4,6 @@ import lombok.Getter;
 
 /**
  *  基础自定义异常类，自定义继承该异常类
-*
- * @author wenwj 
- * @date: 2017年11月15日 上午10:05:12 
-* @since 1.0
  */
 public class BaseServiceException extends RuntimeException{
 	

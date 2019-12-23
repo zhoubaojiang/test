@@ -26,8 +26,6 @@ public class GoodsAdminController {
     /**
      *
      * 功能描述:商品列表
-     * @author: xiongkun
-     * @date: 2017年11月27日 下午4:36:51
      * @param request
      * @return
      */
@@ -45,8 +43,6 @@ public class GoodsAdminController {
     /**
      *
      * 功能描述:商品列表
-     * @author: xiongkun
-     * @date: 2017年11月27日 下午4:36:51
      * @param request
      * @return
      */

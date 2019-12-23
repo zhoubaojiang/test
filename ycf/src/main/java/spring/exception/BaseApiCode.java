@@ -3,11 +3,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 
 *	公共基础编码：10000、99999，需继承该编码表
- * @author wenwj 
- * @date: 2017年11月15日 上午9:38:53 
-* @since 1.0
  */
 public class BaseApiCode {
 

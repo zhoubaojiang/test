@@ -70,7 +70,8 @@
     p.goods_name goodsName,
     p.goods_price goodsPrice,
     p.discount_price discountPrice,
-    p.master_graph pic
+    p.master_graph pic,
+    p.treasure_discount_price treasureDiscountPrice
     FROM
     p_goods p
     WHERE
@@ -91,7 +92,8 @@
         p.goods_name goodsName,
         p.goods_price goodsPrice,
         p.discount_price discountPrice,
-        p.master_graph  pic
+        p.master_graph  pic,
+        p.treasure_discount_price treasureDiscountPrice
         FROM
         p_goods p
         WHERE
@@ -109,11 +111,12 @@
 
     <select id="selectOrderGoodsNum" parameterType="java.lang.String" resultType="spring.wechat.dto.result.PayOrderGoodsNumRes">
     SELECT
-    g.goods_num_type
+    g.goods_num_type goodsNumType,
+    g.goods_name goodsName
     FROM
 		p_orders p
 		left JOIN  p_orders_details po on p.id = po.order_no
 		left JOIN p_goods g on po.goods_id = g.id
-        where po.order_no = #{orderNo}
+        where p.order_no = #{orderNo}
     </select>
 </mapper>
