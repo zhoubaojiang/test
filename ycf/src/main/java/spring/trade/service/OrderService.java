@@ -231,9 +231,6 @@ public class OrderService  {
      */
     @Transient
     public BaseCommonResult<MRecoveryGoods> recoveryOrder(RecoveryOrderRequest request) {
-        if (request.getMemberId()==null){
-            return ResultBuilder.fail("获取用户数据失败");
-        }
         MRecoveryGoods record = dozer.map(request, MRecoveryGoods.class);
         record.setOrderNo(DateUtil.getOrderNumber());
         record.setMemberId(request.getMemberId());
