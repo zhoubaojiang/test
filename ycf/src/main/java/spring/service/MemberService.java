@@ -352,7 +352,7 @@ public class MemberService {
                int i = uUserMember.getlType()+1;
                 log.info("已领次数:{}",i);
                 uUserMember.setlType(i);
-                record.setName("没获得100鱿费");
+                record.setName("每获得100鱿费");
                 userMemberMapper.updateByPrimaryKeySelective(uUserMember);
             }
             record.setCreateTime(new Date());
