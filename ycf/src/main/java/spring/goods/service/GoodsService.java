@@ -221,11 +221,6 @@ public class GoodsService {
     public BaseCommonResult<List<PFirstFicture>> picList() {
         PFirstFictureExample example = new PFirstFictureExample();
         List<PFirstFicture> pFirstFictures = pFirstFictureMapper.selectByExample(example);
-        if (pFirstFictures.size()>0){
-            for (PFirstFicture pFirstFicture:pFirstFictures) {
-                pFirstFicture.setPicUrl(pFirstFicture.getPicUrl());
-            }
-        }
         return ResultBuilder.success(pFirstFictures);
     }
 
